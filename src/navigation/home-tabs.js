@@ -1,59 +1,91 @@
 import React from "react"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import Example1 from "../screens/Example1"
-import Example2 from "../screens/Example2"
-import Example4 from "../screens/Example4"
-import Example3 from "../screens/Example3"
+
+import Color from "../common/Color"
+import {Icon} from "react-native-elements"
+import Home from "../screens/home/home"
+import News from "../screens/news/news"
+import Profile from "../screens/more/profile"
+import Notify from "../screens/notify/notify"
+import CreateNews from "../screens/post/createnews"
+
+import {homeTabs} from "../common/navigator"
 
 const Tab = createBottomTabNavigator()
 
 const HomeTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: Color.orange,
+        // tabBarInactiveTintColor: "blue",
+        tabBarStyle: {
+          height: 55,
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          margin: 0,
+        },
+      }}>
       <Tab.Screen
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Tang chủ",
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <Icon name="home-outline" type="ionicon" color={color} />
           ),
           tabBarBadge: 3,
         }}
-        name="Example1"
-        component={Example1}
+        name={homeTabs.home}
+        component={Home}
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Quản lý tin",
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <Icon name="newspaper-outline" type="ionicon" color={color} />
           ),
           tabBarBadge: 3,
         }}
-        name="Example2"
-        component={Example2}
+        name={homeTabs.news}
+        component={News}
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Đăng tin",
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <Icon name="create-outline" type="ionicon" color={color} />
           ),
           tabBarBadge: 3,
         }}
-        name="Example3"
-        component={Example3}
+        name={homeTabs.createnews}
+        component={CreateNews}
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Thông báo",
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <Icon name="notifications-outline" type="ionicon" color={color} />
           ),
           tabBarBadge: 3,
         }}
-        name="Example4"
-        component={Example4}
+        name={homeTabs.notify}
+        component={Notify}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Thêm",
+          tabBarIcon: ({color, size}) => (
+            <Icon
+              name="ellipsis-horizontal-outline"
+              color={color}
+              type="ionicon"
+              size={size}
+            />
+          ),
+          tabBarBadge: 3,
+        }}
+        name={homeTabs.me}
+        component={Profile}
       />
     </Tab.Navigator>
   )

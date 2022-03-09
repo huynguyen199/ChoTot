@@ -10,8 +10,11 @@ export const homeDrawer = {
 }
 
 export const homeTabs = {
-  cart: "CartStack",
   me: "ProfileStack",
+  home: "HomeStack",
+  news: "NewsStack",
+  createnews: "CreateNewsStack",
+  notify: "NotifyStack",
 }
 
 export const mainStack = {
