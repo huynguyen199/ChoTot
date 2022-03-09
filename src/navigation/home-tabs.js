@@ -18,7 +18,7 @@ const HomeTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: Color.orange,
-        // tabBarInactiveTintColor: "blue",
+        tabBarInactiveTintColor: Color.black,
         tabBarStyle: {
           height: 55,
         },
@@ -29,11 +29,12 @@ const HomeTabs = () => {
       }}>
       <Tab.Screen
         options={{
-          tabBarLabel: "Tang chủ",
+          tabBarLabel: "Trang chủ",
           tabBarIcon: ({color, size}) => (
             <Icon name="home-outline" type="ionicon" color={color} />
           ),
           tabBarBadge: 3,
+          headerShown: false,
         }}
         name={homeTabs.home}
         component={Home}
