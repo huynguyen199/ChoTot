@@ -32,8 +32,8 @@ const ProductList = () => {
         <FlatList
           numColumns={2}
           data={DATA}
-          columnWrapperStyle={{justifyContent: "space-between"}}
-          contentContainerStyle={{marginHorizontal: 12}}
+          columnWrapperStyle={styles.flatColumnWapper}
+          contentContainerStyle={styles.flatContent}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   boxHeader: {marginTop: 10},
+  flatContent: {marginHorizontal: 12},
+  flatColumnWapper: {justifyContent: "space-between"},
 })
 
 export default ProductList
