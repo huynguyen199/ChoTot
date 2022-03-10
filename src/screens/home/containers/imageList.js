@@ -6,64 +6,35 @@ const ImageList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.titleStyle}>Chợ tốt có gì mới</Text>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 10,
-        }}>
+      <View style={styles.boxImageTop}>
         <Image
-          style={{
-            flex: 0.5,
-            height: width / 2 - 50,
-            borderRadius: 10,
-            margin: 4,
-          }}
+          style={styles.imageTop}
           source={{
             uri: "http://chuongtrinh.chotot.com/wp-content/uploads/sites/9/2019/12/850_350.jpg",
           }}
         />
         <Image
-          style={{
-            flex: 0.5,
-            height: width / 2 - 50,
-            borderRadius: 10,
-            margin: 4,
-          }}
+          style={styles.imageTop}
           source={{
             uri: "http://chuongtrinh.chotot.com/wp-content/uploads/sites/9/2019/12/850_350.jpg",
           }}
         />
       </View>
-      <View style={{flexDirection: "row"}}>
+      <View style={styles.boxImageBottom}>
         <Image
-          style={{
-            flex: 1,
-            height: width / 2 - 50,
-            borderRadius: 10,
-            margin: 4,
-          }}
+          style={styles.imageBottom}
           source={{
             uri: "http://chuongtrinh.chotot.com/wp-content/uploads/sites/9/2019/12/850_350.jpg",
           }}
         />
         <Image
-          style={{
-            flex: 1,
-            height: width / 2 - 50,
-            borderRadius: 10,
-            margin: 4,
-          }}
+          style={styles.imageBottom}
           source={{
             uri: "http://chuongtrinh.chotot.com/wp-content/uploads/sites/9/2019/12/850_350.jpg",
           }}
         />
         <Image
-          style={{
-            flex: 1,
-            height: width / 2 - 50,
-            borderRadius: 10,
-            margin: 4,
-          }}
+          style={styles.imageBottom}
           source={{
             uri: "http://chuongtrinh.chotot.com/wp-content/uploads/sites/9/2019/12/850_350.jpg",
           }}
@@ -80,6 +51,23 @@ const styles = StyleSheet.create({
     color: "black",
     marginLeft: 5,
   },
+  boxImageTop: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
+  imageTop: {
+    flex: 0.5,
+    height: width / 2 - 50,
+    borderRadius: 10,
+    margin: 4,
+  },
+  imageBottom: {
+    flex: 1,
+    height: width / 2 - 50,
+    borderRadius: 10,
+    margin: 4,
+  },
+  boxImageBottom: {flexDirection: "row"},
 })
 
 export default ImageList

@@ -5,14 +5,11 @@ import {Avatar} from "react-native-elements"
 const GiftList = () => {
   return (
     <ScrollView
-      style={{backgroundColor: "white"}}
+      style={styles.container}
       horizontal
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}>
-      <View
-        style={{
-          flexDirection: "row",
-        }}>
+      <View style={styles.boxRow}>
         <View style={styles.itemGift}>
           <Avatar
             size={55}
@@ -22,11 +19,7 @@ const GiftList = () => {
               type: "material",
               color: "#cdde20",
             }}
-            containerStyle={{
-              borderColor: "grey",
-              borderStyle: "solid",
-              borderWidth: 1,
-            }}
+            containerStyle={styles.iconAvatar}
           />
           <Text style={styles.textStyle}>Chương trình ưu đãi</Text>
         </View>
@@ -36,6 +29,7 @@ const GiftList = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {backgroundColor: "white"},
   itemGift: {
     padding: 10,
     alignItems: "center",
@@ -44,6 +38,14 @@ const styles = StyleSheet.create({
   textStyle: {
     width: 80,
     textAlign: "center",
+  },
+  iconAvatar: {
+    borderColor: "grey",
+    borderStyle: "solid",
+    borderWidth: 1,
+  },
+  boxRow: {
+    flexDirection: "row",
   },
 })
 

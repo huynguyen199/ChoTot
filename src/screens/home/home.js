@@ -2,16 +2,17 @@ import {View, ScrollView, StyleSheet} from "react-native"
 import React from "react"
 import {Header, Icon} from "react-native-elements"
 
-import ProductList from "./containers/productlist"
-import ImageList from "./containers/imagelist"
-import CategoryList from "./containers/categorylist"
-import GiftList from "./containers/giftlist"
+import ProductList from "./containers/productList"
+import ImageList from "./containers/imageList"
+import CategoryList from "./containers/categoryList"
+import GiftList from "./containers/giftList"
 import Banner from "./containers/banner"
-import SearchBar from "../../components/searchbar/search"
+import SearchBar from "@components/searchbar"
+// import {Banner} from "@containers/banner"
 
 const Home = () => {
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.containerHome}>
       {/* Header */}
       <Header
         leftComponent={<SearchBar />}
@@ -42,6 +43,7 @@ const Home = () => {
   )
 }
 const styles = StyleSheet.create({
+  containerHome: {flex: 1},
   container: {
     flex: 1,
     justifyContent: "center",
