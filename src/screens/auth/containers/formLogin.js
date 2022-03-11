@@ -8,7 +8,7 @@ import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
 
 const FormLogin = () => {
-  const [isFocus, setIsFocus] = useState({acount: false, password: false})
+  const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
   const [account, setAccount] = useState("")
   const [password, setPassword] = useState("")
@@ -45,29 +45,29 @@ const FormLogin = () => {
         value={account}
         onChangeText={onChangeAccount}
         containerStyle={
-          !isFocus.acount
-            ? styles.inputContainerStyle
-            : styles.inputContainerHover
+          isFocus.account
+            ? styles.inputContainerHover
+            : styles.inputContainerStyle
         }
-        onFocus={() => handleInputFocus("acount")}
+        onFocus={() => handleInputFocus("account")}
         onBlur={() => handleInputBlur("password")}
       />
       <Input
         placeholder="Nhập mật khẩu"
         rightIcon={
-          !isVisible ? (
-            <EyeIcon onPress={showPasswords} />
-          ) : (
+          isVisible ? (
             <EyeOffIcon onPress={showPasswords} />
+          ) : (
+            <EyeIcon onPress={showPasswords} />
           )
         }
         value={password}
         inputContainerStyle={styles.inputContainerPass}
         onChangeText={onChangePassword}
         containerStyle={
-          !isFocus.password
-            ? styles.inputContainerStyle
-            : styles.inputContainerHover
+          isFocus.password
+            ? styles.inputContainerHover
+            : styles.inputContainerStyle
         }
       />
       <ButtonLogin

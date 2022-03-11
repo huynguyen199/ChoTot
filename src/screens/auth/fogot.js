@@ -3,7 +3,7 @@ import React, {useState} from "react"
 import {Header, Icon, Input} from "react-native-elements"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
-import ButtonFogot from "@components/button/index"
+import ButtonFogot from "@components/button"
 
 const Fogot = () => {
   const [account, setAccount] = useState("")

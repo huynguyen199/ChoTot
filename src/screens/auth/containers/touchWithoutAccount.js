@@ -2,7 +2,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import Color from "@common/Color"
 
-const touchWithoutAccount = () => {
+const TouchWithoutAccount = () => {
   return (
     <View style={styles.container}>
       <Text>Chưa có tài khoản?</Text>
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default touchWithoutAccount
+export default TouchWithoutAccount
