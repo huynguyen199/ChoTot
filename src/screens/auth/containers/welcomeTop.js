@@ -2,12 +2,12 @@ import {View, Text, StyleSheet, Image} from "react-native"
 import React from "react"
 import Color from "@common/Color"
 
-const WelcomeTop = () => {
+const WelcomeTop = ({title, description}) => {
   return (
     <View style={styles.containerHeader}>
       <View style={styles.boxLeft}>
-        <Text style={styles.textTitle}>Đăng nhập</Text>
-        <Text style={styles.textDescription}>Chào bạn đã quay lại</Text>
+        <Text style={styles.textTitle}>{title}</Text>
+        <Text style={styles.textDescription}>{description}</Text>
       </View>
       <View>
         <Image
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   textDescription: {
-    fontSize: 20,
+    fontSize: 18,
     color: Color.grey,
   },
   boxLeft: {

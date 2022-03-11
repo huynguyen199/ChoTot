@@ -4,10 +4,10 @@ import {Icon, Header} from "react-native-elements"
 import Color from "@common/Color"
 import Icons from "@common/Icon"
 import WelcomeTop from "./containers/welcomeTop"
-import FormLogin from "./containers/formLogin"
+import FormRegister from "./containers/formRegister"
 import TouchWithoutAccount from "./containers/touchWithoutAccount"
 
-const Login = () => {
+const Register = () => {
   return (
     <View style={styles.container}>
       <Header
@@ -24,8 +24,11 @@ const Login = () => {
       />
       {/* Body */}
       <View style={styles.body}>
-        <WelcomeTop title={"Đăng nhập"} description={"Chào bạn đã quay lại"} />
-        <FormLogin />
+        <WelcomeTop
+          title={"Đăng ký"}
+          description={"Tạo tài khoản Chợ Tốt ngay"}
+        />
+        <FormRegister />
         <TouchWithoutAccount />
       </View>
     </View>
@@ -44,4 +47,4 @@ const styles = StyleSheet.create({
   headerStyle: {borderBottomWidth: 0},
 })
 
-export default Login
+export default Register
