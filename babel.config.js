@@ -24,6 +24,7 @@ module.exports = {
           "@stores": "./src/stores",
           "@styles": "./src/styles",
           "@common": "./src/common",
+          "@navigation": "./src/navigation",
         },
       },
     ],
