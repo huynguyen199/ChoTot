@@ -24,10 +24,7 @@ const Register = () => {
       />
       {/* Body */}
       <View style={styles.body}>
-        <WelcomeTop
-          title={"Đăng ký"}
-          description={"Tạo tài khoản Chợ Tốt ngay"}
-        />
+        <WelcomeTop title={"Đăng nhập"} description={"Bạn đã có tài khoản"} />
         <FormRegister />
         <TouchWithoutAccount />
       </View>
