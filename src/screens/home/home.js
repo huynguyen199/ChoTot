@@ -1,4 +1,4 @@
-import {View, ScrollView, StyleSheet} from "react-native"
+import {View, ScrollView, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import {Header, Icon} from "react-native-elements"
 
@@ -9,8 +9,15 @@ import GiftList from "./containers/giftList"
 import Banner from "./containers/banner"
 import SearchBar from "@components/searchbar"
 // import {Banner} from "@containers/banner"
+import {useNavigation} from "@react-navigation/native"
+import {mainStack} from "@common/navigator"
 
 const Home = () => {
+  const navigation = useNavigation()
+  // dispatch(login({email: "test1@gmail.com", password: "123456"}))
+  // const user = useSelector((state) => state.auth)
+
+  // console.log(Config.API_URL)
   return (
     <View style={styles.containerHome}>
       {/* Header */}
@@ -18,14 +25,16 @@ const Home = () => {
         leftComponent={<SearchBar />}
         backgroundColor={"orange"}
         rightComponent={
-          <View style={styles.container}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(mainStack.auth_stack)}
+            style={styles.container}>
             <Icon
               name="newspaper-outline"
               type="ionicon"
               color="black"
               size={26}
             />
-          </View>
+          </TouchableOpacity>
         }
       />
       <ScrollView>

@@ -7,6 +7,7 @@ export const authStack = {
 
 export const homeDrawer = {
   home: "HomeScreen",
+  detail: "DetailScreen",
 }
 
 export const homeTabs = {
@@ -19,6 +20,7 @@ export const homeTabs = {
 
 export const mainStack = {
   home_tab: "HomeTab",
+  auth_stack: "AuthStack",
 }
 
 export const rootSwitch = {
