@@ -26,7 +26,7 @@ const Home = () => {
         backgroundColor={"orange"}
         rightComponent={
           <TouchableOpacity
-            onPress={() => navigation.navigate(mainStack.auth_stack)}
+            onPress={() => navigation.navigate(mainStack.authStack)}
             style={styles.container}>
             <Icon
               name="newspaper-outline"

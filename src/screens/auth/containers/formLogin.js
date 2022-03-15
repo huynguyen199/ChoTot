@@ -34,8 +34,8 @@ const FormLogin = () => {
       dispatch(login({email, password}))
         .unwrap()
         .then((auth) => {
-          if (auth.isLoggedIn) {
-            navigation.navigate(mainStack.home_tab)
+          if (auth.user) {
+            navigation.navigate(mainStack.homeTab)
           }
         })
     }

@@ -1,16 +1,15 @@
-import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import Config from "react-native-config"
-const API_URL = Config.API_URL
+import {client} from "@common/client"
+
 const register = (email, password) => {
-  return axios.post(`${API_URL}users`, {
+  return client.post("users", {
     email,
     password,
   })
 }
 const login = (email, password) => {
-  return axios
-    .post(`${API_URL}auth/login`, {
+  return client
+    .post(`auth/login`, {
       email,
       password,
     })
@@ -20,13 +19,13 @@ const login = (email, password) => {
         response,
       )
       if (response.data.accessToken) {
-        AsyncStorage.setItem("user", JSON.stringify(response.data))
+        AsyncStorage.setItem("token", JSON.stringify(response.data.accessToken))
       }
       return response.data
     })
 }
 const logout = () => {
-  AsyncStorage.removeItem("user")
+  AsyncStorage.removeItem("token")
 }
 const authService = {
   register,

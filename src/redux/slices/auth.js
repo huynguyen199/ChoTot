@@ -3,7 +3,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import authService from "../services/auth"
 
 // const user = JSON.parse(AsyncStorage.getItem("user"))
-const initialState = {isLoggedIn: false, user: null, error: null}
+const initialState = {user: null}
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -12,7 +12,7 @@ export const login = createAsyncThunk(
       const data = await authService.login(email, password)
       console.log("DEBUG: - file: auth.js - line 13 - data", data)
 
-      return {user: data, isLoggedIn: true, error: null}
+      return {user: data}
     } catch (error) {
       const message =
         (error.response &&
@@ -31,7 +31,7 @@ export const register = createAsyncThunk(
     try {
       const data = await authService.register(email, password)
 
-      return {user: data, isLoggedIn: true, error: null}
+      return {user: data}
     } catch (error) {
       const message =
         (error.response &&
@@ -50,21 +50,13 @@ export const authSlice = createSlice({
   reducers: {},
   extraReducers: {
     [login.fulfilled]: (state, action) => {
-      state.isLoggedIn = true
       state.user = action.payload.user
-      state.error = null
     },
     [login.rejected]: (state, action) => {
-      state.isLoggedIn = false
-      state.error = action.error.message
       state.user = null
     },
-    [register.fulfilled]: (state, action) => {
-      state.isLoggedIn = false
-    },
-    [register.rejected]: (state, action) => {
-      state.isLoggedIn = false
-    },
+    [register.fulfilled]: (state, action) => {},
+    [register.rejected]: (state, action) => {},
   },
 })
 
