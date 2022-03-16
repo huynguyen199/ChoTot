@@ -1,42 +1,55 @@
-import {View, Text, StyleSheet} from "react-native"
-import React from "react"
+import {View, Text, StyleSheet, KeyboardAvoidingView} from "react-native"
+import React, {useEffect, useState} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e2s9d72",
-    title: "Third Item",
-  },
-]
+import {useDispatch, useSelector} from "react-redux"
+import {getProducts} from "@redux/slices/product"
 
 const ProductList = () => {
-  const renderItem = ({item}) => <ProductItem title={item.title} />
+  const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  const product = useSelector((state) => state.product.data)
+  const pagination = useSelector((state) => state.product.pagination)
+
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [dispatch])
+
+  useEffect(() => {
+    const page = pagination.page
+    const totalPages = pagination.totalPages
+    if (page <= totalPages) {
+      setProducts([...products, ...product])
+    }
+  }, [pagination, product, products])
+
+  const handleOnEndReached = () => {
+    let page = pagination.page
+    const totalPages = pagination.totalPages
+    if (page < totalPages) {
+      page++
+      dispatch(getProducts(page))
+    }
+  }
+
+  const renderItem = ({item}) => <ProductItem item={item} />
 
   return (
     <View style={styles.container}>
       <View style={styles.boxHeader}>
         <Text style={styles.textTitle}>Tin đăng mới</Text>
-        <FlatList
-          numColumns={2}
-          data={DATA}
-          columnWrapperStyle={styles.flatColumnWapper}
-          contentContainerStyle={styles.flatContent}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
+        <KeyboardAvoidingView behavior={"height"}>
+          <FlatList
+            numColumns={2}
+            data={products}
+            columnWrapperStyle={styles.flatColumnWapper}
+            contentContainerStyle={[styles.flatContent]}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+            onEndReachedThreshold={0.1}
+            onEndReached={handleOnEndReached}
+          />
+        </KeyboardAvoidingView>
       </View>
     </View>
   )
@@ -50,7 +63,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   boxHeader: {marginTop: 10},
-  flatContent: {marginHorizontal: 12},
+  flatContent: {marginHorizontal: 12, flex: 1},
   flatColumnWapper: {justifyContent: "space-between"},
 })
 

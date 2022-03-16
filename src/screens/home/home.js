@@ -11,6 +11,7 @@ import SearchBar from "@components/searchbar"
 // import {Banner} from "@containers/banner"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
+import VirtualizedView from "../../components/virtualizedView"
 
 const Home = () => {
   const navigation = useNavigation()
@@ -37,17 +38,21 @@ const Home = () => {
           </TouchableOpacity>
         }
       />
-      <ScrollView>
-        <Banner />
-        {/* gift list */}
-        <GiftList />
-        {/* categorylist */}
-        <CategoryList />
-        {/* list image */}
-        <ImageList />
-        {/* product list */}
-        <ProductList />
-      </ScrollView>
+      <VirtualizedView>
+        <ScrollView>
+          <View>
+            <Banner />
+            {/* gift list */}
+            <GiftList />
+            {/* categorylist */}
+            <CategoryList />
+            {/* list image */}
+            <ImageList />
+            {/* product list */}
+            <ProductList />
+          </View>
+        </ScrollView>
+      </VirtualizedView>
     </View>
   )
 }

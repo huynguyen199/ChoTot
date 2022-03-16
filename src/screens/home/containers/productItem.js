@@ -1,14 +1,30 @@
-import {View, Text, ImageBackground, StyleSheet} from "react-native"
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
 
-const ProductItem = ({title}) => {
+import Color from "@common/Color"
+import formatCurrency from "@utils/formatCurrency"
+import {format} from "@utils/timeAgo"
+
+const ProductItem = ({item}) => {
+  const onMoveDetail = () => {
+    // navigation.navigate(homeDrawer.detail, {
+    //   productId: item._id,
+    // })
+  }
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onMoveDetail} style={styles.container}>
       <ImageBackground
         style={styles.mainImage}
         source={{
-          uri: "https://nordiccoder.com/app/uploads/2020/01/6ab1641f-fb02-4f84-b09d-b8f001063b66.png",
+          uri: item.imageUrl,
         }}>
         <View style={styles.boxTopIcon}>
           <Icon name="camera-outline" type="ionicon" color="black" size={20} />
@@ -21,20 +37,20 @@ const ProductItem = ({title}) => {
       </ImageBackground>
       <View style={styles.boxRowTitle}>
         <View style={styles.boxLeft}>
-          <Text style={styles.textTitle}>this is title</Text>
+          <Text style={styles.textTitle}>{item.name}</Text>
         </View>
         <View style={styles.boxRight}>
           <Icon
             name="ellipsis-vertical-outline"
             type="ionicon"
-            color="black"
+            color={Color.black}
             size={23}
           />
         </View>
       </View>
-      <Text style={styles.textPrice}>100.000 đ</Text>
-      <Text style={styles.textDate}>5 ngay truoc</Text>
-    </View>
+      <Text style={styles.textPrice}>{formatCurrency(item.price)}</Text>
+      <Text style={styles.textDate}>{format(item.createdAt)}</Text>
+    </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({
@@ -43,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: "white",
+    backgroundColor: Color.white,
   },
   mainImage: {
     height: 160,
