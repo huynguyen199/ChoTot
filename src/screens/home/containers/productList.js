@@ -4,12 +4,13 @@ import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
 import {useDispatch, useSelector} from "react-redux"
 import {getProducts} from "@redux/slices/product"
+import {selectPagination, selectProducts} from "@redux/selector/product"
 
 const ProductList = () => {
   const [products, setProducts] = useState([])
   const dispatch = useDispatch()
-  const product = useSelector((state) => state.product.data)
-  const pagination = useSelector((state) => state.product.pagination)
+  const product = useSelector(selectProducts)
+  const pagination = useSelector(selectPagination)
 
   useEffect(() => {
     dispatch(getProducts())
