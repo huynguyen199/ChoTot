@@ -1,26 +1,28 @@
 export const authStack = {
   login: "LoginScreen",
-  login_mobile: "LoginMobileScreen",
   register: "RegisterScreen",
   forgot: "ForgotScreen",
 }
 
 export const homeDrawer = {
   home: "HomeScreen",
+  detail: "DetailScreen",
 }
 
 export const homeTabs = {
   me: "ProfileStack",
   home: "HomeStack",
   news: "NewsStack",
-  createnews: "CreateNewsStack",
+  createNews: "CreateNewsStack",
   notify: "NotifyStack",
 }
 
 export const mainStack = {
-  home_tab: "HomeTab",
+  homeTab: "HomeTab",
+  authStack: "AuthStack",
 }
 
 export const rootSwitch = {
   main: "MainStack",
+  auth: "AuthStack",
 }

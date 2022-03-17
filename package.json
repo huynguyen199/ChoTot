@@ -11,23 +11,36 @@
     "postinstall": "husky install && cd app && yarn install",
     "pre-commit": "lint-staged",
     "create-hook": "husky add .husky/pre-commit \"npm test\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "android:staging": "react-native run-android --variant=stagingdebug",
+    "android:staging-release": "react-native run-android --variant=stagingrelease",
+    "android:dev": "react-native run-android --variant=developmentdebug",
+    "android:dev-release": "react-native run-android --variant=developmentrelease",
+    "android:prod": "react-native run-android --variant=productiondebug",
+    "android:prod-release": "react-native run-android --variant=productionrelease"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.16.1",
     "@react-navigation/bottom-tabs": "^6.2.0",
     "@react-navigation/material-bottom-tabs": "^6.1.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "@react-navigation/stack": "^6.1.1",
+    "@reduxjs/toolkit": "^1.8.0",
+    "axios": "^0.26.1",
     "react": "17.0.2",
     "react-native": "0.67.3",
+    "react-native-config": "^1.4.5",
     "react-native-elements": "^3.4.2",
+    "react-native-form-validator": "^0.5.1",
     "react-native-gesture-handler": "^2.3.0",
     "react-native-paper": "^4.11.2",
     "react-native-safe-area-context": "^4.1.2",
     "react-native-screens": "^3.13.1",
     "react-native-swiper": "^1.6.0",
-    "react-native-vector-icons": "^9.1.0"
+    "react-native-vector-icons": "^9.1.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2"
   },
   "husky": {
     "hooks": {
@@ -58,7 +71,8 @@
     "lint-staged": "^12.3.5",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "^2.5.1",
-    "react-test-renderer": "17.0.2"
+    "react-test-renderer": "17.0.2",
+    "redux-devtools": "^3.7.0"
   },
   "jest": {
     "preset": "react-native"
