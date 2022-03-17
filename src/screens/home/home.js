@@ -1,4 +1,4 @@
-import {View, ScrollView, StyleSheet, TouchableOpacity} from "react-native"
+import {View, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import {Header, Icon} from "react-native-elements"
 
@@ -11,7 +11,6 @@ import SearchBar from "@components/searchbar"
 // import {Banner} from "@containers/banner"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
-import VirtualizedView from "../../components/virtualizedView"
 
 const Home = () => {
   const navigation = useNavigation()
@@ -38,21 +37,15 @@ const Home = () => {
           </TouchableOpacity>
         }
       />
-      <VirtualizedView>
-        <ScrollView>
-          <View>
-            <Banner />
-            {/* gift list */}
-            <GiftList />
-            {/* categorylist */}
-            <CategoryList />
-            {/* list image */}
-            <ImageList />
-            {/* product list */}
-            <ProductList />
-          </View>
-        </ScrollView>
-      </VirtualizedView>
+      <ProductList>
+        <Banner />
+        {/* gift list */}
+        <GiftList />
+        {/* categorylist */}
+        <CategoryList />
+        {/* list image */}
+        <ImageList />
+      </ProductList>
     </View>
   )
 }

@@ -55,11 +55,12 @@ const ProductItem = ({item}) => {
 }
 const styles = StyleSheet.create({
   container: {
-    width: 180,
+    width: 185,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
     backgroundColor: Color.white,
+    padding: 10,
   },
   mainImage: {
     height: 160,
