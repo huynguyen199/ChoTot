@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {getProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 
-const ProductList = () => {
+const ProductList = ({children}) => {
   const [products, setProducts] = useState([])
   const dispatch = useDispatch()
   const product = useSelector(selectProducts)
@@ -20,9 +20,9 @@ const ProductList = () => {
     const page = pagination.page
     const totalPages = pagination.totalPages
     if (page <= totalPages) {
-      setProducts([...products, ...product])
+      setProducts((preState) => [...preState, ...product])
     }
-  }, [pagination, product, products])
+  }, [pagination, product])
 
   const handleOnEndReached = () => {
     let page = pagination.page
@@ -43,6 +43,7 @@ const ProductList = () => {
           <FlatList
             numColumns={2}
             data={products}
+            ListHeaderComponent={() => <>{children}</>}
             columnWrapperStyle={styles.flatColumnWapper}
             contentContainerStyle={[styles.flatContent]}
             renderItem={renderItem}
