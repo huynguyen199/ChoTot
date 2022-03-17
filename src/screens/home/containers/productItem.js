@@ -10,7 +10,7 @@ import {Icon} from "react-native-elements"
 
 import Color from "@common/Color"
 import formatCurrency from "@utils/formatCurrency"
-import {format} from "@utils/timeAgo"
+import {formatDateAgo} from "@utils/timeAgo"
 
 const ProductItem = ({item}) => {
   const onMoveDetail = () => {
@@ -49,7 +49,7 @@ const ProductItem = ({item}) => {
         </View>
       </View>
       <Text style={styles.textPrice}>{formatCurrency(item.price)}</Text>
-      <Text style={styles.textDate}>{format(item.createdAt)}</Text>
+      <Text style={styles.textDate}>{formatDateAgo(item.createdAt)}</Text>
     </TouchableOpacity>
   )
 }
