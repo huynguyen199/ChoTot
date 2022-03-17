@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from "react-native"
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native"
 import React, {useState} from "react"
 import {Input} from "react-native-elements"
 import Color from "@common/Color"
@@ -6,40 +6,13 @@ import ButtonLogin from "@components/button"
 import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
-import {useValidation} from "react-native-form-validator"
-import {register} from "@redux/slices/auth"
-import {useDispatch} from "react-redux"
 
 const FormRegister = () => {
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
-  const [email, setEmail] = useState("")
+  const [account, setAccount] = useState("")
   const [password, setPassword] = useState("")
 
-  const dispatch = useDispatch()
-  const {validate} = useValidation({
-    state: {email, password},
-  })
-
-  const onCreatedAccount = () => {
-    const isValid = validate({
-      email: {email: true, required: true},
-      password: {required: true},
-    })
-    if (isValid) {
-      dispatch(register({email, password}))
-        .unwrap()
-        .then((auth) => {
-          console.log(
-            "DEBUG: - file: formRegister.js - line 31 - .then - res",
-            auth,
-          )
-          if (auth.user.status === 201) {
-            Alert.alert("Đăng ký thành công.")
-          }
-        })
-    }
-  }
   const handleInputFocus = (text) => {
     setIsFocus({
       [text]: true,
@@ -56,7 +29,7 @@ const FormRegister = () => {
   }
 
   const onChangeAccount = (value) => {
-    setEmail(value)
+    setAccount(value)
   }
 
   const onChangePassword = (value) => {
@@ -69,7 +42,7 @@ const FormRegister = () => {
         autoFocus
         placeholder="Nhập số điện thoại của bạn"
         inputContainerStyle={styles.inputStyle}
-        value={email}
+        value={account}
         onChangeText={onChangeAccount}
         containerStyle={
           isFocus.account
@@ -101,7 +74,6 @@ const FormRegister = () => {
         style={styles.btnLogin}
         color={Color.grey}
         title={"Đăng ký"}
-        onPress={onCreatedAccount}
       />
       <View style={styles.boxTerm}>
         <Text style={styles.textFoget}>

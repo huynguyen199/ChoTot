@@ -6,40 +6,12 @@ import ButtonLogin from "@components/button"
 import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
-import {useValidation} from "react-native-form-validator"
-import {useDispatch} from "react-redux"
-import {login} from "@redux/slices/auth"
-
-import {mainStack} from "@common/navigator"
-import {useNavigation} from "@react-navigation/native"
 
 const FormLogin = () => {
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
-  const [email, setEmail] = useState("")
+  const [account, setAccount] = useState("")
   const [password, setPassword] = useState("")
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
-
-  const {validate} = useValidation({
-    state: {email, password},
-  })
-
-  const onSubmit = () => {
-    const isValid = validate({
-      email: {email: true, required: true},
-      password: {required: true},
-    })
-    if (isValid) {
-      dispatch(login({email, password}))
-        .unwrap()
-        .then((auth) => {
-          if (auth.user) {
-            navigation.navigate(mainStack.homeTab)
-          }
-        })
-    }
-  }
 
   const handleInputFocus = (text) => {
     setIsFocus({
@@ -57,7 +29,7 @@ const FormLogin = () => {
   }
 
   const onChangeAccount = (value) => {
-    setEmail(value)
+    setAccount(value)
   }
 
   const onChangePassword = (value) => {
@@ -70,7 +42,7 @@ const FormLogin = () => {
         autoFocus
         placeholder="Nhập số điện thoại của bạn"
         inputContainerStyle={styles.inputStyle}
-        value={email}
+        value={account}
         onChangeText={onChangeAccount}
         containerStyle={
           isFocus.account
@@ -102,7 +74,6 @@ const FormLogin = () => {
         style={styles.btnLogin}
         color={Color.grey}
         title={"Đăng nhập"}
-        onPress={onSubmit}
       />
       <TouchableOpacity>
         <Text style={styles.textFoget}>Bạn quên mật khẩu</Text>

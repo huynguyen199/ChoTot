@@ -58,7 +58,7 @@ const HomeTabs = () => {
           ),
           tabBarBadge: 3,
         }}
-        name={homeTabs.createNews}
+        name={homeTabs.createnews}
         component={CreateNews}
       />
       <Tab.Screen
