@@ -9,9 +9,7 @@ export const getProducts = createAsyncThunk(
   "product/getProducts",
   async (page = 1, thunkAPI) => {
     try {
-      console.log("test products")
       const res = await productService.getProducts(page)
-      console.log("DEBUG: - file: auth.js - line 13 - data", res)
       return {data: res.data, pagination: res.pagination}
     } catch (error) {
       const message =

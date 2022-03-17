@@ -14,10 +14,7 @@ import {mainStack} from "@common/navigator"
 
 const Home = () => {
   const navigation = useNavigation()
-  // dispatch(login({email: "test1@gmail.com", password: "123456"}))
-  // const user = useSelector((state) => state.auth)
 
-  // console.log(Config.API_URL)
   return (
     <View style={styles.containerHome}>
       {/* Header */}
