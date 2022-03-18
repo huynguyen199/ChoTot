@@ -14,10 +14,6 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      console.log(
-        "DEBUG: - file: auth.js - line 20 - .then - response",
-        response,
-      )
       if (response.data.accessToken) {
         AsyncStorage.setItem("token", JSON.stringify(response.data.accessToken))
       }
