@@ -30,10 +30,6 @@ const FormRegister = () => {
       dispatch(register({email, password}))
         .unwrap()
         .then((auth) => {
-          console.log(
-            "DEBUG: - file: formRegister.js - line 31 - .then - res",
-            auth,
-          )
           if (auth.user.status === 201) {
             Alert.alert("Đăng ký thành công.")
           }

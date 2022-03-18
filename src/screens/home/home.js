@@ -1,4 +1,4 @@
-import {View, ScrollView, StyleSheet, TouchableOpacity} from "react-native"
+import {View, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import {Header, Icon} from "react-native-elements"
 
@@ -14,10 +14,7 @@ import {mainStack} from "@common/navigator"
 
 const Home = () => {
   const navigation = useNavigation()
-  // dispatch(login({email: "test1@gmail.com", password: "123456"}))
-  // const user = useSelector((state) => state.auth)
 
-  // console.log(Config.API_URL)
   return (
     <View style={styles.containerHome}>
       {/* Header */}
@@ -37,7 +34,7 @@ const Home = () => {
           </TouchableOpacity>
         }
       />
-      <ScrollView>
+      <ProductList>
         <Banner />
         {/* gift list */}
         <GiftList />
@@ -45,9 +42,7 @@ const Home = () => {
         <CategoryList />
         {/* list image */}
         <ImageList />
-        {/* product list */}
-        <ProductList />
-      </ScrollView>
+      </ProductList>
     </View>
   )
 }

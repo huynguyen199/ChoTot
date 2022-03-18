@@ -1,5 +1,7 @@
 import {View, Text, Image, Dimensions, StyleSheet} from "react-native"
 import React from "react"
+import Color from "@common/Color"
+
 const {width} = Dimensions.get("window")
 
 const ImageList = () => {
@@ -44,7 +46,7 @@ const ImageList = () => {
   )
 }
 const styles = StyleSheet.create({
-  container: {margin: 10, backgroundColor: "white", paddingBottom: 10},
+  container: {backgroundColor: Color.white, paddingBottom: 10},
   titleStyle: {
     fontWeight: "bold",
     fontSize: 18,

@@ -26,6 +26,7 @@ module.exports = {
           "@common": "./src/common",
           "@navigation": "./src/navigation",
           "@redux": "./src/redux",
+          "@utils": "./src/utils",
         },
       },
     ],

@@ -15,6 +15,7 @@ export const homeTabs = {
   news: "NewsStack",
   createNews: "CreateNewsStack",
   notify: "NotifyStack",
+  detail: "DetailScreen",
 }
 
 export const mainStack = {
