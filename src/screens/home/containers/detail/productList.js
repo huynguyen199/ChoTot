@@ -1,46 +1,39 @@
-import {View, Text, StyleSheet} from "react-native"
-import React from "react"
+import {StyleSheet} from "react-native"
+import React, {useEffect} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
+import {getProducts, resetProducts} from "@redux/slices/product"
+import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e2s9d72",
-    title: "Third Item",
-  },
-]
+import {useDispatch, useSelector} from "react-redux"
 
-const ProductList = () => {
-  const renderItem = ({item}) => <ProductItem title={item.title} />
+const ProductList = ({children}) => {
+  const renderItem = (item) => <ProductItem item={item} />
+  const dispatch = useDispatch()
+  const products = useSelector(selectProducts)
+  const pagination = useSelector(selectPagination)
 
+  useEffect(() => {
+    dispatch(resetProducts())
+    dispatch(getProducts())
+  }, [dispatch])
+
+  const handleOnEndReached = () => {
+    let page = pagination.page
+    dispatch(getProducts(++page))
+  }
   return (
-    <View style={styles.container}>
-      <View style={styles.boxHeader}>
-        <View style={styles.boxTitle}>
-          <Text style={styles.textTitle}>Tin rao khác</Text>
-        </View>
-        <FlatList
-          numColumns={2}
-          data={DATA}
-          columnWrapperStyle={styles.flatColumnWapper}
-          contentContainerStyle={styles.flatContent}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    </View>
+    <FlatList
+      numColumns={2}
+      data={products}
+      ListHeaderComponent={() => <>{children}</>}
+      columnWrapperStyle={styles.flatColumnWapper}
+      contentContainerStyle={styles.flatContent}
+      renderItem={renderItem}
+      keyExtractor={(item) => item.id}
+      onEndReachedThreshold={0.1}
+      onEndReached={handleOnEndReached}
+    />
   )
 }
 const styles = StyleSheet.create({
@@ -51,9 +44,12 @@ const styles = StyleSheet.create({
     color: Color.black,
     marginLeft: 5,
   },
-  boxHeader: {backgroundColor: Color.lightGrey},
-  flatContent: {marginHorizontal: 5},
-  flatColumnWapper: {justifyContent: "space-between"},
+  boxHeader: {backgroundColor: Color.white},
+  flatContent: {marginHorizontal: 0},
+  flatColumnWapper: {
+    justifyContent: "space-evenly",
+    backgroundColor: Color.ghostWhite,
+  },
   boxTitle: {backgroundColor: Color.white, padding: 10},
 })
 

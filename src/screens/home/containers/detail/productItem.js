@@ -2,13 +2,13 @@ import {View, Text, ImageBackground, StyleSheet} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
 
-const ProductItem = ({title}) => {
+const ProductItem = ({item}) => {
   return (
     <View style={styles.container}>
       <ImageBackground
         style={styles.mainImage}
         source={{
-          uri: "https://nordiccoder.com/app/uploads/2020/01/6ab1641f-fb02-4f84-b09d-b8f001063b66.png",
+          uri: item.item.imageUrl,
         }}>
         <View style={styles.boxTopIcon}>
           <Icon name="camera-outline" type="ionicon" color="black" size={20} />

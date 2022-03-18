@@ -1,37 +1,25 @@
 import {View, Text, StyleSheet} from "react-native"
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
 import {useDispatch, useSelector} from "react-redux"
-import {getProducts} from "@redux/slices/product"
+import {getProducts, resetProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
 
 const ProductList = ({children}) => {
-  const [products, setProducts] = useState([])
   const dispatch = useDispatch()
   const product = useSelector(selectProducts)
   const pagination = useSelector(selectPagination)
 
   useEffect(() => {
+    dispatch(resetProducts())
     dispatch(getProducts())
   }, [dispatch])
 
-  useEffect(() => {
-    const page = pagination.page
-    const totalPages = pagination.totalPages
-    if (page <= totalPages) {
-      setProducts((preState) => [...preState, ...product])
-    }
-  }, [pagination, product])
-
   const handleOnEndReached = () => {
     let page = pagination.page
-    const totalPages = pagination.totalPages
-    if (page < totalPages) {
-      page++
-      dispatch(getProducts(page))
-    }
+    dispatch(getProducts(++page))
   }
 
   const renderItem = ({item}) => <ProductItem item={item} />
@@ -39,7 +27,7 @@ const ProductList = ({children}) => {
   return (
     <FlatList
       numColumns={2}
-      data={products}
+      data={product}
       ListHeaderComponent={() => (
         <>
           {children}

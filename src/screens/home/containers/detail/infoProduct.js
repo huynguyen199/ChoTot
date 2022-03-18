@@ -4,7 +4,7 @@ import Color from "@common/Color"
 import {Button as ButtonSaveNews} from "react-native-elements"
 import Icons from "@common/Icon"
 
-const InfoProduct = () => {
+const InfoProduct = ({itemDetails}) => {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const heart = {
@@ -25,9 +25,9 @@ const InfoProduct = () => {
   return (
     <View style={styles.container}>
       <View style={styles.styleInfo}>
-        <Text style={styles.textTitle}>infoProdsaaaaaaasdaSsadasdsa</Text>
-        <Text style={styles.textPrice}>dsdassa</Text>
-        <Text>1 giờ trước</Text>
+        <Text style={styles.textTitle}>{itemDetails.name}</Text>
+        <Text style={styles.textPrice}>{itemDetails.price}</Text>
+        <Text>{itemDetails.createdAt}</Text>
       </View>
       <ButtonSaveNews
         title="Lưu tin"

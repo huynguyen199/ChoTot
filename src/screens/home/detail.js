@@ -1,5 +1,5 @@
-import {View, StyleSheet, ScrollView} from "react-native"
-import React from "react"
+import {View, StyleSheet} from "react-native"
+import React, {useEffect} from "react"
 import Banner from "@components/banner"
 import {Divider, Header} from "react-native-elements"
 import Footer from "./containers/detail/footer"
@@ -12,8 +12,20 @@ import NewsProduct from "./containers/detail/productList"
 import Color from "@common/Color"
 import LeftHeader from "./containers/detail/leftHeader"
 import RightHeader from "./containers/detail/rightHeader"
+import {useRoute} from "@react-navigation/native"
+import {useDispatch, useSelector} from "react-redux"
+import {getProductDetails} from "@redux/slices/product"
 
 const Detail = () => {
+  const route = useRoute()
+  const {productId} = route.params
+  const dispatch = useDispatch()
+  const itemDetails = useSelector((state) => state.product.item)
+
+  useEffect(() => {
+    dispatch(getProductDetails(productId))
+  }, [dispatch, productId])
+
   return (
     <View style={styles.container}>
       <View style={styles.groupContainer}>
@@ -22,21 +34,20 @@ const Detail = () => {
           backgroundColor={Color.orange}
           rightComponent={<RightHeader />}
         />
-        <ScrollView>
-          <Banner height={250} />
-          <View style={styles.groupPage}>
-            <InfoProduct />
-            <Divider width={0.5} color={Color.grey} />
-            <InfoPage />
-            <Divider width={0.5} color={Color.grey} />
-            <QuestionList />
-            <InfoArea />
-            <SocialList />
-          </View>
-          <NewsProduct />
-        </ScrollView>
-      </View>
 
+        <NewsProduct>
+          <Banner data={[itemDetails.imageUrl]} height={250} />
+          <View style={styles.groupPage}>
+            <InfoProduct itemDetails={itemDetails} />
+            <Divider width={0.5} color={Color.grey} />
+            <InfoPage itemDetails={itemDetails} />
+            <Divider width={0.5} color={Color.grey} />
+            <QuestionList itemDetails={itemDetails} />
+            <InfoArea itemDetails={itemDetails} />
+            <SocialList itemDetails={itemDetails} />
+          </View>
+        </NewsProduct>
+      </View>
       <Footer />
     </View>
   )

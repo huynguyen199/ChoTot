@@ -15,12 +15,12 @@ export const homeTabs = {
   news: "NewsStack",
   createNews: "CreateNewsStack",
   notify: "NotifyStack",
-  detail: "DetailScreen",
 }
 
 export const mainStack = {
   homeTab: "HomeTab",
   authStack: "AuthStack",
+  detail: "DetailScreen",
 }
 
 export const rootSwitch = {

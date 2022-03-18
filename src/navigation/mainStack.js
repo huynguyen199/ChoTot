@@ -1,6 +1,7 @@
 import React from "react"
 import {createStackNavigator} from "@react-navigation/stack"
 import HomeTabs from "./homeTabs"
+import Detail from "@screens/home/detail"
 import {mainStack} from "@common/navigator"
 
 const Stack = createStackNavigator()
@@ -14,6 +15,11 @@ const MainStack = () => {
         options={{headerShown: false}}
         name={mainStack.homeTab}
         component={HomeTabs}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name={mainStack.detail}
+        component={Detail}
       />
     </Stack.Navigator>
   )

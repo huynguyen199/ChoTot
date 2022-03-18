@@ -9,7 +9,7 @@ import {
 import Color from "@common/Color"
 import Icons from "@common/Icon"
 
-const InfoPage = () => {
+const InfoPage = ({itemDetails}) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowInfoContainer}>
@@ -59,7 +59,7 @@ const InfoPage = () => {
       </View>
       {/* box description */}
       <View style={styles.boxDescription}>
-        <Text>this is description</Text>
+        <Text>{itemDetails.description}</Text>
       </View>
     </View>
   )
