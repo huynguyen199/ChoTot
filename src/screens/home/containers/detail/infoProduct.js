@@ -3,8 +3,10 @@ import React, {useState} from "react"
 import Color from "@common/Color"
 import {Button as ButtonSaveNews} from "react-native-elements"
 import Icons from "@common/Icon"
+import {formatDateAgo} from "@utils/timeAgo"
+import formatCurrency from "@utils/formatCurrency"
 
-const InfoProduct = () => {
+const InfoProduct = ({itemDetails}) => {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const heart = {
@@ -25,9 +27,11 @@ const InfoProduct = () => {
   return (
     <View style={styles.container}>
       <View style={styles.styleInfo}>
-        <Text style={styles.textTitle}>infoProdsaaaaaaasdaSsadasdsa</Text>
-        <Text style={styles.textPrice}>dsdassa</Text>
-        <Text>1 giờ trước</Text>
+        <Text style={styles.textTitle}>{itemDetails.name}</Text>
+        <Text style={styles.textPrice}>
+          {formatCurrency(itemDetails.price)}
+        </Text>
+        <Text>{formatDateAgo(itemDetails.createdAt)}</Text>
       </View>
       <ButtonSaveNews
         title="Lưu tin"

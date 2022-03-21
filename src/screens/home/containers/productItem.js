@@ -7,16 +7,20 @@ import {
 } from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
+import {mainStack} from "@common/navigator"
 
 import Color from "@common/Color"
 import formatCurrency from "@utils/formatCurrency"
 import {formatDateAgo} from "@utils/timeAgo"
+import {useNavigation} from "@react-navigation/native"
 
 const ProductItem = ({item}) => {
+  const navigation = useNavigation()
+
   const onMoveDetail = () => {
-    // navigation.navigate(homeDrawer.detail, {
-    //   productId: item._id,
-    // })
+    navigation.navigate(mainStack.detail, {
+      productId: item._id,
+    })
   }
 
   return (

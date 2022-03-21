@@ -1,9 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
-// import AsyncStorage from "@react-native-async-storage/async-storage"
 import productService from "../services/product"
 
-// const user = JSON.parse(AsyncStorage.getItem("user"))
-const initialState = {data: [], pagination: {}}
+const initialState = {data: [], pagination: {}, item: {}}
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
@@ -23,21 +21,53 @@ export const getProducts = createAsyncThunk(
   },
 )
 
+export const getProductDetails = createAsyncThunk(
+  "product/getProductDetails",
+  async (id, thunkAPI) => {
+    try {
+      const data = await productService.getProductDetails(id)
+      return {item: data}
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    resetProducts(state) {
+      state.data = []
+      state.pagination = {page: 0}
+    },
+    clearDetails(state) {
+      state.item = {}
+    },
+  },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
-      state.data = action.payload.data
+      state.data.push(...action.payload.data)
       state.pagination = action.payload.pagination
     },
     [getProducts.rejected]: (state, action) => {
       state.data = null
     },
+    [getProductDetails.fulfilled]: (state, action) => {
+      state.item = action.payload.item
+    },
+    [getProductDetails.rejected]: (state, action) => {
+      state.item = null
+    },
   },
 })
 
 // Action creators
-// export const {increment, decrement, incrementByAmount} = authSlice.actions
+export const {resetProducts, clearDetails} = productSlice.actions
 export default productSlice.reducer
