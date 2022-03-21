@@ -1,0 +1,31 @@
+{
+  "common": {
+    "ok": "OK"
+  },
+  "home": {
+    "titleCategory": "Khám phá danh mục",
+    "whatsNews": "Chợ tốt có gì mới",
+    "news": "Tin đăng mới nhất",
+    "search":"Tìm kiếm trên chợ tốt",
+    "home":"Trang chủ",
+    "newsManager":"Quản lý tin",
+    "post":"Đăng tin",
+    "notify":"Thông báo",
+    "add":"Thêm"
+  },
+  "auth": {
+    "yourNumber": "Nhập số điện thoại của bạn",
+    "yourPassword": "Nhập mật khẩu của bạn",
+    "signIn": "Đăng nhập",
+    "forgotPassword": "Quên mật khẩu",
+    "orUse": "hoặc sử dụng",
+    "noAccount":"Chưa có tài khoản",
+    "registerNow":"Đăng ký ngay",
+    "signUp":"Đăng ký",
+    "createAccount":"tạo tài khoản Chợ Tốt ngay",
+    "acceptTermOfUse": "Bằng việc Đăng ký, bạn đã đồng ý với",
+    "termOfUse":"Điều khoản sử dụng",
+    "whose":"của Chợ tốt",
+    "welcomeBack":"Chào bạn đã quay lại"
+  }
+}

@@ -5,9 +5,10 @@ import Color from "@common/Color"
 import Icons from "@common/Icon"
 import WelcomeTop from "./containers/welcomeTop"
 import FormRegister from "./containers/formRegister"
-import TouchWithoutAccount from "./containers/touchWithoutAccount"
-
+import {useTranslation} from "react-i18next"
 const Register = () => {
+  const {t} = useTranslation()
+
   return (
     <View style={styles.container}>
       <Header
@@ -25,11 +26,10 @@ const Register = () => {
       {/* Body */}
       <View style={styles.body}>
         <WelcomeTop
-          title={"Đăng ký"}
-          description={"Tạo tài khoản Chợ Tốt ngay"}
+          title={t("auth:signUp")}
+          description={t("auth:createAccount")}
         />
         <FormRegister />
-        <TouchWithoutAccount />
       </View>
     </View>
   )

@@ -10,9 +10,9 @@ import {Icon} from "react-native-elements"
 import {mainStack} from "@common/navigator"
 
 import Color from "@common/Color"
-import formatCurrency from "@utils/formatCurrency"
 import {formatDateAgo} from "@utils/timeAgo"
 import {useNavigation} from "@react-navigation/native"
+import formatCurrency from "@utils/formatCurrency"
 
 const ProductItem = ({item}) => {
   const navigation = useNavigation()
