@@ -1,6 +1,8 @@
 import {View, Text, ImageBackground, StyleSheet} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
+import formatCurrency from "@utils/formatCurrency"
+import {formatDateAgo} from "@utils/timeAgo"
 
 const ProductItem = ({item}) => {
   return (
@@ -8,7 +10,7 @@ const ProductItem = ({item}) => {
       <ImageBackground
         style={styles.mainImage}
         source={{
-          uri: item.item.imageUrl,
+          uri: item.imageUrl,
         }}>
         <View style={styles.boxTopIcon}>
           <Icon name="camera-outline" type="ionicon" color="black" size={20} />
@@ -21,11 +23,11 @@ const ProductItem = ({item}) => {
       </ImageBackground>
       <View style={styles.boxRowTitle}>
         <View style={styles.boxLeft}>
-          <Text style={styles.textTitle}>this is title</Text>
+          <Text style={styles.textTitle}>{item.name}</Text>
         </View>
       </View>
-      <Text style={styles.textPrice}>100.000 đ</Text>
-      <Text style={styles.textDate}>5 ngay truoc</Text>
+      <Text style={styles.textPrice}>{formatCurrency(item.price)}</Text>
+      <Text style={styles.textDate}>{formatDateAgo(item.createdAt)}</Text>
     </View>
   )
 }

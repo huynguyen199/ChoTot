@@ -15,15 +15,20 @@ import RightHeader from "./containers/detail/rightHeader"
 import {useRoute} from "@react-navigation/native"
 import {useDispatch, useSelector} from "react-redux"
 import {getProductDetails} from "@redux/slices/product"
+import {clearDetails} from "@redux/slices/product"
+import {selectProductDetails} from "@redux/selector/product"
 
 const Detail = () => {
   const route = useRoute()
   const {productId} = route.params
   const dispatch = useDispatch()
-  const itemDetails = useSelector((state) => state.product.item)
+  const itemDetails = useSelector(selectProductDetails)
 
   useEffect(() => {
     dispatch(getProductDetails(productId))
+    return () => {
+      dispatch(clearDetails())
+    }
   }, [dispatch, productId])
 
   return (
@@ -36,7 +41,10 @@ const Detail = () => {
         />
 
         <NewsProduct>
-          <Banner data={[itemDetails.imageUrl]} height={250} />
+          <Banner
+            data={[{id: "keyid1", url: itemDetails.imageUrl}]}
+            height={250}
+          />
           <View style={styles.groupPage}>
             <InfoProduct itemDetails={itemDetails} />
             <Divider width={0.5} color={Color.grey} />

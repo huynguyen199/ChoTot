@@ -8,7 +8,7 @@ import Color from "@common/Color"
 import {useDispatch, useSelector} from "react-redux"
 
 const ProductList = ({children}) => {
-  const renderItem = (item) => <ProductItem item={item} />
+  const renderItem = (data) => <ProductItem item={data.item} />
   const dispatch = useDispatch()
   const products = useSelector(selectProducts)
   const pagination = useSelector(selectPagination)
@@ -30,7 +30,7 @@ const ProductList = ({children}) => {
       columnWrapperStyle={styles.flatColumnWapper}
       contentContainerStyle={styles.flatContent}
       renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       onEndReachedThreshold={0.1}
       onEndReached={handleOnEndReached}
     />

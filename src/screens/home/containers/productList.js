@@ -3,7 +3,7 @@ import React, {useEffect} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
 import {useDispatch, useSelector} from "react-redux"
-import {getProducts, resetProducts} from "@redux/slices/product"
+import {getProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
 
@@ -13,7 +13,6 @@ const ProductList = ({children}) => {
   const pagination = useSelector(selectPagination)
 
   useEffect(() => {
-    dispatch(resetProducts())
     dispatch(getProducts())
   }, [dispatch])
 

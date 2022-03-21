@@ -6,13 +6,13 @@ const Banner = ({width = width, height, data}) => {
   return (
     <View style={{width: width, height: height}}>
       <Swiper autoplay style={styles.styleSwiper}>
-        {data.map((item, index) => {
+        {data.map((item) => {
           return (
-            <View key={index} style={styles.container}>
+            <View key={item.id} style={styles.container}>
               <Image
                 style={styles.imageStyle}
                 source={{
-                  uri: item,
+                  uri: item.url,
                 }}
               />
             </View>

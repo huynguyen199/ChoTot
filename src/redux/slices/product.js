@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import productService from "../services/product"
 
-const initialState = {data: [], pagination: {}, item: []}
+const initialState = {data: [], pagination: {}, item: {}}
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
@@ -47,10 +47,12 @@ export const productSlice = createSlice({
       state.data = []
       state.pagination = {page: 0}
     },
+    clearDetails(state) {
+      state.item = {}
+    },
   },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
-      console.log("fullfiled", state.pagination.page)
       state.data.push(...action.payload.data)
       state.pagination = action.payload.pagination
     },
@@ -67,5 +69,5 @@ export const productSlice = createSlice({
 })
 
 // Action creators
-export const {resetProducts} = productSlice.actions
+export const {resetProducts, clearDetails} = productSlice.actions
 export default productSlice.reducer
