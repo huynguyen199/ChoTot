@@ -6,8 +6,11 @@ import Icons from "@common/Icon"
 import WelcomeTop from "./containers/welcomeTop"
 import FormLogin from "./containers/formLogin"
 import TouchWithoutAccount from "./containers/touchWithoutAccount"
+import {useTranslation} from "react-i18next"
 
 const Login = () => {
+  const {t} = useTranslation()
+
   return (
     <View style={styles.container}>
       <Header
@@ -24,7 +27,10 @@ const Login = () => {
       />
       {/* Body */}
       <View style={styles.body}>
-        <WelcomeTop title={"Đăng nhập"} description={"Chào bạn đã quay lại"} />
+        <WelcomeTop
+          title={t("auth:signIn")}
+          description={t("auth:welcomeBack")}
+        />
         <FormLogin />
         <TouchWithoutAccount />
       </View>

@@ -12,8 +12,10 @@ import {login} from "@redux/slices/auth"
 
 import {mainStack} from "@common/navigator"
 import {useNavigation} from "@react-navigation/native"
+import {useTranslation} from "react-i18next"
 
 const FormLogin = () => {
+  const {t} = useTranslation()
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
   const [email, setEmail] = useState("")
@@ -68,7 +70,7 @@ const FormLogin = () => {
     <View style={styles.container}>
       <Input
         autoFocus
-        placeholder="Nhập số điện thoại của bạn"
+        placeholder={t("auth:yourNumber")}
         inputContainerStyle={styles.inputStyle}
         value={email}
         onChangeText={onChangeAccount}
@@ -81,7 +83,7 @@ const FormLogin = () => {
         onBlur={() => handleInputBlur("password")}
       />
       <Input
-        placeholder="Nhập mật khẩu"
+        placeholder={t("auth:yourPassword")}
         rightIcon={
           isVisible ? (
             <EyeOffIcon onPress={showPasswords} />
@@ -101,11 +103,11 @@ const FormLogin = () => {
       <ButtonLogin
         style={styles.btnLogin}
         color={Color.grey}
-        title={"Đăng nhập"}
+        title={t("auth:signIn")}
         onPress={onSubmit}
       />
       <TouchableOpacity>
-        <Text style={styles.textFoget}>Bạn quên mật khẩu</Text>
+        <Text style={styles.textFoget}>{t("auth:forgotPassword")}</Text>
       </TouchableOpacity>
       <SocialMethod />
     </View>

@@ -1,8 +1,11 @@
 import {View, Text, ScrollView, StyleSheet} from "react-native"
 import React from "react"
 import {Avatar} from "react-native-elements"
+import {useTranslation} from "react-i18next"
+import "../../../configI18n"
 
 const GiftList = () => {
+  const {t} = useTranslation()
   return (
     <ScrollView
       style={styles.container}
@@ -21,7 +24,7 @@ const GiftList = () => {
             }}
             containerStyle={styles.iconAvatar}
           />
-          <Text style={styles.textStyle}>Chương trình ưu đãi</Text>
+          <Text style={styles.textStyle}>{t("ok")}</Text>
         </View>
       </View>
     </ScrollView>

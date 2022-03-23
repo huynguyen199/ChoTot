@@ -10,10 +10,13 @@ import Notify from "../screens/notify/notify"
 import CreateNews from "../screens/post/createnews"
 
 import {homeTabs} from "../common/navigator"
+import {useTranslation} from "react-i18next"
 
 const Tab = createBottomTabNavigator()
 
 const HomeTabs = () => {
+  const {t} = useTranslation()
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -29,7 +32,7 @@ const HomeTabs = () => {
       }}>
       <Tab.Screen
         options={{
-          tabBarLabel: "Trang chủ",
+          tabBarLabel: t("home:home"),
           tabBarIcon: ({color, size}) => (
             <Icon name="home-outline" type="ionicon" color={color} />
           ),
@@ -41,7 +44,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Quản lý tin",
+          tabBarLabel: t("home:newsManager"),
           tabBarIcon: ({color, size}) => (
             <Icon name="newspaper-outline" type="ionicon" color={color} />
           ),
@@ -52,7 +55,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Đăng tin",
+          tabBarLabel: t("home:post"),
           tabBarIcon: ({color, size}) => (
             <Icon name="create-outline" type="ionicon" color={color} />
           ),
@@ -63,7 +66,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Thông báo",
+          tabBarLabel: t("home:notify"),
           tabBarIcon: ({color, size}) => (
             <Icon name="notifications-outline" type="ionicon" color={color} />
           ),
@@ -74,7 +77,7 @@ const HomeTabs = () => {
       />
       <Tab.Screen
         options={{
-          tabBarLabel: "Thêm",
+          tabBarLabel: t("home:add"),
           tabBarIcon: ({color, size}) => (
             <Icon
               name="ellipsis-horizontal-outline"

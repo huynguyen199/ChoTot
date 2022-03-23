@@ -1,13 +1,15 @@
 import {View, Text, Image, Dimensions, StyleSheet} from "react-native"
 import React from "react"
 import Color from "@common/Color"
+import {useTranslation} from "react-i18next"
 
 const {width} = Dimensions.get("window")
 
 const ImageList = () => {
+  const {t} = useTranslation()
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>Chợ tốt có gì mới</Text>
+      <Text style={styles.titleStyle}>{t("home:whatsNews")}</Text>
       <View style={styles.boxImageTop}>
         <Image
           style={styles.imageTop}

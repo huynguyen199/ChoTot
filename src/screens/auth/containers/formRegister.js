@@ -9,12 +9,15 @@ import EyeOffIcon from "./icon/eyeOffIcon"
 import {useValidation} from "react-native-form-validator"
 import {register} from "@redux/slices/auth"
 import {useDispatch} from "react-redux"
+import {useTranslation} from "react-i18next"
 
 const FormRegister = () => {
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const {t} = useTranslation()
 
   const dispatch = useDispatch()
   const {validate} = useValidation({
@@ -63,7 +66,7 @@ const FormRegister = () => {
     <View style={styles.container}>
       <Input
         autoFocus
-        placeholder="Nhập số điện thoại của bạn"
+        placeholder={t("auth:yourNumber")}
         inputContainerStyle={styles.inputStyle}
         value={email}
         onChangeText={onChangeAccount}
@@ -76,7 +79,7 @@ const FormRegister = () => {
         onBlur={() => handleInputBlur("password")}
       />
       <Input
-        placeholder="Nhập mật khẩu"
+        placeholder={t("auth:yourPassword")}
         rightIcon={
           isVisible ? (
             <EyeOffIcon onPress={showPasswords} />
@@ -100,13 +103,11 @@ const FormRegister = () => {
         onPress={onCreatedAccount}
       />
       <View style={styles.boxTerm}>
-        <Text style={styles.textFoget}>
-          Bằng việc Đăng ký, bạn đã đồng ý với
-        </Text>
+        <Text style={styles.textFoget}>{t("auth:acceptTermOfUse")}</Text>
         <TouchableOpacity>
-          <Text style={styles.textTerm}> Điều khoản sử dụng </Text>
+          <Text style={styles.textTerm}> {t("auth:termOfUse")} </Text>
         </TouchableOpacity>
-        <Text style={styles.textFoget}>của Chợ Tốt</Text>
+        <Text style={styles.textFoget}>{t("auth:whose")}</Text>
       </View>
       <SocialMethod />
     </View>

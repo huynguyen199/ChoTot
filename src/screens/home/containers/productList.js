@@ -6,11 +6,13 @@ import {useDispatch, useSelector} from "react-redux"
 import {getProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
+import {useTranslation} from "react-i18next"
 
 const ProductList = ({children}) => {
   const dispatch = useDispatch()
   const product = useSelector(selectProducts)
   const pagination = useSelector(selectPagination)
+  const {t} = useTranslation()
 
   useEffect(() => {
     dispatch(getProducts())
@@ -31,7 +33,7 @@ const ProductList = ({children}) => {
         <>
           {children}
           <View style={styles.containerNews}>
-            <Text style={styles.textTitle}>Tin đăng mới</Text>
+            <Text style={styles.textTitle}>{t("home:news")}</Text>
           </View>
         </>
       )}

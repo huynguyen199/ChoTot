@@ -2,8 +2,11 @@ import {View, Dimensions, TextInput, StyleSheet} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
 const {width} = Dimensions.get("window")
+import {useTranslation} from "react-i18next"
 
 const SearchBar = ({text, onChangeText}) => {
+  const {t} = useTranslation()
+
   return (
     <View style={styles.container}>
       <View style={styles.boxItemRow}>
@@ -18,7 +21,7 @@ const SearchBar = ({text, onChangeText}) => {
           style={styles.inputSearch}
           onChangeText={onChangeText}
           value={text}
-          placeholder={"Tìm kiếm trên chợ tốt"}
+          placeholder={t("home:search")}
         />
       </View>
     </View>

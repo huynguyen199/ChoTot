@@ -6,7 +6,7 @@ const {width} = Dimensions.get("window")
 
 const Banner = () => {
   return (
-    <Swiper autoplay style={styles.styleSwiper}>
+    <Swiper autoplay autoplayTimeout={4} style={styles.styleSwiper}>
       <View style={styles.container}>
         <Image
           style={styles.imageStyle}
@@ -27,7 +27,7 @@ const Banner = () => {
   )
 }
 const styles = StyleSheet.create({
-  container: {backgroundColor: "white", flex: 1},
+  container: {flex: 1},
   styleSwiper: {height: width / 2.2},
   imageStyle: {flex: 1},
 })

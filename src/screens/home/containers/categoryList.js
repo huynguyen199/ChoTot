@@ -1,11 +1,14 @@
 import {View, Text, ScrollView, StyleSheet} from "react-native"
 import React from "react"
 import CategoryItem from "./categoryItem"
+import {useTranslation} from "react-i18next"
 
 const CategoryList = () => {
+  const {t} = useTranslation()
+
   return (
     <View style={styles.container}>
-      <Text style={styles.textTitle}>Khám phá danh mục</Text>
+      <Text style={styles.textTitle}>{t("home:titleCategory")}</Text>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
