@@ -1,12 +1,5 @@
-import {View, Text} from "react-native"
-import React from "react"
-
-const CreateNews = () => {
-  return (
-    <View>
-      <Text>createnews</Text>
-    </View>
-  )
+const Createnews = () => {
+  return null
 }
 
-export default CreateNews
+export default Createnews

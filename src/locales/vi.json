@@ -1,6 +1,7 @@
 {
   "common": {
-    "ok": "OK"
+    "ok": "OK",
+    "address": "Địa chỉ"
   },
   "home": {
     "titleCategory": "Khám phá danh mục",
@@ -27,5 +28,16 @@
     "termOfUse":"Điều khoản sử dụng",
     "whose":"của Chợ tốt",
     "welcomeBack":"Chào bạn đã quay lại"
+  },
+  "post":{
+    "city":"Tỉnh, thành phố",
+    "ward":"Phường, xã , thị trấn",
+    "finish":"Hoàn Thành",
+    "district":"Quận,huyện thị xã",
+    "postOneToSix":"ĐĂNG TỪ 1 ĐẾN 6 TẤM ẢNH",
+    "category":"Danh mục",
+    "details":"THÔNG TIN CHI TIẾT",
+    "selectCity":"Chọn tỉnh, thành phố",
+    "selectDistrict":"Chọn quận, huyện"
   }
 }
