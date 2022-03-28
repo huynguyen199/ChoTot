@@ -9,10 +9,19 @@ const Ionicons = {
   ellipsis_vertical: "ellipsis-vertical-outline",
   share: "share-social-outline",
   chatBubbles: "chatbubbles-outline",
+  close: "close-outline",
+  post: "create-outline",
+  caretDown: "caret-down",
+  camera: "camera",
+  chevronFoward: "chevron-forward-outline",
 }
 const Fontisto = {
   heart: "heart",
   heartoutline: "heart-alt",
 }
 
-export default {Ionicons, Fontisto}
+const Material = {
+  addAPhoto: "add-a-photo",
+}
+
+export default {Ionicons, Fontisto, Material}

@@ -42,7 +42,10 @@ const Detail = () => {
 
         <NewsProduct>
           <Banner
-            data={[{id: "keyid1", url: itemDetails.imageUrl}]}
+            data={[
+              {id: "keyid1", url: itemDetails.imageUrl},
+              {id: "keyid12", url: itemDetails.imageUrl},
+            ]}
             height={250}
           />
           <View style={styles.groupPage}>

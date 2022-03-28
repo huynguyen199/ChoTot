@@ -4,11 +4,11 @@ import {Icon} from "react-native-elements"
 const {width} = Dimensions.get("window")
 import {useTranslation} from "react-i18next"
 
-const SearchBar = ({text, onChangeText}) => {
+const SearchBar = ({text, onChangeText, containerStyle}) => {
   const {t} = useTranslation()
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <View style={styles.boxItemRow}>
         <Icon
           name="search-outline"
