@@ -23,7 +23,7 @@ function SettingsScreen() {
 const ContainerTabs = () => {
   return (
     <Tab.Navigator screenOptions={styles.screenOptions}>
-      <Tab.Screen name="Đang hiển thị" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   )

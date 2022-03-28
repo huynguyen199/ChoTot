@@ -13,7 +13,7 @@ const InfoDetail = ({onOpen}) => {
   const {t} = useTranslation()
 
   return (
-    <View>
+    <>
       <View style={styles.container}>
         <Text style={styles.txtTitle}>{t("post:details")}</Text>
       </View>
@@ -55,7 +55,7 @@ const InfoDetail = ({onOpen}) => {
           titleStyle={styles.btnStyleTitle}
         />
       </View>
-    </View>
+    </>
   )
 }
 

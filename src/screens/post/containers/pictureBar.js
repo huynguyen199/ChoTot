@@ -7,7 +7,7 @@ import PictureList from "./pictureList"
 
 const PictureBar = () => {
   return (
-    <View>
+    <>
       <Text style={styles.txtTitle}>Hình ảnh</Text>
       <View style={styles.boxRow}>
         <View style={styles.boxCamera}>
@@ -20,7 +20,7 @@ const PictureBar = () => {
         </View>
         <PictureList />
       </View>
-    </View>
+    </>
   )
 }
 

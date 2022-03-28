@@ -36,7 +36,7 @@ const ProvinceItem = ({item, id, setId}) => {
               />
             }
             onPress={() => onMoveModal(item.id)}
-            checked={id === item.id ? true : false}
+            checked={id === item.id}
           />
         </View>
         <Divider width={0.5} color={Color.grey} />

@@ -11,12 +11,7 @@ const AutoComplete = ({style, panel, value, onChange, onPress}) => {
       <TextInput
         disabled
         label={panel}
-        style={[
-          styles.inputStyle,
-          {
-            ...style,
-          },
-        ]}
+        style={[styles.inputStyle, style]}
         right={
           <TextInput.Icon
             name={() => (
