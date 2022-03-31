@@ -45,7 +45,6 @@ const Post = () => {
     modalizeRef.current.close()
   }
   const onOpenCategory = () => {
-    console.log("test")
     modalizeRef.current.open()
   }
 
