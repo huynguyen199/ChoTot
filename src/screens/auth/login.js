@@ -7,16 +7,22 @@ import WelcomeTop from "./containers/welcomeTop"
 import FormLogin from "./containers/formLogin"
 import TouchWithoutAccount from "./containers/touchWithoutAccount"
 import {useTranslation} from "react-i18next"
+import {useNavigation} from "@react-navigation/native"
 
 const Login = () => {
   const {t} = useTranslation()
+  const navigation = useNavigation()
 
+  const onGoBackHome = () => {
+    navigation.goBack()
+  }
   return (
     <View style={styles.container}>
       <Header
         containerStyle={styles.headerStyle}
         leftComponent={
           <Icon
+            onPress={onGoBackHome}
             name={Icons.Ionicons.back}
             type="ionicon"
             color="black"

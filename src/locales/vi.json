@@ -19,6 +19,7 @@
   },
   "auth": {
     "yourNumber": "Nhập số điện thoại của bạn",
+    "yourEmail": "Nhập số email của bạn",
     "yourPassword": "Nhập mật khẩu của bạn",
     "signIn": "Đăng nhập",
     "forgotPassword": "Quên mật khẩu",
@@ -30,7 +31,8 @@
     "acceptTermOfUse": "Bằng việc Đăng ký, bạn đã đồng ý với",
     "termOfUse": "Điều khoản sử dụng",
     "whose": "của Chợ tốt",
-    "welcomeBack": "Chào bạn đã quay lại"
+    "welcomeBack": "Chào bạn đã quay lại",
+    "loginSuccess":"Đăng nhập thành công"
   },
   "post": {
     "city": "Tỉnh, thành phố",
@@ -52,7 +54,12 @@
     "fillAddress":"Vui lòng điền địa chỉ",
     "fillPrice":"Vui lòng điền giá",
     "postSuccess":"Đăng tin thành công",
-    "postAtLeast":"Bạn cần đăng ít nhất 1 ảnh"
-
+    "postAtLeast":"Bạn cần đăng ít nhất 1 ảnh",
+    "invalidEmail":"Email không hợp lệ",
+    "fillEmail":"Vui lòng điền vào Email",
+    "fillPassword":"Vui lòng điền vào Password",
+    "passwordLength":"Nhập mật khẩu ít nhất là 6 ký tự",
+    "emailIncorrect":"Email hoặc mật khẩu không chính xác",
+    "accountExists":"Tài khoản này đã có người đăng ký"
   }
 }

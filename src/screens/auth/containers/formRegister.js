@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from "react-native"
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native"
 import React, {useState} from "react"
 import {Input} from "react-native-elements"
 import Color from "@common/Color"
@@ -6,38 +6,51 @@ import ButtonLogin from "@components/button"
 import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
-import {useValidation} from "react-native-form-validator"
 import {register} from "@redux/slices/auth"
 import {useDispatch} from "react-redux"
 import {useTranslation} from "react-i18next"
+import {useForm, Controller} from "react-hook-form"
+import {emailContraints, passwordContraints} from "@common/validator"
+import SimpleDialog from "@components/simpleDialog/index"
 
 const FormRegister = () => {
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [isNotify, setIsNotify] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
 
-  const {t} = useTranslation()
-
-  const dispatch = useDispatch()
-  const {validate} = useValidation({
-    state: {email, password},
+  const {
+    handleSubmit,
+    control,
+    formState: {errors},
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
+  const {t} = useTranslation()
+  const dispatch = useDispatch()
 
-  const onCreatedAccount = () => {
-    const isValid = validate({
-      email: {email: true, required: true},
-      password: {required: true},
-    })
-    if (isValid) {
-      dispatch(register({email, password}))
-        .unwrap()
-        .then((auth) => {
-          if (auth.user.status === 201) {
-            Alert.alert("Đăng ký thành công.")
-          }
-        })
-    }
+  const toggleDialog = () => {
+    setIsNotify(!isNotify)
+  }
+
+  const toggleDialogSuccess = () => {
+    setIsSuccess(!isSuccess)
+  }
+  const onSubmit = (data) => {
+    const {email, password} = data
+    dispatch(register({email, password}))
+      .unwrap()
+      .then((res) => {
+        if (res.user) {
+          toggleDialogSuccess()
+        }
+      })
+      .catch((err) => {
+        toggleDialog()
+      })
   }
   const handleInputFocus = (text) => {
     setIsFocus({
@@ -54,53 +67,61 @@ const FormRegister = () => {
     setIsVisible(!isVisible)
   }
 
-  const onChangeAccount = (value) => {
-    setEmail(value)
-  }
-
-  const onChangePassword = (value) => {
-    setPassword(value)
-  }
-
   return (
     <View style={styles.container}>
-      <Input
-        autoFocus
-        placeholder={t("auth:yourNumber")}
-        inputContainerStyle={styles.inputStyle}
-        value={email}
-        onChangeText={onChangeAccount}
-        containerStyle={
-          isFocus.account
-            ? styles.inputContainerHover
-            : styles.inputContainerStyle
-        }
-        onFocus={() => handleInputFocus("account")}
-        onBlur={() => handleInputBlur("password")}
+      <Controller
+        control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            autoFocus
+            placeholder={t("auth:yourNumber")}
+            inputContainerStyle={styles.inputStyle}
+            value={value}
+            onChangeText={onChange}
+            errorMessage={errors.email && errors.email.message}
+            containerStyle={
+              isFocus.account
+                ? styles.inputContainerHover
+                : styles.inputContainerStyle
+            }
+            onFocus={() => handleInputFocus("account")}
+            onBlur={() => handleInputBlur("password")}
+          />
+        )}
+        name="email"
+        rules={emailContraints}
       />
-      <Input
-        placeholder={t("auth:yourPassword")}
-        rightIcon={
-          isVisible ? (
-            <EyeOffIcon onPress={showPasswords} />
-          ) : (
-            <EyeIcon onPress={showPasswords} />
-          )
-        }
-        value={password}
-        inputContainerStyle={styles.inputContainerPass}
-        onChangeText={onChangePassword}
-        containerStyle={
-          isFocus.password
-            ? styles.inputContainerHover
-            : styles.inputContainerStyle
-        }
+      <Controller
+        control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder={t("auth:yourPassword")}
+            errorMessage={errors.password && errors.password.message}
+            rightIcon={
+              isVisible ? (
+                <EyeOffIcon onPress={showPasswords} />
+              ) : (
+                <EyeIcon onPress={showPasswords} />
+              )
+            }
+            value={value}
+            inputContainerStyle={styles.inputContainerPass}
+            onChangeText={onChange}
+            containerStyle={
+              isFocus.password
+                ? styles.inputContainerHover
+                : styles.inputContainerStyle
+            }
+          />
+        )}
+        name="password"
+        rules={passwordContraints}
       />
       <ButtonLogin
         style={styles.btnLogin}
         color={Color.grey}
-        title={"Đăng ký"}
-        onPress={onCreatedAccount}
+        title={t("auth:signUp")}
+        onPress={handleSubmit(onSubmit)}
       />
       <View style={styles.boxTerm}>
         <Text style={styles.textFoget}>{t("auth:acceptTermOfUse")}</Text>
@@ -110,6 +131,16 @@ const FormRegister = () => {
         <Text style={styles.textFoget}>{t("auth:whose")}</Text>
       </View>
       <SocialMethod />
+      <SimpleDialog
+        isVisible={isNotify}
+        onBackdropPress={toggleDialog}
+        title={t("validator:accountExists")}
+      />
+      <SimpleDialog
+        isVisible={isSuccess}
+        onBackdropPress={toggleDialogSuccess}
+        title={t("auth:loginSuccess")}
+      />
     </View>
   )
 }

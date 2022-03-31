@@ -6,8 +6,15 @@ import Icons from "@common/Icon"
 import WelcomeTop from "./containers/welcomeTop"
 import FormRegister from "./containers/formRegister"
 import {useTranslation} from "react-i18next"
+import {useNavigation} from "@react-navigation/native"
+
 const Register = () => {
   const {t} = useTranslation()
+  const navigation = useNavigation()
+
+  const onBackSignIn = () => {
+    navigation.goBack()
+  }
 
   return (
     <View style={styles.container}>
@@ -15,6 +22,7 @@ const Register = () => {
         containerStyle={styles.headerStyle}
         leftComponent={
           <Icon
+            onPress={onBackSignIn}
             name={Icons.Ionicons.back}
             type="ionicon"
             color="black"
