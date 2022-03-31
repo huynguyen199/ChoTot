@@ -226,6 +226,7 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
           onPress={onOpen}
           value={addressText}
           panel={"Địa chỉ"}
+          disabled={addressText === null}
           onEndEditing={onEndEditAddress}
           style={
             validator.isAddress
@@ -234,7 +235,7 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
           }
         />
         <HelperText type="error" visible={validator.isAddress}>
-          {t("address")}
+          {t("validator:fillAddress")}
         </HelperText>
         <Button
           title={"ĐĂNG TIN"}
