@@ -234,7 +234,7 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
           }
         />
         <HelperText type="error" visible={validator.isAddress}>
-          {t("validator:address")}
+          {t("address")}
         </HelperText>
         <Button
           title={"ĐĂNG TIN"}
