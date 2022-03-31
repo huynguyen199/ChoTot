@@ -39,11 +39,22 @@ const MainStack = () => {
         screenOptions={{
           presentation: "modal",
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
         <Stack.Screen name={mainStack.city} component={City} />
-        <Stack.Screen name={mainStack.district} component={District} />
-        <Stack.Screen name={mainStack.ward} component={Ward} />
+        <Stack.Screen
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+          name={mainStack.district}
+          component={District}
+        />
+        <Stack.Screen
+          options={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+          name={mainStack.ward}
+          component={Ward}
+        />
       </Stack.Group>
     </Stack.Navigator>
   )

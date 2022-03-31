@@ -3,6 +3,24 @@ import productService from "../services/product"
 
 const initialState = {data: [], pagination: {}, item: {}}
 
+export const addProduct = createAsyncThunk(
+  "product/addProduct",
+  async (data, thunkAPI) => {
+    try {
+      const res = await productService.addProduct(data)
+      return {product: {...res, category: res.category._id, author: res.author}}
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 export const getProducts = createAsyncThunk(
   "product/getProducts",
   async (page = 1, thunkAPI) => {
@@ -65,6 +83,10 @@ export const productSlice = createSlice({
     [getProductDetails.rejected]: (state, action) => {
       state.item = null
     },
+    [addProduct.fulfilled]: (state, action) => {
+      state.data.unshift(action.payload.product)
+    },
+    [addProduct.rejected]: (state, action) => {},
   },
 })
 

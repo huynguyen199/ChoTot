@@ -1,35 +1,73 @@
-import {Image, TouchableOpacity} from "react-native"
+import {Image, View, Text, StyleSheet} from "react-native"
 import React from "react"
-import {ListItem} from "react-native-elements"
+import {Icon, Divider} from "react-native-elements"
+import {TouchableOpacity} from "react-native-gesture-handler"
 import {useNavigation} from "@react-navigation/native"
-import {mainStack} from "../../common/navigator"
-import {StyleSheet} from "react-native"
-
-const CategoryItem = ({item}) => {
+import {mainStack} from "@common/navigator"
+import Icons from "@common/Icon"
+import Color from "@common/Color"
+const CategoryItem = ({item, onPress}) => {
   const navigation = useNavigation()
 
+  const onMovePost = () => {
+    navigation.navigate(mainStack.post, {
+      category: item,
+      address: {codeCity: null, codeDistrict: null, codeWard: null},
+    })
+  }
+
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate(mainStack.post)
-      }}>
-      <ListItem bottomDivider>
-        <Image
-          style={styles.image}
-          source={{
-            uri: "https://lighthouse.chotot.com/_next/image?url=https%3A%2F%2Fstatic.chotot.com%2Fstorage%2Fchapy-pro%2Fnewcats%2Fv8%2F5000.png&w=256&q=95",
-          }}
-        />
-        <ListItem.Content>
-          <ListItem.Title>Điện thoại</ListItem.Title>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
+    <TouchableOpacity onPress={onPress || onMovePost}>
+      <View style={styles.container}>
+        <View style={styles.boxLeft}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: item.imageUrl,
+            }}
+          />
+        </View>
+        <View style={styles.boxCenter}>
+          <Text>{item.name}</Text>
+        </View>
+        <View style={styles.boxRight}>
+          <Icon
+            name={Icons.Ionicons.chevronFoward}
+            type="ionicon"
+            color={Color.black}
+            size={20}
+          />
+        </View>
+      </View>
+      {/* <View style={{backgroundColor: "red", width: 10, height: 10}} /> */}
+
+      <Divider width={2} color={Color.ghostWhite} />
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
-  image: {width: 80, height: 80},
+  boxRight: {
+    flex: 0.1,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  boxCenter: {
+    flex: 0.6,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  boxLeft: {
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  container: {
+    flexDirection: "row",
+  },
+  image: {width: 70, height: 70},
 })
 export default CategoryItem

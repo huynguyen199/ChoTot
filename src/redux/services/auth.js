@@ -14,8 +14,8 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      if (response.data.accessToken) {
-        AsyncStorage.setItem("token", JSON.stringify(response.data.accessToken))
+      if (response.data.access_token) {
+        AsyncStorage.setItem("token", response.data.access_token)
       }
       return response.data
     })

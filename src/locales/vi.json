@@ -1,18 +1,21 @@
 {
   "common": {
     "ok": "OK",
-    "address": "Địa chỉ"
+    "close":"Đóng",
+    "address": "Địa chỉ",
+    "images":"Hình ảnh"
   },
   "home": {
     "titleCategory": "Khám phá danh mục",
     "whatsNews": "Chợ tốt có gì mới",
     "news": "Tin đăng mới nhất",
-    "search":"Tìm kiếm trên chợ tốt",
-    "home":"Trang chủ",
-    "newsManager":"Quản lý tin",
-    "post":"Đăng tin",
-    "notify":"Thông báo",
-    "add":"Thêm"
+    "search": "Tìm kiếm trên chợ tốt",
+    "home": "Trang chủ",
+    "newsManager": "Quản lý tin",
+    "post": "Đăng tin",
+    "notify": "Thông báo",
+    "add": "Thêm",
+    "chooseCategory": "Chọn danh mục"
   },
   "auth": {
     "yourNumber": "Nhập số điện thoại của bạn",
@@ -20,24 +23,36 @@
     "signIn": "Đăng nhập",
     "forgotPassword": "Quên mật khẩu",
     "orUse": "hoặc sử dụng",
-    "noAccount":"Chưa có tài khoản",
-    "registerNow":"Đăng ký ngay",
-    "signUp":"Đăng ký",
-    "createAccount":"tạo tài khoản Chợ Tốt ngay",
+    "noAccount": "Chưa có tài khoản",
+    "registerNow": "Đăng ký ngay",
+    "signUp": "Đăng ký",
+    "createAccount": "tạo tài khoản Chợ Tốt ngay",
     "acceptTermOfUse": "Bằng việc Đăng ký, bạn đã đồng ý với",
-    "termOfUse":"Điều khoản sử dụng",
-    "whose":"của Chợ tốt",
-    "welcomeBack":"Chào bạn đã quay lại"
+    "termOfUse": "Điều khoản sử dụng",
+    "whose": "của Chợ tốt",
+    "welcomeBack": "Chào bạn đã quay lại"
   },
-  "post":{
-    "city":"Tỉnh, thành phố",
-    "ward":"Phường, xã , thị trấn",
-    "finish":"Hoàn Thành",
-    "district":"Quận,huyện thị xã",
-    "postOneToSix":"ĐĂNG TỪ 1 ĐẾN 6 TẤM ẢNH",
-    "category":"Danh mục",
-    "details":"THÔNG TIN CHI TIẾT",
-    "selectCity":"Chọn tỉnh, thành phố",
-    "selectDistrict":"Chọn quận, huyện"
+  "post": {
+    "city": "Tỉnh, thành phố",
+    "ward": "Phường, xã , thị trấn",
+    "finish": "Hoàn Thành",
+    "district": "Quận,huyện thị xã",
+    "postOneToSix": "ĐĂNG TỪ 1 ĐẾN 6 TẤM ẢNH",
+    "category": "Danh mục",
+    "details": "THÔNG TIN CHI TIẾT",
+    "selectCity": "Chọn tỉnh, thành phố",
+    "selectDistrict": "Chọn quận, huyện"
+  },
+  "modal":{
+    "selectWard":"Chọn phường, xã thị trấn"
+  },
+  "validator":{
+    "fillName":"Vui lòng điền tên",
+    "fillDescription":"Vui lòng điền miêu tả",
+    "fillAddress":"Vui lòng điền địa chỉ",
+    "fillPrice":"Vui lòng điền giá",
+    "postSuccess":"Đăng tin thành công",
+    "postAtLeast":"Bạn cần đăng ít nhất 1 ảnh"
+
   }
 }

@@ -3,12 +3,17 @@ import React from "react"
 import AutoComplete from "./autoComplete"
 import {useTranslation} from "react-i18next"
 
-const Category = () => {
+const Category = ({onPress, categoryItem}) => {
   const {t} = useTranslation()
 
   return (
     <View style={styles.container}>
-      <AutoComplete panel={t("post:category")} />
+      <AutoComplete
+        value={categoryItem ? categoryItem.name : ""}
+        onPress={onPress}
+        disabled={true}
+        panel={t("post:category")}
+      />
     </View>
   )
 }
