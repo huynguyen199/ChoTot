@@ -1,6 +1,14 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import categoryService from "../services/category"
 
+const handledError = (error) => {
+  return (
+    (error.response && error.response.data && error.response.data.message) ||
+    error.message ||
+    error.toString()
+  )
+}
+
 export const getCategories = createAsyncThunk(
   "category/getCategories",
   async (thunkAPI) => {
@@ -8,12 +16,7 @@ export const getCategories = createAsyncThunk(
       const data = await categoryService.getCategories()
       return {data: data}
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const message = handledError(error)
       return thunkAPI.rejectWithValue(message)
     }
   },

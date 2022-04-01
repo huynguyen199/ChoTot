@@ -1,11 +1,11 @@
-import axios from "axios"
 import authHeader from "../redux/services/authHeader"
 import Config from "react-native-config"
+import {client} from "./client"
 
 const API_URL = Config.API_URL
 
 export const uploadImage = async (formData) => {
-  return axios({
+  return client({
     url: `${API_URL}upload`,
     method: "post",
     data: formData,

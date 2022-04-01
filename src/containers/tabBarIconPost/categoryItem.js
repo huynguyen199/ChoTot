@@ -12,7 +12,7 @@ const CategoryItem = ({item, onPress}) => {
   const onMovePost = () => {
     navigation.navigate(mainStack.post, {
       category: item,
-      address: {codeCity: null, codeDistrict: null, codeWard: null},
+      address: {},
     })
   }
 
