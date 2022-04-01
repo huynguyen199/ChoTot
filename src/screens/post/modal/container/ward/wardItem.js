@@ -3,17 +3,27 @@ import React from "react"
 import {StyleSheet} from "react-native"
 import Color from "@common/Color"
 import {CheckBox, Divider, Icon} from "react-native-elements"
+import {useNavigation} from "@react-navigation/native"
+import {mainStack} from "@common/navigator"
 
-const WardItem = ({item, id, setId}) => {
-  const onMoveModal = () => {
-    setId(item.id)
-    // navigation.push("MyModal2")
+const WardItem = ({item, code, setCode, codeCity, codeDistrict}) => {
+  const navigation = useNavigation()
+
+  const onMoveModal = (id) => {
+    setCode(id)
+    const address = {
+      codeCity,
+      codeDistrict,
+      codeWard: id,
+    }
+
+    navigation.navigate(mainStack.post, {category: null, address})
   }
   return (
-    <TouchableOpacity onPress={onMoveModal}>
+    <TouchableOpacity onPress={() => onMoveModal(item.code)}>
       <View>
         <View style={styles.container}>
-          <Text style={styles.txtTitle}>{item.title}</Text>
+          <Text style={styles.txtTitle}>{item.name}</Text>
           <CheckBox
             checkedIcon={
               <Icon
@@ -31,8 +41,8 @@ const WardItem = ({item, id, setId}) => {
                 size={25}
               />
             }
-            onPress={() => onMoveModal(item.id)}
-            checked={id === item.id ? true : false}
+            onPress={() => onMoveModal(item.code)}
+            checked={code === item.code}
           />
         </View>
         <Divider width={0.5} color={Color.grey} />

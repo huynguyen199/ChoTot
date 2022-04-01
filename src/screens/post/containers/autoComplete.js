@@ -4,13 +4,29 @@ import {TextInput} from "react-native-paper"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
 import {Icon} from "react-native-elements"
-
-const AutoComplete = ({style, panel, value, onChange, onPress}) => {
+const AutoComplete = ({
+  style,
+  panel,
+  value,
+  onChangeText,
+  onPress,
+  disabled,
+  onChange,
+  onEndEditing,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <TextInput
-        disabled
+        disabled={disabled}
         label={panel}
+        showSoftInputOnFocus={false}
+        onPressOut={onPress}
+        onEndEditing={onEndEditing}
+        value={value}
+        onChange={onChange}
+        onChangeText={onChangeText}
+        underlineColor="transparent"
+        theme={{colors: "transparent"}}
         style={[styles.inputStyle, style]}
         right={
           <TextInput.Icon
@@ -22,7 +38,6 @@ const AutoComplete = ({style, panel, value, onChange, onPress}) => {
                 size={20}
               />
             )}
-            // onPress={() => {}}
           />
         }
       />

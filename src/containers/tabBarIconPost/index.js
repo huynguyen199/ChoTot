@@ -1,47 +1,44 @@
-import {View, ScrollView} from "react-native"
-import React from "react"
+import {Dimensions} from "react-native"
+import React, {useEffect} from "react"
 import {Icon} from "react-native-elements"
 import {Portal} from "react-native-portalize"
 import {Modalize} from "react-native-modalize"
 import CategoryItem from "./categoryItem"
 import Icons from "@common/Icon"
 import HeaderModal from "@components/headerModal"
+import {useDispatch, useSelector} from "react-redux"
+import {getCategories} from "@redux/slices/category"
 
-const data = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-]
+const {height} = Dimensions.get("window")
 
 const TabBarIconPost = ({color, modalizeRef}) => {
   const onClose = () => {
     modalizeRef.current.close()
   }
+  const dispatch = useDispatch()
+  const data = useSelector((state) => state.category.data)
+
+  useEffect(() => {
+    dispatch(getCategories())
+  }, [dispatch])
+
   return (
-    <View>
+    <>
       <Portal>
-        <Modalize modalHeight={780} withHandle={false} ref={modalizeRef}>
-          <View>
+        <Modalize
+          HeaderComponent={
             <HeaderModal title={"Chọn danh mục"} onClose={onClose} />
-            <ScrollView>
-              {data.map((item, index) => (
-                <CategoryItem key={item.id} item={item} />
-              ))}
-            </ScrollView>
-          </View>
+          }
+          modalHeight={height - 40}
+          withHandle={false}
+          ref={modalizeRef}>
+          {data.map((item, index) => (
+            <CategoryItem key={item._id} item={item} />
+          ))}
         </Modalize>
       </Portal>
       <Icon name={Icons.Ionicons.post} type="ionicon" color={color} />
-    </View>
+    </>
   )
 }
 

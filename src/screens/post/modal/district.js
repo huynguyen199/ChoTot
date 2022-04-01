@@ -6,33 +6,46 @@ import SearchBar from "@components/searchbar"
 import {ScrollView} from "react-native"
 import DistrictItem from "./container/district/districtItem"
 import {useTranslation} from "react-i18next"
-
-const data = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-]
+import {useRoute} from "@react-navigation/native"
+import {getAllDistrictByCode} from "@utils/address"
+import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
 
 const District = () => {
-  const [id, setId] = useState(null)
+  const [code, setCode] = useState(null)
   const {t} = useTranslation()
+  const route = useRoute()
+  const {codeCity} = route.params
+  const [data, setData] = useState(getAllDistrictByCode(codeCity) || [])
+  const [search, setSearch] = useState(null)
+
+  const onSearch = (text) => {
+    const listDistricts = getAllDistrictByCode(codeCity)
+    const result = listDistricts.filter((item) => {
+      const name = nonAccentVietnamese(item.name.toLowerCase())
+
+      return name.includes(text.toLowerCase())
+    })
+    setData(result)
+    setSearch(text)
+  }
 
   return (
     <View style={styles.container}>
       <HeaderModal title={t("post:selectDistrict")} />
-      <SearchBar containerStyle={styles.containerStyle} />
+      <SearchBar
+        text={search}
+        onChangeText={onSearch}
+        containerStyle={styles.containerStyle}
+      />
       <ScrollView>
         {data.map((item, index) => (
-          <DistrictItem id={id} setId={setId} item={item} key={item.id} />
+          <DistrictItem
+            code={code}
+            setCode={setCode}
+            item={item}
+            key={item.code}
+            codeCity={codeCity}
+          />
         ))}
       </ScrollView>
     </View>

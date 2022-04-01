@@ -6,18 +6,18 @@ import {CheckBox, Divider, Icon} from "react-native-elements"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
 
-const ProvinceItem = ({item, id, setId}) => {
+const ProvinceItem = ({item, code, setCode}) => {
   const navigation = useNavigation()
 
   const onMoveModal = () => {
-    setId(item.id)
-    navigation.navigate(mainStack.district)
+    setCode(item.code)
+    navigation.navigate(mainStack.district, {codeCity: item.code})
   }
   return (
     <TouchableOpacity onPress={onMoveModal}>
       <View>
         <View style={styles.container}>
-          <Text style={styles.txtTitle}>{item.title}</Text>
+          <Text style={styles.txtTitle}>{item.name}</Text>
           <CheckBox
             checkedIcon={
               <Icon
@@ -36,7 +36,7 @@ const ProvinceItem = ({item, id, setId}) => {
               />
             }
             onPress={() => onMoveModal(item.id)}
-            checked={id === item.id}
+            checked={code === item.code}
           />
         </View>
         <Divider width={0.5} color={Color.grey} />

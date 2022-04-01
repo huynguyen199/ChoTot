@@ -1,27 +1,34 @@
-import {View, Text, StyleSheet} from "react-native"
+import {View, Text, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
 import PictureList from "./pictureList"
+import {useTranslation} from "react-i18next"
 
-const PictureBar = () => {
-  return (
-    <>
-      <Text style={styles.txtTitle}>Hình ảnh</Text>
-      <View style={styles.boxRow}>
-        <View style={styles.boxCamera}>
-          <Icon
-            name={Icons.Material.addAPhoto}
-            type="material"
-            color={Color.orange}
-            size={40}
-          />
+const PictureBar = ({images, onPress, isVisible, changeImages}) => {
+  const {t} = useTranslation()
+  if (isVisible) {
+    return (
+      <>
+        <Text style={styles.txtTitle}>{t("images")}</Text>
+        <View style={styles.boxRow}>
+          <TouchableOpacity onPress={onPress}>
+            <View style={styles.boxCamera}>
+              <Icon
+                name={Icons.Material.addAPhoto}
+                type="material"
+                color={Color.orange}
+                size={40}
+              />
+            </View>
+          </TouchableOpacity>
+          <PictureList changeImages={changeImages} images={images} />
         </View>
-        <PictureList />
-      </View>
-    </>
-  )
+      </>
+    )
+  }
+  return null
 }
 
 const styles = StyleSheet.create({

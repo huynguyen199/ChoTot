@@ -1,27 +1,31 @@
-import {View, Text, Image} from "react-native"
+import {View, Text, Image, TouchableOpacity} from "react-native"
 import React from "react"
 import {Icon} from "react-native-elements"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
 import {StyleSheet} from "react-native"
 
-const PictureItem = ({item}) => {
+const PictureItem = ({item, uri, onDelete}) => {
   return (
     <View style={styles.container}>
       <Image
         style={styles.itemImage}
         source={{
-          uri: "https://lighthouse.chotot.com/_next/image?url=https%3A%2F%2Fstatic.chotot.com%2Fstorage%2Fchapy-pro%2Fnewcats%2Fv8%2F5000.png&w=256&q=95",
+          uri: uri
+            ? uri
+            : "https://lighthouse.chotot.com/_next/image?url=https%3A%2F%2Fstatic.chotot.com%2Fstorage%2Fchapy-pro%2Fnewcats%2Fv8%2F5000.png&w=256&q=95",
         }}
       />
-      <View style={styles.btnClose}>
+      <TouchableOpacity
+        onPress={() => onDelete(item.id)}
+        style={styles.btnClose}>
         <Icon
           name={Icons.Ionicons.close}
           type="ionicon"
           color={Color.white}
           size={20}
         />
-      </View>
+      </TouchableOpacity>
       <View style={styles.panelBottom}>
         <Text style={styles.titleBottom}>Ảnh bìa</Text>
       </View>
