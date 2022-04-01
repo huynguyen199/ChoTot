@@ -11,7 +11,7 @@ const CameraBar = ({onPress, isVisible}) => {
 
   return (
     <>
-      {isVisible ? (
+      {isVisible && (
         <TouchableOpacity onPress={onPress}>
           <View style={styles.container}>
             <Icon
@@ -23,7 +23,7 @@ const CameraBar = ({onPress, isVisible}) => {
             <Text style={styles.txtTitle}>{t("post:postOneToSix")}</Text>
           </View>
         </TouchableOpacity>
-      ) : null}
+      )}
     </>
   )
 }
