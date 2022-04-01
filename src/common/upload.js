@@ -1,12 +1,9 @@
 import authHeader from "../redux/services/authHeader"
-import Config from "react-native-config"
 import {client} from "./client"
 
-const API_URL = Config.API_URL
-
 export const uploadImage = async (formData) => {
-  return client({
-    url: `${API_URL}upload`,
+  return await client({
+    url: `upload`,
     method: "post",
     data: formData,
     headers: {
