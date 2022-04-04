@@ -1,31 +1,41 @@
 import {View, FlatList, StyleSheet} from "react-native"
-import React from "react"
+import React, {useEffect} from "react"
 import Color from "@common/Color"
 import NewsItem from "./containers/newsItem"
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-]
+import {useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
+import ListEmptyComponent from "../containers/news/ListEmptyComponent"
+import {getMyPostedProducts} from "@redux/slices/product"
 
 const Display = () => {
-  const renderItem = ({item}) => <NewsItem title={item.title} />
+  const data = useSelector((state) => state.product.myPostedProducts.data)
+  console.log("DEBUG: - file: display.js - line 12 - Display - data", data)
+
+  const pagination = useSelector(
+    (state) => state.product.myPostedProducts.pagination,
+  )
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getMyPostedProducts())
+    // dispatch(getProductsByCategory({page: 1, category: categoryId}))
+  }, [dispatch])
+
+  const handleOnEndReached = () => {
+    let page = pagination.page
+    dispatch(getMyPostedProducts(++page))
+  }
+  // const pagination = useSelector(selectPaginationOfProductByCategory)
+  const renderItem = ({item}) => <NewsItem item={item} />
   return (
     <View style={styles.containers}>
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
+        onEndReached={handleOnEndReached}
+        ListEmptyComponent={ListEmptyComponent}
       />
     </View>
   )

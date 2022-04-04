@@ -1,28 +1,43 @@
-import {View, Text, ImageBackground, StyleSheet} from "react-native"
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native"
 import React from "react"
 import Icons from "@common/Icon"
 import {Icon} from "react-native-elements"
+import {mainStack} from "@common/navigator"
 import Color from "@common/Color"
-const image = {
-  uri: "https://cdn.didongviet.vn/pub/media/catalog/product//i/p/iphone-13-256gb-didongviet_1.jpg",
-}
+import {formatDateAgo} from "@utils/timeAgo"
+import formatCurrency from "@utils/formatCurrency"
+import {useNavigation} from "@react-navigation/native"
 
-const NewsItem = () => {
+const NewsItem = ({item}) => {
+  const navigation = useNavigation()
+
+  const onMoveDetail = () => {
+    navigation.navigate(mainStack.detail, {
+      productId: item._id,
+    })
+  }
+
   return (
-    <View style={styles.containers}>
+    <TouchableOpacity onPress={onMoveDetail} style={styles.containers}>
       <View style={styles.boxRow}>
         <View style={styles.leftImage}>
           <ImageBackground
-            source={image}
+            source={{uri: item.imageUrl}}
             resizeMode="cover"
             style={styles.imageStyle}
           />
         </View>
         <View style={styles.contentCenter}>
-          <Text style={styles.txtTitle}>dssadsadsa</Text>
-          <Text style={styles.txtPrice}>20000</Text>
+          <Text style={styles.txtTitle}>{item.name}</Text>
+          <Text style={styles.txtPrice}>{formatCurrency(item.price)}</Text>
 
-          <Text>dsa</Text>
+          <Text>{formatDateAgo(item.createdAt)}</Text>
         </View>
         <View style={styles.rightIcon}>
           <Icon
@@ -34,7 +49,7 @@ const NewsItem = () => {
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -43,10 +58,10 @@ export default NewsItem
 const styles = StyleSheet.create({
   imageStyle: {width: 100, height: 100},
   styleRightIcon: {marginTop: 10},
-  txtPrice: {color: Color, fontSize: 16, fontWeight: "bold"},
-  txtTitle: {color: "black", fontSize: 18},
+  txtPrice: {color: Color.red, fontSize: 16, fontWeight: "bold"},
+  txtTitle: {color: Color.black, fontSize: 18},
   rightIcon: {
-    backgroundColor: "white",
+    backgroundColor: Color.white,
     flex: 0.1,
   },
   contentCenter: {
