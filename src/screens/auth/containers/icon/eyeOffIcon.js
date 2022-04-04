@@ -11,7 +11,7 @@ const EyeOffIcon = ({onPress, color = Color.grey}) => {
       type="ionicon"
       containerStyle={styles.iconStyle}
       iconStyle={styles.iconEye}
-      name={Icons.Ionicons.eyeoff}
+      name={Icons.Ionicons.eyeOff}
       size={19}
       color={color}
     />

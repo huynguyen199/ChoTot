@@ -8,7 +8,8 @@ export const getAllAddress = () => {
 }
 
 export const getAllDistrictByCode = (codeCity) => {
-  const result = data.find((item) => item.code === codeCity)
+  const location = getAllAddress()
+  const result = location.find((item) => item.code === codeCity)
   return result.districts
 }
 

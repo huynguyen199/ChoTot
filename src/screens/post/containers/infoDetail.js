@@ -72,34 +72,18 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
   }
 
   const onEndEditName = () => {
-    if (name) {
-      setValidator((prev) => ({...prev, isName: false}))
-    } else {
-      setValidator((prev) => ({...prev, isName: true}))
-    }
+    setValidator((prev) => ({...prev, isName: !name}))
   }
 
   const onEndEditPrice = () => {
-    if (price) {
-      setValidator((prev) => ({...prev, isPrice: false}))
-    } else {
-      setValidator((prev) => ({...prev, isPrice: true}))
-    }
+    setValidator((prev) => ({...prev, isPrice: !price}))
   }
   const onEndEditDescription = () => {
-    if (description) {
-      setValidator((prev) => ({...prev, isDescription: false}))
-    } else {
-      setValidator((prev) => ({...prev, isDescription: true}))
-    }
+    setValidator((prev) => ({...prev, isDescription: !description}))
   }
 
   const onEndEditAddress = () => {
-    if (addressText) {
-      setValidator((prev) => ({...prev, isAddress: false}))
-    } else {
-      setValidator((prev) => ({...prev, isAddress: true}))
-    }
+    setValidator((prev) => ({...prev, isAddress: !addressText}))
   }
 
   const toggleDialog = () => {

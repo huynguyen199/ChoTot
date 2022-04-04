@@ -21,9 +21,9 @@ const AddressModal = ({modalizeRef, setAddressText, onClose}) => {
   const {t} = useTranslation()
   const navigation = useNavigation()
 
-  const [city, setCity] = useState({name: null})
-  const [district, setDistrict] = useState({name: null})
-  const [ward, setWard] = useState({name: null})
+  const [city, setCity] = useState({})
+  const [district, setDistrict] = useState({})
+  const [ward, setWard] = useState({})
 
   useEffect(() => {
     if (address.codeCity) {

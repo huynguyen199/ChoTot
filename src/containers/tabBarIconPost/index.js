@@ -27,9 +27,7 @@ const TabBarIconPost = ({color, modalizeRef}) => {
       <Portal>
         <Modalize
           HeaderComponent={
-            <>
-              <HeaderModal title={"Chọn danh mục"} onClose={onClose} />
-            </>
+            <HeaderModal title={"Chọn danh mục"} onClose={onClose} />
           }
           modalHeight={height - 40}
           withHandle={false}

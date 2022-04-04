@@ -9,7 +9,7 @@ const Category = ({onPress, categoryItem}) => {
   return (
     <View style={styles.container}>
       <AutoComplete
-        value={categoryItem ? categoryItem.name : ""}
+        value={categoryItem?.name ?? ""}
         onPress={onPress}
         disabled={true}
         panel={t("post:category")}

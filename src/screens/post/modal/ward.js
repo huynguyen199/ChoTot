@@ -1,5 +1,5 @@
 import {View} from "react-native"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
 import HeaderModal from "@components/headerModal"
 import SearchBar from "@components/searchbar"
@@ -16,9 +16,10 @@ const Ward = () => {
   const {codeDistrict, codeCity} = route.params
   const [search, setSearch] = useState(null)
   const {t} = useTranslation()
-  const [data, setData] = useState(
-    getAllWardByCode(codeCity, codeDistrict) || [],
-  )
+  const [data, setData] = useState([])
+  useEffect(() => {
+    setData(getAllWardByCode(codeCity, codeDistrict))
+  }, [codeDistrict, codeCity])
 
   const onSearch = (text) => {
     const listWard = getAllWardByCode(codeCity, codeDistrict)
