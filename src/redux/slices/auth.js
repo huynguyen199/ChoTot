@@ -54,8 +54,12 @@ export const authSlice = createSlice({
     [login.rejected]: (state, action) => {
       state.user = null
     },
-    [register.fulfilled]: (state, action) => {},
-    [register.rejected]: (state, action) => {},
+    [register.fulfilled]: (state, action) => {
+      state.user = action.payload.user
+    },
+    [register.rejected]: (state, action) => {
+      state.user = null
+    },
   },
 })
 

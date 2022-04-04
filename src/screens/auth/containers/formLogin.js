@@ -6,41 +6,53 @@ import ButtonLogin from "@components/button"
 import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
-import {useValidation} from "react-native-form-validator"
 import {useDispatch} from "react-redux"
 import {login} from "@redux/slices/auth"
 
 import {mainStack} from "@common/navigator"
 import {useNavigation} from "@react-navigation/native"
 import {useTranslation} from "react-i18next"
+import {useForm, Controller} from "react-hook-form"
+import SimpleDialog from "@components/simpleDialog/index"
+import {emailContraints, passwordContraints} from "@common/validator"
+import {authStack} from "@common/navigator"
 
 const FormLogin = () => {
   const {t} = useTranslation()
   const [isFocus, setIsFocus] = useState({account: false, password: false})
   const [isVisible, setIsVisible] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [isFailure, setIsFailure] = useState(false)
+
   const dispatch = useDispatch()
   const navigation = useNavigation()
-
-  const {validate} = useValidation({
-    state: {email, password},
+  const {
+    handleSubmit,
+    control,
+    formState: {errors},
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   })
 
-  const onSubmit = () => {
-    const isValid = validate({
-      email: {email: true, required: true},
-      password: {required: true},
-    })
-    if (isValid) {
-      dispatch(login({email, password}))
-        .unwrap()
-        .then((auth) => {
-          if (auth.user) {
-            navigation.navigate(mainStack.homeTab)
-          }
-        })
-    }
+  const toggleDialogFailure = () => {
+    setIsFailure(!isFailure)
+  }
+
+  const onSubmit = (data) => {
+    const {email, password} = data
+
+    dispatch(login({email, password}))
+      .unwrap()
+      .then((auth) => {
+        if (auth.user) {
+          navigation.navigate(mainStack.homeTab)
+        }
+      })
+      .catch((err) => {
+        toggleDialogFailure()
+      })
   }
 
   const handleInputFocus = (text) => {
@@ -58,58 +70,76 @@ const FormLogin = () => {
     setIsVisible(!isVisible)
   }
 
-  const onChangeAccount = (value) => {
-    setEmail(value)
-  }
-
-  const onChangePassword = (value) => {
-    setPassword(value)
+  const onMoveForgot = () => {
+    navigation.navigate(authStack.forgot)
   }
 
   return (
     <View style={styles.container}>
-      <Input
-        autoFocus
-        placeholder={t("auth:yourNumber")}
-        inputContainerStyle={styles.inputStyle}
-        value={email}
-        onChangeText={onChangeAccount}
-        containerStyle={
-          isFocus.account
-            ? styles.inputContainerHover
-            : styles.inputContainerStyle
-        }
-        onFocus={() => handleInputFocus("account")}
-        onBlur={() => handleInputBlur("password")}
+      <Controller
+        control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            autoFocus
+            placeholder={t("auth:yourEmail")}
+            inputContainerStyle={styles.inputStyle}
+            value={value}
+            onChangeText={onChange}
+            errorMessage={errors.email && errors.email.message}
+            containerStyle={
+              isFocus.account
+                ? styles.inputContainerHover
+                : styles.inputContainerStyle
+            }
+            onFocus={() => handleInputFocus("account")}
+            onBlur={() => handleInputBlur("password")}
+          />
+        )}
+        name="email"
+        rules={emailContraints}
       />
-      <Input
-        placeholder={t("auth:yourPassword")}
-        rightIcon={
-          isVisible ? (
-            <EyeOffIcon onPress={showPasswords} />
-          ) : (
-            <EyeIcon onPress={showPasswords} />
-          )
-        }
-        value={password}
-        inputContainerStyle={styles.inputContainerPass}
-        onChangeText={onChangePassword}
-        containerStyle={
-          isFocus.password
-            ? styles.inputContainerHover
-            : styles.inputContainerStyle
-        }
+      <Controller
+        control={control}
+        render={({field: {onChange, onBlur, value}}) => (
+          <Input
+            placeholder={t("auth:yourPassword")}
+            rightIcon={
+              isVisible ? (
+                <EyeIcon onPress={showPasswords} />
+              ) : (
+                <EyeOffIcon onPress={showPasswords} />
+              )
+            }
+            secureTextEntry={isVisible}
+            value={value}
+            errorMessage={errors.password && errors.password.message}
+            inputContainerStyle={styles.inputContainerPass}
+            onChangeText={onChange}
+            containerStyle={
+              isFocus.password
+                ? styles.inputContainerHover
+                : styles.inputContainerStyle
+            }
+          />
+        )}
+        name="password"
+        rules={passwordContraints}
       />
       <ButtonLogin
         style={styles.btnLogin}
         color={Color.grey}
         title={t("auth:signIn")}
-        onPress={onSubmit}
+        onPress={handleSubmit(onSubmit)}
       />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onMoveForgot}>
         <Text style={styles.textFoget}>{t("auth:forgotPassword")}</Text>
       </TouchableOpacity>
       <SocialMethod />
+      <SimpleDialog
+        isVisible={isFailure}
+        onBackdropPress={toggleDialogFailure}
+        title={t("validator:emailIncorrect")}
+      />
     </View>
   )
 }
