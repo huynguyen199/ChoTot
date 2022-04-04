@@ -1,17 +1,29 @@
-import {View, Text, Image, StyleSheet} from "react-native"
+import {View, Text, Image, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
+import {useNavigation} from "@react-navigation/native"
 
-const CategoryItem = () => {
+const CategoryItem = ({item}) => {
+  const navigation = useNavigation()
+
+  const onMoveCategory = () => {
+    // category
+    navigation.navigate("category", {
+      categoryId: item._id,
+    })
+  }
+
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.mainImage}
-        source={{
-          uri: "https://www.xtmobile.vn/vnt_upload/product/08_2019/thumbs/(600x600)_crop_asus-rog-phone-5-pro.jpg",
-        }}
-      />
-      <Text style={styles.textTitle}>Phone</Text>
-    </View>
+    <TouchableOpacity onPress={onMoveCategory}>
+      <View style={styles.container}>
+        <Image
+          style={styles.mainImage}
+          source={{
+            uri: item.imageUrl,
+          }}
+        />
+        <Text style={styles.textTitle}>{item.name}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 

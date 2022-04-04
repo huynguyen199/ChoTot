@@ -24,6 +24,7 @@ const MainStack = () => {
           name={mainStack.homeTab}
           component={HomeTabs}
         />
+
         <Stack.Screen
           options={{headerShown: false}}
           name={mainStack.detail}

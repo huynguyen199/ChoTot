@@ -5,6 +5,14 @@ const getProducts = (page) => {
     return response.data
   })
 }
+
+const getProductsByCategory = (page, category) => {
+  return client
+    .get(`products?page=${page}&category=${category}`)
+    .then((response) => {
+      return response.data
+    })
+}
 const addProduct = (data) => {
   const body = {
     name: data.name,
@@ -29,6 +37,7 @@ const getProductDetails = (id) => {
 const productService = {
   getProducts,
   getProductDetails,
+  getProductsByCategory,
   addProduct,
 }
 export default productService

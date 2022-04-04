@@ -16,7 +16,7 @@ const InfoProduct = ({itemDetails}) => {
     color: Color.red,
   }
   const heartOutline = {
-    name: Icons.Fontisto.heartoutline,
+    name: Icons.Fontisto.heartOutline,
     type: "fontisto",
     size: 15,
     color: Color.red,
