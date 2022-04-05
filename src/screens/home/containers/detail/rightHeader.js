@@ -21,7 +21,7 @@ const RightHeader = () => {
         style={styles.styleIcon}
       />
       <Icon
-        name={Icons.Ionicons.ellipsis_vertical}
+        name={Icons.Ionicons.ellipsisVertical}
         type="ionicon"
         color={Color.black}
         size={35}
