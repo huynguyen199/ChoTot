@@ -6,10 +6,13 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "react-redux"
 import ListEmptyComponent from "../containers/news/ListEmptyComponent"
 import {getMyPostedProducts} from "@redux/slices/product"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import {useState} from "react"
+import WithoutAccount from "./containers/withoutAccount"
 
 const Display = () => {
   const data = useSelector((state) => state.product.myPostedProducts.data)
-  console.log("DEBUG: - file: display.js - line 12 - Display - data", data)
+  const [logged, setLogged] = useState(false)
 
   const pagination = useSelector(
     (state) => state.product.myPostedProducts.pagination,
@@ -18,13 +21,21 @@ const Display = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getMyPostedProducts())
-    // dispatch(getProductsByCategory({page: 1, category: categoryId}))
-  }, [dispatch])
+    AsyncStorage.getItem("token").then((token) => {
+      if (token) {
+        dispatch(getMyPostedProducts())
+      } else {
+        setLogged(true)
+      }
+    })
+  }, [dispatch, logged])
 
   const handleOnEndReached = () => {
     let page = pagination.page
     dispatch(getMyPostedProducts(++page))
+  }
+  if (logged) {
+    return <WithoutAccount />
   }
   // const pagination = useSelector(selectPaginationOfProductByCategory)
   const renderItem = ({item}) => <NewsItem item={item} />
