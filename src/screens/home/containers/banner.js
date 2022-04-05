@@ -6,7 +6,7 @@ const colors = ["tomato", "thistle", "skyblue", "teal"]
 const {width} = Dimensions.get("window")
 
 const Banner = () => {
-  const ref = useRef()
+  const ref = useRef(null)
 
   const onChangeIndex = ({index}) => {
     if (index === colors.length - 1) {
