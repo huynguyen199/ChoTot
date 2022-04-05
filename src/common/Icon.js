@@ -2,10 +2,10 @@ const Ionicons = {
   back: "chevron-back-outline",
   newspaper: "newspaper-outline",
   eye: "eye-outline",
-  eyeoff: "eye-off-outline",
+  eyeOff: "eye-off-outline",
   user: "person-circle-outline",
   location: "location-outline",
-  heartoutline: "heart-outline",
+  heartOutline: "heart-outline",
   ellipsis_vertical: "ellipsis-vertical-outline",
   share: "share-social-outline",
   chatBubbles: "chatbubbles-outline",
@@ -13,11 +13,14 @@ const Ionicons = {
   post: "create-outline",
   caretDown: "caret-down",
   camera: "camera",
-  chevronFoward: "chevron-forward-outline",
+  chevronForward: "chevron-forward-outline",
+  grid: "grid-outline",
+  list: "list-outline",
 }
 const Fontisto = {
   heart: "heart",
-  heartoutline: "heart-alt",
+  heartOutline: "heart-alt",
+  filter: "filter",
 }
 
 const Material = {

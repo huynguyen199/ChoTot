@@ -18,7 +18,7 @@ client.interceptors.request.use(
   async function (config) {
     // Do something before request is sent
     const token = await AsyncStorage.getItem("token")
-    config.headers["Authorization"] = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`
     return config
   },
   function (error) {

@@ -9,7 +9,7 @@ const Footer = () => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.boxLeft}>
         <Icon
-          name={Icons.Ionicons.heartoutline}
+          name={Icons.Ionicons.heartOutline}
           type="ionicon"
           color={Color.white}
           size={35}
@@ -19,7 +19,7 @@ const Footer = () => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.boxCenter}>
         <Icon
-          name={Icons.Ionicons.heartoutline}
+          name={Icons.Ionicons.heartOutline}
           type="ionicon"
           color={Color.green}
           size={35}

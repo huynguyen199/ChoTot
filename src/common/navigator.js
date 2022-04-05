@@ -4,7 +4,7 @@ export const authStack = {
   forgot: "ForgotScreen",
 }
 
-export const homeDrawer = {
+export const homePage = {
   home: "HomeScreen",
   detail: "DetailScreen",
 }

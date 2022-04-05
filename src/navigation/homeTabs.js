@@ -1,9 +1,7 @@
 import React from "react"
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs"
-
 import Color from "../common/Color"
 import {Icon} from "react-native-elements"
-import Home from "../screens/home/home"
 import News from "../screens/news/news"
 import Profile from "../screens/more/profile"
 import Notify from "../screens/notify/notify"
@@ -14,6 +12,7 @@ import {useTranslation} from "react-i18next"
 import {Host} from "react-native-portalize"
 import {useRef} from "react"
 import TabBarIconPost from "@containers/tabBarIconPost"
+import HomePages from "./pages/home"
 
 const Tab = createBottomTabNavigator()
 
@@ -49,8 +48,9 @@ const HomeTabs = () => {
             headerShown: false,
           }}
           name={homeTabs.home}
-          component={Home}
+          component={HomePages}
         />
+
         <Tab.Screen
           options={{
             tabBarLabel: t("home:newsManager"),

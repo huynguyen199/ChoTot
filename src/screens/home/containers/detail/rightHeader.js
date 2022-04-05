@@ -7,7 +7,7 @@ const RightHeader = () => {
   return (
     <View style={styles.container}>
       <Icon
-        name={Icons.Ionicons.heartoutline}
+        name={Icons.Ionicons.heartOutline}
         type="ionicon"
         color={Color.black}
         size={35}

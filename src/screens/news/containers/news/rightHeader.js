@@ -9,7 +9,7 @@ const RightHeader = () => {
   return (
     <TouchableOpacity style={styles.btnStyle}>
       <Icon
-        name={Icons.Ionicons.chevronFoward}
+        name={Icons.Ionicons.chevronForward}
         type="ionicon"
         color={Color.black}
         size={26}
