@@ -44,7 +44,6 @@ const HomeTabs = () => {
             tabBarIcon: ({color, size}) => (
               <Icon name="home-outline" type="ionicon" color={color} />
             ),
-            tabBarBadge: 3,
             headerShown: false,
           }}
           name={homeTabs.home}
@@ -57,7 +56,6 @@ const HomeTabs = () => {
             tabBarIcon: ({color, size}) => (
               <Icon name="newspaper-outline" type="ionicon" color={color} />
             ),
-            tabBarBadge: 3,
             headerShown: false,
           }}
           name={homeTabs.news}
@@ -73,7 +71,6 @@ const HomeTabs = () => {
                 modalizeRef={modalizeRef}
               />
             ),
-            tabBarBadge: 3,
           }}
           listeners={{
             tabPress: (e) => {
@@ -91,7 +88,6 @@ const HomeTabs = () => {
             tabBarIcon: ({color, size}) => (
               <Icon name="notifications-outline" type="ionicon" color={color} />
             ),
-            tabBarBadge: 3,
           }}
           name={homeTabs.notify}
           component={Notify}
@@ -99,6 +95,7 @@ const HomeTabs = () => {
         <Tab.Screen
           options={{
             tabBarLabel: t("home:add"),
+            headerShown: false,
             tabBarIcon: ({color, size}) => (
               <Icon
                 name="ellipsis-horizontal-outline"
@@ -107,7 +104,6 @@ const HomeTabs = () => {
                 size={size}
               />
             ),
-            tabBarBadge: 3,
           }}
           name={homeTabs.me}
           component={Profile}
