@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from "react-native"
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
 import {useDispatch, useSelector} from "react-redux"
@@ -7,15 +7,21 @@ import {getProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
 import {useTranslation} from "react-i18next"
+import Loading from "./loading"
 
 const ProductList = ({children}) => {
   const dispatch = useDispatch()
+  const [refreshing, setRefreshing] = useState(true)
   const product = useSelector(selectProducts)
   const pagination = useSelector(selectPagination)
   const {t} = useTranslation()
 
   useEffect(() => {
     dispatch(getProducts())
+      .unwrap()
+      .then(() => {
+        setRefreshing(false)
+      })
   }, [dispatch])
 
   const handleOnEndReached = () => {
@@ -25,6 +31,9 @@ const ProductList = ({children}) => {
 
   const renderItem = ({item}) => <ProductItem item={item} />
 
+  if (refreshing) {
+    return <Loading />
+  }
   return (
     <FlatList
       numColumns={2}

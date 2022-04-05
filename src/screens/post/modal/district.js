@@ -1,12 +1,13 @@
 import {View} from "react-native"
 import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
-import HeaderModal from "@components/headerModal/index"
+import HeaderModal from "@components/headerModal"
 import SearchBar from "@components/searchbar"
 import {ScrollView} from "react-native"
 import DistrictItem from "./container/district/districtItem"
 import {useTranslation} from "react-i18next"
-import {useRoute} from "@react-navigation/native"
+import Loading from "./container/district/loading"
+import {useNavigation, useRoute} from "@react-navigation/native"
 import {getAllDistrictByCode} from "@utils/address"
 import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
 
@@ -17,9 +18,11 @@ const District = () => {
   const {codeCity} = route.params
   const [data, setData] = useState([])
   const [search, setSearch] = useState(null)
-
+  const [refreshing, setRefreshing] = useState(true)
+  const navigation = useNavigation()
   useEffect(() => {
     setData(getAllDistrictByCode(codeCity))
+    setRefreshing(false)
   }, [codeCity])
 
   const onSearch = (text) => {
@@ -32,26 +35,33 @@ const District = () => {
     setData(result)
     setSearch(text)
   }
+  const onBackCity = () => {
+    navigation.goBack()
+  }
 
   return (
     <View style={styles.container}>
-      <HeaderModal title={t("post:selectDistrict")} />
+      <HeaderModal onClose={onBackCity} title={t("post:selectDistrict")} />
       <SearchBar
         text={search}
         onChangeText={onSearch}
         containerStyle={styles.containerStyle}
       />
-      <ScrollView>
-        {data.map((item, index) => (
-          <DistrictItem
-            code={code}
-            setCode={setCode}
-            item={item}
-            key={item.code}
-            codeCity={codeCity}
-          />
-        ))}
-      </ScrollView>
+      {refreshing ? (
+        <Loading />
+      ) : (
+        <ScrollView>
+          {data.map((item, index) => (
+            <DistrictItem
+              code={code}
+              setCode={setCode}
+              item={item}
+              key={item.code}
+              codeCity={codeCity}
+            />
+          ))}
+        </ScrollView>
+      )}
     </View>
   )
 }

@@ -5,10 +5,11 @@ import HeaderModal from "@components/headerModal"
 import SearchBar from "@components/searchbar"
 import {ScrollView} from "react-native"
 import WardItem from "./container/ward/wardItem"
-import {useRoute} from "@react-navigation/native"
+import {useNavigation, useRoute} from "@react-navigation/native"
 import {getAllWardByCode} from "@utils/address"
 import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
 import {useTranslation} from "react-i18next"
+import Loading from "./container/ward/loading"
 
 const Ward = () => {
   const [code, setCode] = useState(null)
@@ -17,8 +18,12 @@ const Ward = () => {
   const [search, setSearch] = useState(null)
   const {t} = useTranslation()
   const [data, setData] = useState([])
+  const [refreshing, setRefreshing] = useState(true)
+  const navigation = useNavigation()
+
   useEffect(() => {
     setData(getAllWardByCode(codeCity, codeDistrict))
+    setRefreshing(false)
   }, [codeDistrict, codeCity])
 
   const onSearch = (text) => {
@@ -31,26 +36,34 @@ const Ward = () => {
     setSearch(text)
   }
 
+  const onBackDistrict = () => {
+    navigation.goBack()
+  }
+
   return (
     <View style={styles.container}>
-      <HeaderModal title={t("modal:selectWard")} />
+      <HeaderModal onClose={onBackDistrict} title={t("modal:selectWard")} />
       <SearchBar
         text={search}
         onChangeText={onSearch}
         containerStyle={styles.containerStyle}
       />
-      <ScrollView>
-        {data.map((item, index) => (
-          <WardItem
-            code={code}
-            codeDistrict={codeDistrict}
-            codeCity={codeCity}
-            setCode={setCode}
-            item={item}
-            key={item.code}
-          />
-        ))}
-      </ScrollView>
+      {refreshing ? (
+        <Loading />
+      ) : (
+        <ScrollView>
+          {data.map((item, index) => (
+            <WardItem
+              code={code}
+              codeDistrict={codeDistrict}
+              codeCity={codeCity}
+              setCode={setCode}
+              item={item}
+              key={item.code}
+            />
+          ))}
+        </ScrollView>
+      )}
     </View>
   )
 }
