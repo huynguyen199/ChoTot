@@ -8,11 +8,16 @@ const {width} = Dimensions.get("window")
 const Banner = () => {
   const ref = useRef(null)
 
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+
   const onChangeIndex = ({index}) => {
     if (index === colors.length - 1) {
-      setTimeout(() => {
-        ref.current.goToFirstIndex()
-      }, 2000)
+      // setTimeout(() => {
+      delay(1000).then(() => {
+        if (ref !== null) ref.current.goToFirstIndex()
+      })
+      // wait(1000).then(() => ref.current.goToFirstIndex())
+      // }, 2000)
     }
   }
 
