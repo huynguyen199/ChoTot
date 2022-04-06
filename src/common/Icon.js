@@ -25,6 +25,7 @@ const Fontisto = {
 
 const Material = {
   addAPhoto: "add-a-photo",
+  edit: "edit",
 }
 
 export default {Ionicons, Fontisto, Material}

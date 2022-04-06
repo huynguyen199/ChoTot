@@ -9,8 +9,16 @@ import React from "react"
 import {Avatar, Header} from "react-native-elements"
 import Color from "@common/Color"
 import UtilityList from "./containers/utilityList"
+import {useNavigation} from "@react-navigation/native"
+import {mainStack} from "@common/navigator"
 
 const Profile = () => {
+  const navigation = useNavigation()
+
+  const onMoveSettingProfile = () => {
+    navigation.navigate(mainStack.settingProfile)
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -23,7 +31,9 @@ const Profile = () => {
           backgroundColor={"orange"}
         />
         <View>
-          <TouchableOpacity style={styles.profileBar}>
+          <TouchableOpacity
+            onPress={onMoveSettingProfile}
+            style={styles.profileBar}>
             <View>
               <Avatar
                 size={90}
