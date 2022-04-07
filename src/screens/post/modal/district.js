@@ -1,15 +1,14 @@
-import {View} from "react-native"
+import {FlatList, View} from "react-native"
 import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
 import HeaderModal from "@components/headerModal"
 import SearchBar from "@components/searchbar"
-import {ScrollView} from "react-native"
 import DistrictItem from "./container/district/districtItem"
 import {useTranslation} from "react-i18next"
-import Loading from "./container/district/loading"
 import {useNavigation, useRoute} from "@react-navigation/native"
 import {getAllDistrictByCode} from "@utils/address"
 import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
+import Loading from "@components/loading/index"
 
 const District = () => {
   const [code, setCode] = useState(null)
@@ -39,6 +38,15 @@ const District = () => {
     navigation.goBack()
   }
 
+  const renderCityItem = ({item}) => (
+    <DistrictItem
+      code={code}
+      setCode={setCode}
+      item={item}
+      codeCity={codeCity}
+    />
+  )
+
   return (
     <View style={styles.container}>
       <HeaderModal onClose={onBackCity} title={t("post:selectDistrict")} />
@@ -50,17 +58,11 @@ const District = () => {
       {refreshing ? (
         <Loading />
       ) : (
-        <ScrollView>
-          {data.map((item, index) => (
-            <DistrictItem
-              code={code}
-              setCode={setCode}
-              item={item}
-              key={item.code}
-              codeCity={codeCity}
-            />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={data}
+          renderItem={renderCityItem}
+          keyExtractor={(item) => item.code}
+        />
       )}
     </View>
   )

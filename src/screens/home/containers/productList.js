@@ -7,7 +7,7 @@ import {getProducts} from "@redux/slices/product"
 import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
 import {useTranslation} from "react-i18next"
-import Loading from "./loading"
+import Loading from "@components/loading"
 
 const ProductList = ({children}) => {
   const dispatch = useDispatch()

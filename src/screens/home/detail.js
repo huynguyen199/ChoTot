@@ -17,7 +17,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {getProductDetails} from "@redux/slices/product"
 import {clearDetails} from "@redux/slices/product"
 import {selectProductDetails} from "@redux/selector/product"
-import Loading from "./containers/detail/loading"
+import Loading from "@components/loading"
 
 const Detail = () => {
   const route = useRoute()

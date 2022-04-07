@@ -1,15 +1,14 @@
-import {View} from "react-native"
+import {FlatList, View} from "react-native"
 import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
 import HeaderModal from "@components/headerModal"
 import SearchBar from "@components/searchbar"
-import {ScrollView} from "react-native"
 import WardItem from "./container/ward/wardItem"
 import {useNavigation, useRoute} from "@react-navigation/native"
 import {getAllWardByCode} from "@utils/address"
 import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
 import {useTranslation} from "react-i18next"
-import Loading from "./container/ward/loading"
+import Loading from "@components/loading/index"
 
 const Ward = () => {
   const [code, setCode] = useState(null)
@@ -40,6 +39,16 @@ const Ward = () => {
     navigation.goBack()
   }
 
+  const renderDistrictItem = ({item}) => (
+    <WardItem
+      code={code}
+      codeDistrict={codeDistrict}
+      codeCity={codeCity}
+      setCode={setCode}
+      item={item}
+      key={item.code}
+    />
+  )
   return (
     <View style={styles.container}>
       <HeaderModal onClose={onBackDistrict} title={t("modal:selectWard")} />
@@ -51,18 +60,11 @@ const Ward = () => {
       {refreshing ? (
         <Loading />
       ) : (
-        <ScrollView>
-          {data.map((item, index) => (
-            <WardItem
-              code={code}
-              codeDistrict={codeDistrict}
-              codeCity={codeCity}
-              setCode={setCode}
-              item={item}
-              key={item.code}
-            />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={data}
+          renderItem={renderDistrictItem}
+          keyExtractor={(item) => item.code}
+        />
       )}
     </View>
   )
