@@ -9,7 +9,6 @@ import {getMyPostedProducts} from "@redux/slices/product"
 
 const Display = () => {
   const data = useSelector((state) => state.product.myPostedProducts.data)
-  console.log("DEBUG: - file: display.js - line 12 - Display - data", data)
 
   const pagination = useSelector(
     (state) => state.product.myPostedProducts.pagination,
