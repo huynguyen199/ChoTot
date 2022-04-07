@@ -1,13 +1,14 @@
 import {View, Text, Image, StyleSheet, TouchableOpacity} from "react-native"
 import React from "react"
 import {useNavigation} from "@react-navigation/native"
+import {homePage} from "@common/navigator"
 
 const CategoryItem = ({item}) => {
   const navigation = useNavigation()
 
   const onMoveCategory = () => {
     // category
-    navigation.navigate("category", {
+    navigation.navigate(homePage.category, {
       categoryId: item._id,
     })
   }

@@ -7,6 +7,9 @@ export const authStack = {
 export const homePage = {
   home: "HomeScreen",
   detail: "DetailScreen",
+  category: "CategoryScreen",
+  history: "HistoryScreen",
+  foundProduct: "FoundProductScreen",
 }
 
 export const homeTabs = {

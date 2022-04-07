@@ -4,7 +4,15 @@ import {Icon} from "react-native-elements"
 const {width} = Dimensions.get("window")
 import {useTranslation} from "react-i18next"
 
-const SearchBar = ({text, onChangeText, containerStyle}) => {
+const SearchBar = ({
+  text,
+  onChangeText,
+  containerStyle,
+  onFocus,
+  onSubmitEditing,
+  onBlur,
+  autoFocus,
+}) => {
   const {t} = useTranslation()
 
   return (
@@ -18,9 +26,13 @@ const SearchBar = ({text, onChangeText, containerStyle}) => {
           style={styles.iconSeach}
         />
         <TextInput
+          onFocus={onFocus}
+          onBlur={onBlur}
           style={styles.inputSearch}
+          onSubmitEditing={onSubmitEditing}
           onChangeText={onChangeText}
           value={text}
+          autoFocus={autoFocus}
           placeholder={t("home:search")}
         />
       </View>
