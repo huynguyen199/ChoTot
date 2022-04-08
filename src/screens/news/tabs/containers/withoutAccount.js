@@ -2,12 +2,21 @@ import {View, Text, StyleSheet} from "react-native"
 import React from "react"
 import Color from "@common/Color"
 import {Button} from "react-native-elements"
+import {useNavigation} from "@react-navigation/native"
+import {mainStack} from "@common/navigator"
 
 const WithoutAccount = () => {
+  const navigation = useNavigation()
+
+  const onMoveLogin = () => {
+    navigation.navigate(mainStack.authStack)
+  }
+
   return (
     <View style={styles.containers}>
       <Text>Vui lòng đăng nhập để thực hiện chức năng này</Text>
       <Button
+        onPress={onMoveLogin}
         title="ĐĂNG NHẬP/ĐĂNG KÝ"
         buttonStyle={styles.btnStyle}
         type="outline"
