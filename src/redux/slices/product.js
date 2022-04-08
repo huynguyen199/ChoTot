@@ -6,6 +6,7 @@ const initialState = {
   pagination: {},
   item: {},
   productsByCategory: {data: [], pagination: {}},
+  searchProduct: {data: [], pagination: {}},
 }
 
 const handledError = (error) => {
@@ -34,6 +35,22 @@ export const getProducts = createAsyncThunk(
   async (page = 1, thunkAPI) => {
     try {
       const res = await productService.getProducts(page)
+      return {data: res.data, pagination: res.pagination}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const getProductSearch = createAsyncThunk(
+  "product/getProductsSearch",
+  async (params, thunkAPI) => {
+    try {
+      const res = await productService.getProductsSearch(
+        params.page,
+        params.name,
+      )
       return {data: res.data, pagination: res.pagination}
     } catch (error) {
       const message = handledError(error)
@@ -110,6 +127,11 @@ export const productSlice = createSlice({
     [getProductDetails.rejected]: (state, action) => {
       state.item = null
     },
+    [getProductSearch.fulfilled]: (state, action) => {
+      state.searchProduct.data = action.payload.data
+      state.searchProduct.pagination = action.payload.pagination
+    },
+    [getProductSearch.rejected]: (state, action) => {},
     [addProduct.fulfilled]: (state, action) => {
       state.data.unshift(action.payload.product)
     },

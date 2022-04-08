@@ -1,14 +1,16 @@
 import {View, Text, FlatList, StyleSheet} from "react-native"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Color from "@common/Color"
 import {Header, Icon} from "react-native-elements"
-import SearchBar from "../../components/searchbar/index"
+import SearchBar from "@components/searchbar/index"
 import {useNavigation} from "@react-navigation/native"
 import Icons from "@common/Icon"
 import HistoryItem from "./containers/history/historyItem"
 import SearchProduct from "./searchProduct"
 import {homePage} from "@common/navigator"
-
+import {useSelector, useDispatch} from "react-redux"
+import {getProductSearch} from "@redux/slices/product"
+import _ from "lodash"
 const DATA = [
   {
     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -25,13 +27,29 @@ const DATA = [
 ]
 
 const History = () => {
-  const renderItem = ({item}) => <HistoryItem title={item.title} />
+  const products = useSelector((state) => state.product.searchProduct.data)
+
   const [search, setSearch] = useState("")
+
+  const dispatch = useDispatch()
+  // useEffect(() => {
+  // }, [dispatch])
+  const sendSearchersWord = _.debounce(
+    () => dispatch(getProductSearch({page: 1, name: search})),
+    100,
+  )
+
+  useEffect(() => {
+    sendSearchersWord()
+  }, [sendSearchersWord, search])
+
   const navigation = useNavigation()
   const onChangeSearch = (value) => {
+    sendSearchersWord()
     setSearch(value)
   }
 
+  const renderItem = ({item}) => <HistoryItem title={item.title} />
   const onSubmitSearch = () => {
     navigation.navigate(homePage.foundProduct)
   }
@@ -58,7 +76,7 @@ const History = () => {
         backgroundColor={"orange"}
       />
       {search.length > 0 ? (
-        <SearchProduct />
+        <SearchProduct search={search} products={products} />
       ) : (
         <>
           <View style={styles.boxHistoryRecent}>
