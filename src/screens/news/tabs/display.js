@@ -12,7 +12,7 @@ import WithoutAccount from "./containers/withoutAccount"
 
 const Display = () => {
   const data = useSelector((state) => state.product.myPostedProducts.data)
-  const [logged, setLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(false)
 
   const pagination = useSelector(
     (state) => state.product.myPostedProducts.pagination,
@@ -25,16 +25,16 @@ const Display = () => {
       if (token) {
         dispatch(getMyPostedProducts())
       } else {
-        setLogged(true)
+        setIsLogged(true)
       }
     })
-  }, [dispatch, logged])
+  }, [dispatch, isLogged])
 
   const handleOnEndReached = () => {
     let page = pagination.page
     dispatch(getMyPostedProducts(++page))
   }
-  if (logged) {
+  if (isLogged) {
     return <WithoutAccount />
   }
   // const pagination = useSelector(selectPaginationOfProductByCategory)
