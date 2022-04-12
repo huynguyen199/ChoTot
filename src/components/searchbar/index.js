@@ -12,6 +12,7 @@ const SearchBar = ({
   onSubmitEditing,
   onBlur,
   autoFocus,
+  textInputRef,
 }) => {
   const {t} = useTranslation()
 
@@ -26,6 +27,7 @@ const SearchBar = ({
           style={styles.iconSeach}
         />
         <TextInput
+          ref={textInputRef}
           onFocus={onFocus}
           onBlur={onBlur}
           style={styles.inputSearch}

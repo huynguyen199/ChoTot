@@ -1,31 +1,33 @@
 import {View, FlatList, RefreshControl} from "react-native"
-import React from "react"
+import React, {useEffect} from "react"
 import ProductItem from "./productItem"
 import Colors from "@common/Color"
 import ProductColumnGrid from "./productIColumnItem"
 import ListEmptyComponent from "./ListEmptyComponent"
+import {useDispatch, useSelector} from "react-redux"
+import {clearProductsFound, getProductFound} from "@redux/slices/product"
 
-const ProductList = ({children, isGrid}) => {
+const ProductList = ({children, isGrid, wordSearch}) => {
   const [refreshing] = React.useState(false)
 
   const onRefresh = React.useCallback(() => {}, [])
+  const products = useSelector((state) => state.product.searchFound.data)
+  const dispatch = useDispatch()
+  const pagination = useSelector(
+    (state) => state.product.searchFound.pagination,
+  )
 
-  const data = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ]
+  useEffect(() => {
+    dispatch(getProductFound({page: 1, name: wordSearch}))
+    return () => clearProductsFound()
+  }, [wordSearch, dispatch])
 
-  const handleOnEndReached = () => {}
+  const handleOnEndReached = () => {
+    let page = pagination.page
+    let totolPages = pagination.totolPages
+    if (totolPages > 1)
+      dispatch(getProductFound({page: ++page, name: wordSearch}))
+  }
 
   const renderGridItem = ({item}) => <ProductItem item={item} />
   const renderColumnItem = ({item}) => <ProductColumnGrid item={item} />
@@ -34,7 +36,7 @@ const ProductList = ({children, isGrid}) => {
     <>
       {isGrid ? (
         <FlatList
-          data={data}
+          data={products}
           key={"*"}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -54,7 +56,7 @@ const ProductList = ({children, isGrid}) => {
         />
       ) : (
         <FlatList
-          data={data}
+          data={products}
           key={"#"}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

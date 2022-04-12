@@ -1,39 +1,57 @@
-import {View, Text, ImageBackground, StyleSheet} from "react-native"
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native"
 import React from "react"
 import Icons from "@common/Icon"
 import {Icon} from "react-native-elements"
+import {mainStack} from "@common/navigator"
 import Color from "@common/Color"
 import {formatDateAgo} from "@utils/timeAgo"
 import formatCurrency from "@utils/formatCurrency"
+import {useNavigation} from "@react-navigation/native"
 
 const ProductColumnItem = ({item}) => {
-  return (
-    <View style={styles.containers}>
-      <View style={styles.boxRow}>
-        <View style={styles.leftImage}>
-          <ImageBackground
-            source={{uri: item.imageUrl}}
-            resizeMode="cover"
-            style={styles.imageStyle}
-          />
-        </View>
-        <View style={styles.contentCenter}>
-          <Text style={styles.txtTitle}>{item.name}</Text>
-          <Text style={styles.txtPrice}>{formatCurrency(item.price)}</Text>
+  const navigation = useNavigation()
 
-          <Text style={styles.txtDate}>{formatDateAgo(item.createdAt)}</Text>
-        </View>
-        <View style={styles.rightIcon}>
-          <Icon
-            name={Icons.Ionicons.ellipsisVerticalFilled}
-            type="ionicon"
-            color={Color.black}
-            size={24}
-            style={styles.styleRightIcon}
-          />
+  const onMoveDetail = () => {
+    navigation.navigate(mainStack.detail, {
+      productId: item._id,
+    })
+  }
+
+  return (
+    <TouchableOpacity onPress={onMoveDetail}>
+      <View style={styles.containers}>
+        <View style={styles.boxRow}>
+          <View style={styles.leftImage}>
+            <ImageBackground
+              source={{uri: item.imageUrl}}
+              resizeMode="cover"
+              style={styles.imageStyle}
+            />
+          </View>
+          <View style={styles.contentCenter}>
+            <Text style={styles.txtTitle}>{item.name}</Text>
+            <Text style={styles.txtPrice}>{formatCurrency(item.price)}</Text>
+
+            <Text style={styles.txtDate}>{formatDateAgo(item.createdAt)}</Text>
+          </View>
+          <View style={styles.rightIcon}>
+            <Icon
+              name={Icons.Ionicons.ellipsisVerticalFilled}
+              type="ionicon"
+              color={Color.black}
+              size={24}
+              style={styles.styleRightIcon}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

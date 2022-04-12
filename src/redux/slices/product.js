@@ -7,6 +7,7 @@ const initialState = {
   item: {},
   productsByCategory: {data: [], pagination: {}},
   searchProduct: {data: [], pagination: {}},
+  searchFound: {data: [], pagination: {}},
 }
 
 const handledError = (error) => {
@@ -45,6 +46,23 @@ export const getProducts = createAsyncThunk(
 
 export const getProductSearch = createAsyncThunk(
   "product/getProductsSearch",
+  async (params, thunkAPI) => {
+    try {
+      console.log("test product")
+      const res = await productService.getProductsSearch(
+        params.page,
+        params.name,
+      )
+      return {data: res.data, pagination: res.pagination}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const getProductFound = createAsyncThunk(
+  "product/getProductsFound",
   async (params, thunkAPI) => {
     try {
       const res = await productService.getProductsSearch(
@@ -102,6 +120,14 @@ export const productSlice = createSlice({
     clearDetails(state) {
       state.item = {}
     },
+    clearProductsFound(state) {
+      state.searchFound.data = []
+      state.searchFound.pagination = {}
+    },
+    clearSearchProducts(state) {
+      state.searchProduct.data = []
+      state.searchProduct.pagination = {}
+    },
   },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
@@ -131,7 +157,24 @@ export const productSlice = createSlice({
       state.searchProduct.data = action.payload.data
       state.searchProduct.pagination = action.payload.pagination
     },
-    [getProductSearch.rejected]: (state, action) => {},
+    [getProductSearch.rejected]: (state, action) => {
+      state.searchProduct.data = []
+      state.searchProduct.pagination = {}
+    },
+    [getProductFound.fulfilled]: (state, action) => {
+      const page = state.searchFound.pagination.page
+      if (page === 1) {
+        state.searchFound.data = action.payload.data
+        state.searchFound.pagination = action.payload.pagination
+      } else {
+        state.searchFound.data.push(...action.payload.data)
+        state.searchFound.pagination = action.payload.pagination
+      }
+    },
+    [getProductFound.rejected]: (state, action) => {
+      state.searchFound.data = []
+      state.searchFound.pagination = {}
+    },
     [addProduct.fulfilled]: (state, action) => {
       state.data.unshift(action.payload.product)
     },
@@ -140,6 +183,11 @@ export const productSlice = createSlice({
 })
 
 // Action creators
-export const {resetProducts, clearDetails, resetProductByCategory} =
-  productSlice.actions
+export const {
+  resetProducts,
+  clearDetails,
+  resetProductByCategory,
+  clearProductsFound,
+  clearSearchProducts,
+} = productSlice.actions
 export default productSlice.reducer

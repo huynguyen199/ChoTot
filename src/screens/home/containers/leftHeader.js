@@ -10,7 +10,7 @@ const LeftHeader = ({search, setSearch, onSubmit}) => {
   }
 
   const onFocusSearch = () => {
-    navigation.navigate(homePage.history)
+    navigation.navigate(homePage.searchProduct)
   }
 
   return (

@@ -10,6 +10,7 @@ export const homePage = {
   category: "CategoryScreen",
   history: "HistoryScreen",
   foundProduct: "FoundProductScreen",
+  searchProduct: "SearchProductScreen",
 }
 
 export const homeTabs = {
