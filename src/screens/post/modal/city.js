@@ -1,22 +1,29 @@
-import {View} from "react-native"
-import React, {useState} from "react"
+import {FlatList, View} from "react-native"
+import React, {useEffect, useState} from "react"
 import {StyleSheet} from "react-native"
 import HeaderModal from "@components/headerModal/index"
 import SearchBar from "@components/searchbar"
 import ProvinceItem from "./container/provinceItem"
-import {ScrollView} from "react-native"
 import {useTranslation} from "react-i18next"
 import {getAllAddress} from "@utils/address"
 import {useNavigation} from "@react-navigation/native"
 import {nonAccentVietnamese} from "@utils/nonAccentVietnamese"
+import Loading from "@components/loading/index"
 
 const City = () => {
   const [code, setCode] = useState(null)
   const [search, setSearch] = useState(null)
-  const [data, setData] = useState(getAllAddress || [])
+  const [data, setData] = useState([])
+  const [refreshing, setRefreshing] = useState(true)
+
   const {t} = useTranslation()
   const navigation = useNavigation()
   const onGoBack = () => navigation.goBack()
+
+  useEffect(() => {
+    setData(getAllAddress)
+    setRefreshing(false)
+  }, [])
 
   const onSearch = (text) => {
     const listCity = getAllAddress()
@@ -28,6 +35,10 @@ const City = () => {
     setSearch(text)
   }
 
+  const renderCityItem = ({item}) => (
+    <ProvinceItem code={code} setCode={setCode} item={item} key={item.code} />
+  )
+
   return (
     <View style={styles.container}>
       <HeaderModal onClose={onGoBack} title={t("post:selectCity")} />
@@ -36,16 +47,15 @@ const City = () => {
         onChangeText={onSearch}
         containerStyle={styles.containerStyle}
       />
-      <ScrollView>
-        {data.map((item, index) => (
-          <ProvinceItem
-            code={code}
-            setCode={setCode}
-            item={item}
-            key={item.code}
-          />
-        ))}
-      </ScrollView>
+      {refreshing ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={renderCityItem}
+          keyExtractor={(item) => item.code}
+        />
+      )}
     </View>
   )
 }
