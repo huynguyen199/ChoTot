@@ -1,5 +1,5 @@
 import {View, FlatList, StyleSheet} from "react-native"
-import React, {useEffect} from "react"
+import React from "react"
 import Color from "@common/Color"
 import NewsItem from "./containers/newsItem"
 import {useSelector} from "react-redux"
@@ -9,6 +9,7 @@ import {getMyPostedProducts} from "@redux/slices/product"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import {useState} from "react"
 import WithoutAccount from "./containers/withoutAccount"
+import {useFocusEffect} from "@react-navigation/native"
 
 const Display = () => {
   const data = useSelector((state) => state.product.myPostedProducts.data)
@@ -20,15 +21,18 @@ const Display = () => {
 
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    AsyncStorage.getItem("token").then((token) => {
-      if (token) {
-        dispatch(getMyPostedProducts())
-      } else {
-        setIsLogged(true)
-      }
-    })
-  }, [dispatch, isLogged])
+  useFocusEffect(
+    React.useCallback(() => {
+      AsyncStorage.getItem("token").then((token) => {
+        if (token) {
+          dispatch(getMyPostedProducts())
+          setIsLogged(false)
+        } else {
+          setIsLogged(true)
+        }
+      })
+    }, [dispatch]),
+  )
 
   const handleOnEndReached = () => {
     let page = pagination.page

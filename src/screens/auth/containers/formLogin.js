@@ -8,7 +8,6 @@ import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
 import {useDispatch} from "react-redux"
 import {login} from "@redux/slices/auth"
-
 import {mainStack} from "@common/navigator"
 import {useNavigation} from "@react-navigation/native"
 import {useTranslation} from "react-i18next"
