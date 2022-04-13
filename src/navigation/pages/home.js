@@ -4,7 +4,6 @@ import {createStackNavigator} from "@react-navigation/stack"
 import {homePage} from "@common/navigator"
 import Home from "@screens/home/home"
 import Category from "@screens/home/category"
-import History from "@screens/home/history"
 import ProductFound from "@screens/home/productFound"
 
 const Stack = createStackNavigator()
@@ -19,11 +18,6 @@ const HomePages = () => {
         options={{headerShown: false}}
         name={homePage.home}
         component={Home}
-      />
-      <Stack.Screen
-        options={{headerShown: false, animationEnabled: false}}
-        name={homePage.history}
-        component={History}
       />
       <Stack.Screen
         options={{headerShown: false, animationEnabled: false}}

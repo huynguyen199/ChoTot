@@ -49,7 +49,6 @@ export const getProductSearch = createAsyncThunk(
   "product/getProductsSearch",
   async (params, thunkAPI) => {
     try {
-      console.log("test product")
       const res = await productService.getProductsSearch(
         params.page,
         params.name,
@@ -136,11 +135,11 @@ export const productSlice = createSlice({
     },
     clearProductsFound(state) {
       state.searchFound.data = []
-      state.searchFound.pagination = {}
+      state.searchFound.pagination = {page: 0}
     },
     clearSearchProducts(state) {
       state.searchProduct.data = []
-      state.searchProduct.pagination = {}
+      state.searchProduct.pagination = {page: 0}
     },
   },
   extraReducers: {

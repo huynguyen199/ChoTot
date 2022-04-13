@@ -30,7 +30,11 @@ const ProductFound = () => {
               color="black"
               size={30}
             />
-            <SearchBar editable={false} onPress={onBackSearch} />
+            <SearchBar
+              text={wordSearch}
+              editable={false}
+              onPress={onBackSearch}
+            />
           </View>
         }
         backgroundColor={"orange"}

@@ -10,10 +10,13 @@ import {useSelector, useDispatch} from "react-redux"
 import {getProductSearch} from "@redux/slices/product"
 import _ from "lodash"
 import SearchItem from "./containers/searchItem/historyItem"
+import Loading from "../../components/loading"
 
 const SearchProduct = () => {
   const products = useSelector((state) => state.product.searchProduct.data)
-  const [search, setSearch] = useState(null)
+
+  const [search, setSearch] = useState("")
+  const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const isFocused = useIsFocused()
@@ -21,7 +24,17 @@ const SearchProduct = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const sendSearchersWord = useCallback(
-    _.debounce((val) => dispatch(getProductSearch({page: 1, name: val})), 500),
+    _.debounce(
+      (val) =>
+        dispatch(getProductSearch({page: 1, name: val}))
+          .unwrap()
+          .then((result) => {
+            if (result) {
+              setLoading(false)
+            }
+          }),
+      500,
+    ),
     [],
   )
 
@@ -34,6 +47,7 @@ const SearchProduct = () => {
   const onChangeSearch = (value) => {
     sendSearchersWord(value)
     setSearch(value)
+    setLoading(true)
   }
 
   const renderItem = ({item}) => <SearchItem item={item} />
@@ -67,11 +81,15 @@ const SearchProduct = () => {
       />
 
       {/* bar on top */}
-      <FlatList
-        data={products}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-      />
+      {loading ? (
+        search.length > 0 && <Loading />
+      ) : (
+        <FlatList
+          data={products}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+        />
+      )}
     </View>
   )
 }
