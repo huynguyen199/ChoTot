@@ -8,7 +8,6 @@ import CategoryList from "./containers/categoryList"
 import GiftList from "./containers/giftList"
 import Banner from "./containers/banner"
 import SearchBar from "@components/searchbar"
-// import {Banner} from "@containers/banner"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
 

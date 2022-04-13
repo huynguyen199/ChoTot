@@ -6,6 +6,7 @@ const initialState = {
   pagination: {},
   item: {},
   productsByCategory: {data: [], pagination: {}},
+  myPostedProducts: {data: [], pagination: {}},
 }
 
 const handledError = (error) => {
@@ -42,6 +43,20 @@ export const getProducts = createAsyncThunk(
   },
 )
 
+export const getMyPostedProducts = createAsyncThunk(
+  "product/getMyPostedProducts",
+  async (page = 1, thunkAPI) => {
+    try {
+      const res = await productService.getMyPostedProducts(page)
+
+      return {data: res.data, pagination: res.pagination}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 export const getProductsByCategory = createAsyncThunk(
   "product/getProductsByCategory",
   async (params, thunkAPI) => {
@@ -50,7 +65,7 @@ export const getProductsByCategory = createAsyncThunk(
         params.page,
         params.category,
       )
-      return {productsByCategory: {data: res.data, pagination: res.pagination}}
+      return {data: res.data, pagination: res.pagination}
     } catch (error) {
       const message = handledError(error)
       return thunkAPI.rejectWithValue(message)
@@ -95,14 +110,18 @@ export const productSlice = createSlice({
       state.data = null
     },
     [getProductsByCategory.fulfilled]: (state, action) => {
-      state.productsByCategory.data.push(
-        ...action.payload.productsByCategory.data,
-      )
-      state.productsByCategory.pagination =
-        action.payload.productsByCategory.pagination
+      state.productsByCategory.data.push(...action.payload.data)
+      state.productsByCategory.pagination = action.payload.pagination
     },
     [getProductsByCategory.rejected]: (state, action) => {
       state.productsByCategory = null
+    },
+    [getMyPostedProducts.fulfilled]: (state, action) => {
+      state.myPostedProducts.data.push(...action.payload.data)
+      state.myPostedProducts.pagination = action.payload.pagination
+    },
+    [getMyPostedProducts.rejected]: (state, action) => {
+      state.myPostedProducts = null
     },
     [getProductDetails.fulfilled]: (state, action) => {
       state.item = action.payload.item
@@ -112,6 +131,8 @@ export const productSlice = createSlice({
     },
     [addProduct.fulfilled]: (state, action) => {
       state.data.unshift(action.payload.product)
+
+      state.myPostedProducts.data.unshift(action.payload.product)
     },
     [addProduct.rejected]: (state, action) => {},
   },

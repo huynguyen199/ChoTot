@@ -28,6 +28,11 @@ const addProduct = (data) => {
   })
 }
 
+const getMyPostedProducts = (page) => {
+  return client.get(`me/products?page=${page}`).then((response) => {
+    return response.data
+  })
+}
 const getProductDetails = (id) => {
   return client.get(`products/${id}`).then((response) => {
     return response.data
@@ -38,6 +43,7 @@ const productService = {
   getProducts,
   getProductDetails,
   getProductsByCategory,
+  getMyPostedProducts,
   addProduct,
 }
 export default productService
