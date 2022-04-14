@@ -25,6 +25,7 @@ export const mainStack = {
   city: "CityScreen",
   district: "DistrictScreen",
   ward: "WardScreen",
+  settingProfile: "SettingProfileScreen",
 }
 
 export const rootSwitch = {

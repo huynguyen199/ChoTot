@@ -1,4 +1,3 @@
-import authHeader from "../redux/services/authHeader"
 import {client} from "./client"
 
 export const uploadImage = async (formData) => {
@@ -9,7 +8,6 @@ export const uploadImage = async (formData) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "multipart/form-data",
-      ...(await authHeader()),
     },
     transformRequest: (data, headers) => {
       return formData
