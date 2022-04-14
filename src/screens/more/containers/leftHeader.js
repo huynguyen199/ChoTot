@@ -3,12 +3,17 @@ import Icons from "@common/Icon"
 import {Icon} from "react-native-elements"
 import {StyleSheet, Text, View} from "react-native"
 import Color from "@common/Color"
+import {useNavigation} from "@react-navigation/native"
 
-const LeftHeader = ({onPress}) => {
+const LeftHeader = () => {
+  const navigation = useNavigation()
+  const onBackProfile = () => {
+    navigation.goBack()
+  }
   return (
     <View style={styles.container}>
       <Icon
-        onPress={onPress}
+        onPress={onBackProfile}
         name={Icons.Ionicons.back}
         type="ionicon"
         color={Color.black}

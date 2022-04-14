@@ -5,18 +5,51 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Avatar, Header} from "react-native-elements"
 import Color from "@common/Color"
 import UtilityList from "./containers/utilityList"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
+import {useDispatch, useSelector} from "react-redux"
+import {getProfileInfo} from "@redux/slices/auth"
+import {selectProfileInfo} from "@redux/selector/auth"
+import Loading from "@components/loading"
 
 const Profile = () => {
   const navigation = useNavigation()
+  const userInfo = useSelector(selectProfileInfo)
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getProfileInfo())
+      .unwrap()
+      .then((data) => {
+        if (data) {
+          setLoading(false)
+        }
+      })
+  }, [dispatch])
 
   const onMoveSettingProfile = () => {
     navigation.navigate(mainStack.settingProfile)
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Header
+          leftComponent={{
+            text: "Thêm",
+            style: {color: Color.black, fontSize: 16, fontWeight: "bold"},
+          }}
+          // leftComponent={<SearchBar />}
+          backgroundColor={"orange"}
+        />
+        <Loading />
+      </View>
+    )
   }
 
   return (
@@ -27,9 +60,9 @@ const Profile = () => {
             text: "Thêm",
             style: {color: Color.black, fontSize: 16, fontWeight: "bold"},
           }}
-          // leftComponent={<SearchBar />}
           backgroundColor={"orange"}
         />
+
         <View>
           <TouchableOpacity
             onPress={onMoveSettingProfile}
@@ -39,13 +72,12 @@ const Profile = () => {
                 size={90}
                 rounded
                 source={{
-                  uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDkvFCLSMbUU6Bqb1m-0y3LPAQ7_Gcs-PNZw&usqp=CAU",
+                  uri: userInfo.avatarUrl,
                 }}
-                // containerStyle={{margin: 20}}
               />
             </View>
             <View style={styles.boxProfile}>
-              <Text style={styles.txtName}>Bồ Câu Nguyễn</Text>
+              <Text style={styles.txtName}>{userInfo.name}</Text>
               <Text>Xem trang cá nhân của bạn</Text>
             </View>
           </TouchableOpacity>

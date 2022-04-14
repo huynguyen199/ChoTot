@@ -13,8 +13,8 @@ import Color from "@common/Color"
 function DialogDateTime({visible, onClose, value, onChange}) {
   const [date, setDate] = useState(new Date())
 
-  const onChangeDate = (value) => {
-    setDate(value)
+  const onChangeDate = (data) => {
+    setDate(data)
   }
 
   const selectDate = () => {

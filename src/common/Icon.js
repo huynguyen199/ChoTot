@@ -17,6 +17,7 @@ const Ionicons = {
   chevronForward: "chevron-forward-outline",
   grid: "grid-outline",
   list: "list-outline",
+  cameraOutline: "camera-outline",
 }
 const Fontisto = {
   heart: "heart",

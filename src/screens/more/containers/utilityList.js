@@ -6,7 +6,7 @@ import {Divider} from "react-native-elements"
 
 const UtilityList = () => {
   return (
-    <View style={{}}>
+    <View>
       <UtilityButton
         title={"Đơn bán"}
         uri={

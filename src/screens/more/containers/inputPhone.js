@@ -3,22 +3,45 @@ import React from "react"
 import {TextInput} from "react-native-paper"
 import Color from "@common/Color"
 import {Button} from "react-native-elements"
+import {useDispatch} from "react-redux"
+import Toast from "../../../common/toast"
+import {updateProfileInfo} from "@redux/slices/auth"
 
-const InputPhone = () => {
+const InputPhone = ({value, onChangeText, userInfo}) => {
+  // dispatch(updateProfileInfo(data))
+  const dispatch = useDispatch()
+
+  const onSaveNumberPhone = () => {
+    const data = {phone: value}
+    dispatch(updateProfileInfo(data))
+      .unwrap()
+      .then((res) => {
+        if (res) {
+          Toast.show("Cập nhật số điện thoại thành công")
+        }
+      })
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
         label={"Số điện thoại"}
+        value={value}
+        onChangeText={onChangeText}
         style={styles.inputStylePhone}
+        keyboardType={"numeric"}
         underlineColor="transparent"
         theme={{colors: "transparent"}}
       />
-      <Button
-        title="Lưu"
-        containerStyle={styles.containerStyleButton}
-        buttonStyle={styles.btnStyle}
-        titleStyle={styles.titleStyle}
-      />
+      {userInfo.phone !== value && (
+        <Button
+          title="Lưu"
+          onPress={onSaveNumberPhone}
+          containerStyle={styles.containerStyleButton}
+          buttonStyle={styles.btnStyle}
+          titleStyle={styles.titleStyle}
+        />
+      )}
     </View>
   )
 }
