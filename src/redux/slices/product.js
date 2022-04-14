@@ -86,6 +86,19 @@ export const getProductDetails = createAsyncThunk(
   },
 )
 
+export const deleteProductById = createAsyncThunk(
+  "product/deleteProductById",
+  async (id, thunkAPI) => {
+    try {
+      const data = await productService.deleteProductById(id)
+      return {id: id, success: data.success}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 export const productSlice = createSlice({
   name: "product",
   initialState,
@@ -135,6 +148,14 @@ export const productSlice = createSlice({
       state.myPostedProducts.data.unshift(action.payload.product)
     },
     [addProduct.rejected]: (state, action) => {},
+    [deleteProductById.fulfilled]: (state, action) => {
+      const success = action.payload.success
+      if (success)
+        state.myPostedProducts.data = state.myPostedProducts.data.filter(
+          (item) => item._id.toString() !== action.payload.id,
+        )
+    },
+    [deleteProductById.rejected]: (state, action) => {},
   },
 })
 

@@ -33,8 +33,15 @@ const getMyPostedProducts = (page) => {
     return response.data
   })
 }
+
 const getProductDetails = (id) => {
   return client.get(`products/${id}`).then((response) => {
+    return response.data
+  })
+}
+
+const deleteProductById = (id) => {
+  return client.delete(`products/${id}`).then((response) => {
     return response.data
   })
 }
@@ -45,5 +52,6 @@ const productService = {
   getProductsByCategory,
   getMyPostedProducts,
   addProduct,
+  deleteProductById,
 }
 export default productService

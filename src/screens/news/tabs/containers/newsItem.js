@@ -13,14 +13,28 @@ import Color from "@common/Color"
 import {formatDateAgo} from "@utils/timeAgo"
 import formatCurrency from "@utils/formatCurrency"
 import {useNavigation} from "@react-navigation/native"
+import {useDispatch} from "react-redux"
+import {deleteProductById} from "@redux/slices/product"
 
-const NewsItem = ({item}) => {
+const NewsItem = ({item, setLoading}) => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
 
   const onMoveDetail = () => {
     navigation.navigate(mainStack.detail, {
       productId: item._id,
     })
+  }
+
+  const onDeleteProduct = () => {
+    setLoading(true)
+    dispatch(deleteProductById(item._id))
+      .unwrap()
+      .then((res) => {
+        if (res) {
+          setLoading(false)
+        }
+      })
   }
 
   return (
@@ -41,6 +55,7 @@ const NewsItem = ({item}) => {
         </View>
         <View style={styles.rightIcon}>
           <Icon
+            onPress={onDeleteProduct}
             name={Icons.Ionicons.ellipsisVerticalFilled}
             type="ionicon"
             color={Color.black}
