@@ -3,8 +3,17 @@ import React from "react"
 import Color from "@common/Color"
 import UtilityButton from "./utilityButton"
 import {Divider} from "react-native-elements"
+import {useDispatch} from "react-redux"
+import {logoutUser} from "@redux/slices/auth"
 
-const UtilityList = () => {
+const UtilityList = ({userInfo}) => {
+  const dispatch = useDispatch()
+
+  const onSignOut = () => {
+    console.log("dang xuat")
+    dispatch(logoutUser())
+  }
+
   return (
     <View>
       <UtilityButton
@@ -69,10 +78,13 @@ const UtilityList = () => {
         title={"Trợ giúp"}
         uri={"https://st.chotot.com/storage/chotot-icons/svg/float.svg"}
       />
-      <UtilityButton
-        title={"Đăng xuất"}
-        uri={"https://st.chotot.com/storage/chotot-icons/svg/sign-out.svg"}
-      />
+      {userInfo !== null && (
+        <UtilityButton
+          onPress={onSignOut}
+          title={"Đăng xuất"}
+          uri={"https://st.chotot.com/storage/chotot-icons/svg/sign-out.svg"}
+        />
+      )}
     </View>
   )
 }

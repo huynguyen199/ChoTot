@@ -3,9 +3,9 @@ import React from "react"
 import {SvgUri} from "react-native-svg"
 import Color from "@common/Color"
 
-const UtilityButton = ({uri, title}) => {
+const UtilityButton = ({uri, title, onPress}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
         <SvgUri width={35} height={35} style={styles.svgIcon} uri={uri} />
         <Text style={styles.txtTitle}>{title}</Text>

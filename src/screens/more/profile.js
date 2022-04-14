@@ -12,6 +12,7 @@ import UtilityList from "./containers/utilityList"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
 import {useDispatch, useSelector} from "react-redux"
+import WithoutAccount from "./containers/withoutAccount"
 import {getProfileInfo} from "@redux/slices/auth"
 import {selectProfileInfo} from "@redux/selector/auth"
 import Loading from "@components/loading"
@@ -19,6 +20,7 @@ import Loading from "@components/loading"
 const Profile = () => {
   const navigation = useNavigation()
   const userInfo = useSelector(selectProfileInfo)
+
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
 
@@ -29,6 +31,9 @@ const Profile = () => {
         if (data) {
           setLoading(false)
         }
+      })
+      .catch((error) => {
+        setLoading(false)
       })
   }, [dispatch])
 
@@ -52,6 +57,9 @@ const Profile = () => {
     )
   }
 
+  if (userInfo === null) {
+    return <WithoutAccount userInfo={userInfo} />
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -72,17 +80,19 @@ const Profile = () => {
                 size={90}
                 rounded
                 source={{
-                  uri: userInfo.avatarUrl,
+                  uri: userInfo ? userInfo.avatarUrl : "",
                 }}
               />
             </View>
             <View style={styles.boxProfile}>
-              <Text style={styles.txtName}>{userInfo.name}</Text>
+              <Text style={styles.txtName}>
+                {userInfo ? userInfo.name : ""}
+              </Text>
               <Text>Xem trang cá nhân của bạn</Text>
             </View>
           </TouchableOpacity>
           {/* profile top */}
-          <UtilityList />
+          <UtilityList userInfo={userInfo} />
         </View>
       </View>
     </ScrollView>

@@ -3,7 +3,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
 import authService from "../services/auth"
 
 // const user = JSON.parse(AsyncStorage.getItem("user"))
-const initialState = {user: {}}
+const initialState = {user: null}
 
 const errorHandler = (error) => {
   return (
@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
     try {
       const data = await authService.login(email, password)
 
-      return {user: data}
+      return {user: data.user}
     } catch (error) {
       const message = errorHandler(error)
       return thunkAPI.rejectWithValue(message)
@@ -72,35 +72,40 @@ export const updateProfileInfo = createAsyncThunk(
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser(state) {
+      state.user = null
+      authService.logout()
+    },
+  },
   extraReducers: {
     [login.fulfilled]: (state, action) => {
       state.user = action.payload.user
     },
     [login.rejected]: (state, action) => {
-      state.user = {}
+      state.user = null
     },
     [register.fulfilled]: (state, action) => {
       state.user = action.payload.user
     },
     [register.rejected]: (state, action) => {
-      state.user = {}
+      state.user = null
     },
     [getProfileInfo.fulfilled]: (state, action) => {
       state.user = action.payload.user
     },
     [getProfileInfo.rejected]: (state, action) => {
-      state.user = {}
+      state.user = null
     },
     [updateProfileInfo.fulfilled]: (state, action) => {
       state.user = action.payload.user
     },
     [updateProfileInfo.rejected]: (state, action) => {
-      state.user = {}
+      state.user = null
     },
   },
 })
 
 // Action creators
-// export const {increment, decrement, incrementByAmount} = authSlice.actions
+export const {logoutUser} = authSlice.actions
 export default authSlice.reducer
