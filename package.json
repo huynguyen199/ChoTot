@@ -80,6 +80,7 @@
     "husky": "^4.3.8",
     "jest": "^26.6.3",
     "lint-staged": "^12.3.5",
+    "lodash": "^4.17.21",
     "metro-react-native-babel-preset": "^0.66.2",
     "prettier": "^2.5.1",
     "react-test-renderer": "17.0.2",
