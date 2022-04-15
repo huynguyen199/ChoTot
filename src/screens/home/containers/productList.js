@@ -8,6 +8,7 @@ import {selectPagination, selectProducts} from "@redux/selector/product"
 import Color from "@common/Color"
 import {useTranslation} from "react-i18next"
 import Loading from "@components/loading"
+import ListFooterComponent from "./listFooterComponent"
 
 const ProductList = ({children}) => {
   const dispatch = useDispatch()
@@ -52,6 +53,7 @@ const ProductList = ({children}) => {
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
       onEndReachedThreshold={0.1}
+      ListFooterComponent={<ListFooterComponent pagination={pagination} />}
       style={styles.listStyle}
       onEndReached={handleOnEndReached}
     />

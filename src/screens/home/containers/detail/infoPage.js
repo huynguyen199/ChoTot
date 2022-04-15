@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet} from "react-native"
-import React from "react"
+import React, {useEffect} from "react"
 import {
   Avatar,
   Badge,
@@ -9,22 +9,29 @@ import {
 import Color from "@common/Color"
 import Icons from "@common/Icon"
 
+import {useDispatch, useSelector} from "react-redux"
+import {getProfileInfo} from "../../../../redux/slices/auth"
+
 const InfoPage = ({itemDetails}) => {
+  const userInfo = useSelector((state) => state.auth.user)
+  console.log(
+    "DEBUG: - file: infoPage.js - line 17 - InfoPage - userInfo",
+    userInfo,
+  )
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getProfileInfo())
+  }, [dispatch])
   return (
     <View style={styles.container}>
       <View style={styles.rowInfoContainer}>
         <View style={styles.leftAvatar}>
-          <Avatar
-            size={64}
-            rounded
-            source={{uri: "https://randomuser.me/api/portraits/men/36.jpg"}}
-          />
+          <Avatar size={64} rounded source={{uri: userInfo?.avatarUrl ?? ""}} />
         </View>
         <View style={styles.rightInfo}>
-          <Text style={styles.txtName}>dass</Text>
+          <Text style={styles.txtName}>{userInfo?.name ?? ""}</Text>
           <View style={styles.viewRowActivity}>
             <Badge badgeStyle={styles.badgeStyle} />
-            <Text style={styles.styleActivity}>Hoạt động 1 phút trước</Text>
           </View>
         </View>
         <View style={styles.endInfo}>
@@ -59,6 +66,7 @@ const InfoPage = ({itemDetails}) => {
       </View>
       {/* box description */}
       <View style={styles.boxDescription}>
+        <Text style={styles.txtDescription}>Miêu tả</Text>
         <Text>{itemDetails.description}</Text>
       </View>
     </View>
@@ -66,9 +74,11 @@ const InfoPage = ({itemDetails}) => {
 }
 
 const styles = StyleSheet.create({
+  txtDescription: {color: Color.black, fontSize: 16, fontWeight: "bold"},
   container: {
     flex: 1,
     marginTop: 10,
+    marginVertical: 20,
   },
   rowInfoContainer: {
     flexDirection: "row",
@@ -116,7 +126,7 @@ const styles = StyleSheet.create({
   txtStatus: {color: Color.black, fontWeight: "bold"},
   groupBox: {flexDirection: "row", height: 60},
   containerStyle: {backgroundColor: "black"},
-  boxDescription: {backgroundColor: Color.white},
+  boxDescription: {backgroundColor: Color.white, marginTop: 10},
   styleActivity: {marginLeft: 5},
 })
 

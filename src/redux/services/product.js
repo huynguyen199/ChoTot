@@ -6,6 +6,18 @@ const getProducts = (page) => {
   })
 }
 
+const getRelatedProducts = (id) => {
+  return client.get(`products?${id}/related`).then((response) => {
+    return response.data
+  })
+}
+
+const getProductsSearch = (page, name) => {
+  return client
+    .get(`products?page=${page}&name=${name}`)
+    .then((response) => response.data)
+}
+
 const getProductsByCategory = (page, category) => {
   return client
     .get(`products?page=${page}&category=${category}`)
@@ -60,5 +72,7 @@ const productService = {
   addProduct,
   updateProduct,
   deleteProductById,
+  getProductsSearch,
+  getRelatedProducts,
 }
 export default productService

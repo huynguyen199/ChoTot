@@ -7,14 +7,16 @@ import {Button, Icon} from "react-native-elements"
 import {TouchableOpacity} from "react-native"
 import {useDispatch} from "react-redux"
 import {updateProfileInfo} from "@redux/slices/auth"
-import {convertToDate, formatDate} from "@utils/date"
+import {convertToDate} from "@utils/date"
 import Toast from "@common/toast"
+import {format} from "date-fns/esm"
 
 const InputDateOfBirth = ({value, onChangeText, openDialog, userInfo}) => {
   const dispatch = useDispatch()
 
   const onSaveBirthDate = () => {
     const data = {dateOfBirth: convertToDate(value)}
+
     dispatch(updateProfileInfo(data))
       .unwrap()
       .then(() => {
@@ -37,7 +39,7 @@ const InputDateOfBirth = ({value, onChangeText, openDialog, userInfo}) => {
               underlineColor="transparent"
               theme={{colors: "transparent"}}
             />
-            {formatDate(userInfo.dateOfBirth) !== value && (
+            {format(new Date(userInfo.dateOfBirth), "dd/MM/yyyy") !== value && (
               <Button
                 title="Lưu"
                 onPress={onSaveBirthDate}

@@ -6,14 +6,13 @@ import Color from "@common/Color"
 import InputPhone from "./inputPhone"
 import InputDateOfBirth from "./inputDateOfBirth"
 import DialogDateTime from "@components/datePickerDialog"
-import {formatDate} from "@utils/date"
 import {launchImageLibrary} from "@utils/imagePicker"
 import {uploadImage} from "@common/upload"
 import {updateProfileInfo} from "@redux/slices/auth"
 import {useDispatch} from "react-redux"
 import Loading from "@components/loading"
 import Toast from "@common/toast"
-
+import {format} from "date-fns/esm"
 const {width} = Dimensions.get("window")
 
 const FormProfile = ({userInfo, loading}) => {
@@ -26,7 +25,7 @@ const FormProfile = ({userInfo, loading}) => {
   useEffect(() => {
     setPhone(userInfo.phone)
     setName(userInfo.name)
-    setBirthDay(formatDate(userInfo.dateOfBirth))
+    setBirthDay(format(new Date(userInfo.dateOfBirth), "dd/MM/yyyy"))
   }, [userInfo])
 
   const onChangeVisible = (value) => {

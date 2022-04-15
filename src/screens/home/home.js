@@ -3,22 +3,21 @@ import React from "react"
 import {Header, Icon} from "react-native-elements"
 
 import ProductList from "./containers/productList"
-import ImageList from "./containers/imageList"
 import CategoryList from "./containers/categoryList"
-import GiftList from "./containers/giftList"
 import Banner from "./containers/banner"
-import SearchBar from "@components/searchbar"
+import {useState} from "react"
+import LeftHeader from "./containers/leftHeader"
 import {useNavigation} from "@react-navigation/native"
 import {mainStack} from "@common/navigator"
 
 const Home = () => {
+  const [search, setSearch] = useState("")
   const navigation = useNavigation()
-
   return (
     <View style={styles.containerHome}>
       {/* Header */}
       <Header
-        leftComponent={<SearchBar />}
+        leftComponent={<LeftHeader search={search} setSearch={setSearch} />}
         backgroundColor={"orange"}
         rightComponent={
           <TouchableOpacity
@@ -33,14 +32,12 @@ const Home = () => {
           </TouchableOpacity>
         }
       />
+
       <ProductList>
         <Banner />
-        {/* gift list */}
-        <GiftList />
-        {/* categorylist */}
+        {/* <GiftList /> */}
         <CategoryList />
-        {/* list image */}
-        <ImageList />
+        {/* <ImageList /> */}
       </ProductList>
     </View>
   )
