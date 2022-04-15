@@ -10,6 +10,7 @@ const initialState = {
   searchFound: {data: [], pagination: {}},
   myPostedProducts: {data: [], pagination: {}},
   loading: false,
+  relatedProduct: {data: []},
 }
 
 const handledError = (error) => {
@@ -39,6 +40,19 @@ export const getProducts = createAsyncThunk(
     try {
       const res = await productService.getProducts(page)
       return {data: res.data, pagination: res.pagination}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const getRelatedProducts = createAsyncThunk(
+  "product/getRelatedProducts",
+  async (id, thunkAPI) => {
+    try {
+      const res = await productService.getRelatedProducts(id)
+      return {data: res.data}
     } catch (error) {
       const message = handledError(error)
       return thunkAPI.rejectWithValue(message)
@@ -180,6 +194,12 @@ export const productSlice = createSlice({
     [getProductSearch.rejected]: (state, action) => {
       state.searchProduct.data = []
       state.searchProduct.pagination = {}
+    },
+    [getRelatedProducts.fulfilled]: (state, action) => {
+      state.relatedProduct.data = action.payload.data
+    },
+    [getRelatedProducts.rejected]: (state, action) => {
+      state.relatedProduct.data = []
     },
     [getProductFound.fulfilled]: (state, action) => {
       const page = state.searchFound.pagination.page

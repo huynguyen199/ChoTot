@@ -1,18 +1,10 @@
-import {View, Text, StyleSheet} from "react-native"
+import {StyleSheet} from "react-native"
 import React from "react"
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs"
 import Color from "@common/Color"
 import Display from "../../tabs/display"
 
 const Tab = createMaterialTopTabNavigator()
-
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Settings!</Text>
-    </View>
-  )
-}
 
 const ContainerTabs = () => {
   return (
@@ -22,7 +14,6 @@ const ContainerTabs = () => {
         options={{title: "Đang hiển thị"}}
         component={Display}
       />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   )
 }

@@ -3,9 +3,7 @@ import React from "react"
 import {Header, Icon} from "react-native-elements"
 
 import ProductList from "./containers/productList"
-import ImageList from "./containers/imageList"
 import CategoryList from "./containers/categoryList"
-import GiftList from "./containers/giftList"
 import Banner from "./containers/banner"
 import {useState} from "react"
 import LeftHeader from "./containers/leftHeader"
@@ -37,9 +35,9 @@ const Home = () => {
 
       <ProductList>
         <Banner />
-        <GiftList />
+        {/* <GiftList /> */}
         <CategoryList />
-        <ImageList />
+        {/* <ImageList /> */}
       </ProductList>
     </View>
   )

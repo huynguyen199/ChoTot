@@ -5,7 +5,7 @@ import {Divider, Icon} from "react-native-elements"
 import Icons from "@common/Icon"
 import ButtonPost from "@components/button/index"
 
-const InfoArea = () => {
+const InfoArea = ({itemDetails}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.txtTitle}>Khu vực</Text>
@@ -17,7 +17,7 @@ const InfoArea = () => {
           type="ionicon"
           color={Color.black}
         />
-        <Text style={styles.txtArea}>Phường 4 quận 12 ,Tphcm</Text>
+        <Text style={styles.txtArea}>{itemDetails.location}</Text>
       </View>
       <Divider width={0.5} color={Color.grey} />
 
@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   txtArea: {
-    fontSize: 18,
+    fontSize: 15,
     color: Color.black,
-    marginLeft: 10,
+    marginLeft: 5,
   },
   btnTitleStyle: {fontSize: 14, fontWeight: "bold", color: "white"},
   btnStyle: {height: 40, marginTop: 5},

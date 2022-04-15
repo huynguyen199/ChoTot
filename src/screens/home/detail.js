@@ -5,9 +5,7 @@ import {Divider, Header} from "react-native-elements"
 import Footer from "./containers/detail/footer"
 import InfoProduct from "./containers/detail/infoProduct"
 import InfoPage from "./containers/detail/infoPage"
-import QuestionList from "./containers/detail/questionList"
 import InfoArea from "./containers/detail/infoArea"
-import SocialList from "./containers/detail/socialList"
 import NewsProduct from "./containers/detail/productList"
 import Color from "@common/Color"
 import LeftHeader from "./containers/detail/leftHeader"
@@ -54,7 +52,7 @@ const Detail = () => {
         {refreshing ? (
           <Loading />
         ) : (
-          <NewsProduct>
+          <NewsProduct productId={productId}>
             <Banner
               data={[{id: "keyid12", url: itemDetails.imageUrl}]}
               height={250}
@@ -64,9 +62,9 @@ const Detail = () => {
               <Divider width={0.5} color={Color.grey} />
               <InfoPage itemDetails={itemDetails} />
               <Divider width={0.5} color={Color.grey} />
-              <QuestionList itemDetails={itemDetails} />
+              {/* <QuestionList itemDetails={itemDetails} /> */}
               <InfoArea itemDetails={itemDetails} />
-              <SocialList itemDetails={itemDetails} />
+              {/* <SocialList itemDetails={itemDetails} /> */}
             </View>
           </NewsProduct>
         )}

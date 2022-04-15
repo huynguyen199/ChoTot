@@ -2,26 +2,19 @@ import {StyleSheet} from "react-native"
 import React, {useEffect} from "react"
 import {FlatList} from "react-native-gesture-handler"
 import ProductItem from "./productItem"
-import {getProducts, resetProducts} from "@redux/slices/product"
-import {selectPagination, selectProducts} from "@redux/selector/product"
+import {getRelatedProducts} from "@redux/slices/product"
 import Color from "@common/Color"
 import {useDispatch, useSelector} from "react-redux"
 
-const ProductList = ({children}) => {
+const ProductList = ({children, productId}) => {
   const renderItem = (data) => <ProductItem item={data.item} />
   const dispatch = useDispatch()
-  const products = useSelector(selectProducts)
-  const pagination = useSelector(selectPagination)
+  const products = useSelector((state) => state.product.relatedProduct.data)
 
   useEffect(() => {
-    dispatch(resetProducts())
-    dispatch(getProducts())
+    dispatch(getRelatedProducts())
   }, [dispatch])
 
-  const handleOnEndReached = () => {
-    let page = pagination.page
-    dispatch(getProducts(++page))
-  }
   return (
     <FlatList
       numColumns={2}
@@ -32,7 +25,6 @@ const ProductList = ({children}) => {
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
       onEndReachedThreshold={0.1}
-      onEndReached={handleOnEndReached}
     />
   )
 }
