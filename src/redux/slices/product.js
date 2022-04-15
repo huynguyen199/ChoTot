@@ -120,9 +120,7 @@ export const productSlice = createSlice({
       state.myPostedProducts.data.push(...action.payload.data)
       state.myPostedProducts.pagination = action.payload.pagination
     },
-    [getMyPostedProducts.rejected]: (state, action) => {
-      state.myPostedProducts = null
-    },
+    [getMyPostedProducts.rejected]: (state, action) => {},
     [getProductDetails.fulfilled]: (state, action) => {
       state.item = action.payload.item
     },

@@ -9,6 +9,7 @@ import {
 } from "react-native"
 import DatePicker from "react-native-date-picker"
 import Color from "@common/Color"
+import {format} from "date-fns/esm"
 
 function DialogDateTime({visible, onClose, value, onChange}) {
   const [date, setDate] = useState(new Date())
@@ -19,17 +20,14 @@ function DialogDateTime({visible, onClose, value, onChange}) {
 
   const selectDate = () => {
     const dateFormat = new Date(date)
-    const day =
-      dateFormat.getUTCDate() < 10
-        ? "0" + (dateFormat.getMonth() + 1)
-        : dateFormat.getUTCDate()
-
-    const month =
-      dateFormat.getMonth() + 1 < 10
-        ? "0" + (dateFormat.getMonth() + 1)
-        : dateFormat.getMonth() + 1
-
-    const fullDate = day + "/" + month + "/" + dateFormat.getFullYear()
+    const fullDate = format(
+      new Date(
+        dateFormat.getFullYear(),
+        dateFormat.getMonth(),
+        dateFormat.getUTCDate(),
+      ),
+      "dd/MM/yyyy",
+    )
 
     onClose(!visible)
     onChange(fullDate)
