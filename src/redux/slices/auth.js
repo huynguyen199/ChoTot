@@ -5,20 +5,23 @@ import authService from "../services/auth"
 // const user = JSON.parse(AsyncStorage.getItem("user"))
 const initialState = {user: null}
 
+const errorHandler = (error) => {
+  return (
+    (error.response && error.response.data && error.response.data.message) ||
+    error.message ||
+    error.toString()
+  )
+}
+
 export const login = createAsyncThunk(
   "auth/login",
   async ({email, password}, thunkAPI) => {
     try {
       const data = await authService.login(email, password)
 
-      return {user: data}
+      return {user: data.user}
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const message = errorHandler(error)
       return thunkAPI.rejectWithValue(message)
     }
   },
@@ -32,12 +35,47 @@ export const register = createAsyncThunk(
 
       return {user: data}
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString()
+      const message = errorHandler(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const getProfileInfo = createAsyncThunk(
+  "auth/getProfileInfo",
+  async (thunkAPI) => {
+    try {
+      const data = await authService.getProfile()
+
+      return {user: data}
+    } catch (error) {
+      const message = errorHandler(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const updateProfileInfo = createAsyncThunk(
+  "auth/updateProfileInfo",
+  async (formData, thunkAPI) => {
+    try {
+      const data = await authService.updateProfile(formData)
+
+      return {user: data}
+    } catch (error) {
+      const message = errorHandler(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
+export const logoutUser = createAsyncThunk(
+  "auth/logoutUser",
+  async (thunkAPI) => {
+    try {
+      return authService.logout()
+    } catch (error) {
+      const message = errorHandler(error)
       return thunkAPI.rejectWithValue(message)
     }
   },
@@ -60,9 +98,27 @@ export const authSlice = createSlice({
     [register.rejected]: (state, action) => {
       state.user = null
     },
+    [getProfileInfo.fulfilled]: (state, action) => {
+      state.user = action.payload.user
+    },
+    [getProfileInfo.rejected]: (state, action) => {
+      state.user = null
+    },
+    [updateProfileInfo.fulfilled]: (state, action) => {
+      state.user = action.payload.user
+    },
+    [updateProfileInfo.rejected]: (state, action) => {
+      state.user = null
+    },
+    [logoutUser.fulfilled]: (state, action) => {
+      state.user = null
+    },
+    [logoutUser.rejected]: (state, action) => {
+      state.user = null
+    },
   },
 })
 
 // Action creators
-// export const {increment, decrement, incrementByAmount} = authSlice.actions
+// export const {logoutUser} = authSlice.actions
 export default authSlice.reducer

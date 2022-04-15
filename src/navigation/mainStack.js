@@ -10,6 +10,7 @@ import Post from "@screens/post/post"
 import City from "@screens/post/modal/city"
 import District from "@screens/post/modal/district"
 import Ward from "@screens/post/modal/ward"
+import SettingProfile from "@screens/more/settingProfile"
 
 const Stack = createStackNavigator()
 
@@ -34,6 +35,11 @@ const MainStack = () => {
           options={{headerShown: false}}
           name={mainStack.post}
           component={Post}
+        />
+        <Stack.Screen
+          options={{headerShown: false}}
+          name={mainStack.settingProfile}
+          component={SettingProfile}
         />
       </Stack.Group>
       <Stack.Group

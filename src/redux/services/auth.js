@@ -20,6 +20,19 @@ const login = (email, password) => {
       return response.data
     })
 }
+
+const getProfile = () => {
+  return client.get(`me/profile`).then((response) => {
+    return response.data
+  })
+}
+
+const updateProfile = (formData) => {
+  return client.patch(`me/profile`, formData).then((response) => {
+    return response.data
+  })
+}
+
 const logout = () => {
   AsyncStorage.removeItem("token")
 }
@@ -27,5 +40,7 @@ const authService = {
   register,
   login,
   logout,
+  getProfile,
+  updateProfile,
 }
 export default authService

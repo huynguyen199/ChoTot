@@ -17,6 +17,7 @@ const Ionicons = {
   chevronForward: "chevron-forward-outline",
   grid: "grid-outline",
   list: "list-outline",
+  cameraOutline: "camera-outline",
 }
 const Fontisto = {
   heart: "heart",
@@ -26,6 +27,7 @@ const Fontisto = {
 
 const Material = {
   addAPhoto: "add-a-photo",
+  edit: "edit",
 }
 
 export default {Ionicons, Fontisto, Material}
