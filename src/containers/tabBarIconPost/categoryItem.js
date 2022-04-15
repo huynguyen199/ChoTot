@@ -13,6 +13,7 @@ const CategoryItem = ({item, onPress}) => {
     navigation.navigate(mainStack.post, {
       category: item,
       address: {},
+      productId: null,
     })
   }
 

@@ -65,8 +65,8 @@ const FormProfile = ({userInfo, loading}) => {
     const data = {avatarUrl: response.data.url}
     dispatch(updateProfileInfo(data))
       .unwrap()
-      .then((data) => {
-        if (data) {
+      .then((res) => {
+        if (res) {
           Toast.show("tải ảnh thành công")
         }
       })
@@ -75,8 +75,8 @@ const FormProfile = ({userInfo, loading}) => {
     const data = {name: name}
     dispatch(updateProfileInfo(data))
       .unwrap()
-      .then((data) => {
-        if (data) {
+      .then((res) => {
+        if (res) {
           Toast.show("cập nhật tên thành công")
         }
       })

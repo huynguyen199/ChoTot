@@ -21,8 +21,27 @@ export const getCategories = createAsyncThunk(
     }
   },
 )
+
+export const getCategoriesById = createAsyncThunk(
+  "category/getCategoriesById",
+  async (id, thunkAPI) => {
+    try {
+      const data = await categoryService.getCategoriesById(id)
+      return {data: data}
+    } catch (error) {
+      const message = handledError(error)
+      return thunkAPI.rejectWithValue(message)
+    }
+  },
+)
+
 // const user = JSON.parse(AsyncStorage.getItem("user"))
-const initialState = {data: []}
+const initialState = {
+  data: [],
+  categoryById: {
+    data: [],
+  },
+}
 
 export const categorySlice = createSlice({
   name: "category",
@@ -34,6 +53,12 @@ export const categorySlice = createSlice({
     },
     [getCategories.rejected]: (state, action) => {
       state.data = []
+    },
+    [getCategoriesById.fulfilled]: (state, action) => {
+      state.categoryById.data = action.payload.data
+    },
+    [getCategoriesById.rejected]: (state, action) => {
+      state.categoryById.data = []
     },
   },
 })

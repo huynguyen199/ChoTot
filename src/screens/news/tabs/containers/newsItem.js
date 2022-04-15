@@ -14,6 +14,7 @@ import {formatDateAgo} from "@utils/timeAgo"
 import formatCurrency from "@utils/formatCurrency"
 import {useNavigation} from "@react-navigation/native"
 import {useDispatch} from "react-redux"
+import {getCategoriesById} from "@redux/slices/category"
 import {deleteProductById} from "@redux/slices/product"
 
 const NewsItem = ({item, setLoading}) => {
@@ -32,9 +33,20 @@ const NewsItem = ({item, setLoading}) => {
       .unwrap()
       .then((res) => {
         if (res) {
+          console.log("DEBUG: - file: newsItem.js - line 35 - .then - res", res)
           setLoading(false)
         }
       })
+  }
+
+  const onMovePost = async () => {
+    const category = await dispatch(getCategoriesById(item.category))
+
+    navigation.navigate(mainStack.post, {
+      category: category.payload.data,
+      address: {},
+      productId: item._id,
+    })
   }
 
   return (
@@ -55,8 +67,16 @@ const NewsItem = ({item, setLoading}) => {
         </View>
         <View style={styles.rightIcon}>
           <Icon
+            onPress={onMovePost}
+            name={Icons.Ionicons.build}
+            type="ionicon"
+            color={Color.black}
+            size={24}
+            style={styles.styleRightIcon}
+          />
+          <Icon
             onPress={onDeleteProduct}
-            name={Icons.Ionicons.ellipsisVerticalFilled}
+            name={Icons.Ionicons.trash}
             type="ionicon"
             color={Color.black}
             size={24}
@@ -78,6 +98,7 @@ const styles = StyleSheet.create({
   rightIcon: {
     backgroundColor: Color.white,
     flex: 0.1,
+    justifyContent: "space-around",
   },
   contentCenter: {
     backgroundColor: Color.white,

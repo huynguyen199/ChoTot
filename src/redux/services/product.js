@@ -40,6 +40,12 @@ const getProductDetails = (id) => {
   })
 }
 
+const updateProduct = (id, data) => {
+  return client.patch(`products/${id}`, data).then((response) => {
+    return response.data
+  })
+}
+
 const deleteProductById = (id) => {
   return client.delete(`products/${id}`).then((response) => {
     return response.data
@@ -52,6 +58,7 @@ const productService = {
   getProductsByCategory,
   getMyPostedProducts,
   addProduct,
+  updateProduct,
   deleteProductById,
 }
 export default productService
