@@ -37,7 +37,10 @@ const styles = StyleSheet.create({
   txtAddress: {marginLeft: 2, color: "black"},
   txtArea: {marginLeft: 5},
   boxRow: {flexDirection: "row"},
-  container: {flexDirection: "row", justifyContent: "space-between"},
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 })
 
 export default LocationBar

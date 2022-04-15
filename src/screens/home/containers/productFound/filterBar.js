@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     marginTop: 5,
+    padding: 5,
   },
 })
 export default FilterBar

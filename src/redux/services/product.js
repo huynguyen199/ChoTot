@@ -7,9 +7,9 @@ const getProducts = (page) => {
 }
 
 const getProductsSearch = (page, name) => {
-  return client.get(`products?page=${page}&name=${name}`).then((response) => {
-    return response.data
-  })
+  return client
+    .get(`products?page=${page}&name=${name}`)
+    .then((response) => response.data)
 }
 
 const getProductsByCategory = (page, category) => {

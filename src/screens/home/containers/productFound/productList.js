@@ -1,5 +1,5 @@
-import {View, FlatList, RefreshControl, StyleSheet} from "react-native"
-import React, {useEffect, useState} from "react"
+import {FlatList, RefreshControl, StyleSheet} from "react-native"
+import React, {useEffect} from "react"
 import ProductItem from "./productItem"
 import Colors from "@common/Color"
 import ProductColumnGrid from "./productIColumnItem"
@@ -8,23 +8,27 @@ import {useDispatch, useSelector} from "react-redux"
 import Loading from "@components/loading"
 import {clearProductsFound, getProductFound} from "@redux/slices/product"
 import ListFooterComponent from "./listFooterComponent"
+import {showLoading, hideLoading} from "../../../../redux/slices/loading"
+import ListHeaderComponent from "./listHeaderComponent"
 
 const ProductList = ({children, isGrid, wordSearch}) => {
   const [refreshing] = React.useState(false)
-  const [loading, setLoading] = useState(true)
   const onRefresh = React.useCallback(() => {}, [])
   const products = useSelector((state) => state.product.searchFound.data)
+  const loading = useSelector((state) => state.progress.loading)
+
   const dispatch = useDispatch()
   const pagination = useSelector(
     (state) => state.product.searchFound.pagination,
   )
 
   useEffect(() => {
+    dispatch(showLoading())
     dispatch(getProductFound({page: 1, name: wordSearch}))
       .unwrap()
       .then((result) => {
         if (result) {
-          setLoading(false)
+          dispatch(hideLoading())
         }
       })
     return () => clearProductsFound()
@@ -40,35 +44,31 @@ const ProductList = ({children, isGrid, wordSearch}) => {
   const renderGridItem = ({item}) => <ProductItem item={item} />
   const renderColumnItem = ({item}) => <ProductColumnGrid item={item} />
 
+  if (loading) {
+    return <Loading />
+  }
+
   return (
     <>
       {isGrid ? (
-        loading ? (
-          <Loading />
-        ) : (
-          <FlatList
-            data={products}
-            key={"*"}
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            renderItem={renderGridItem}
-            keyExtractor={(item) => item._id}
-            ListEmptyComponent={<ListEmptyComponent />}
-            ListHeaderComponent={
-              <View style={styles.listHeaderContainer}>{children}</View>
-            }
-            ListFooterComponent={
-              <ListFooterComponent pagination={pagination} />
-            }
-            contentContainerStyle={styles.contentContainerStyleGrid}
-            onEndReached={handleOnEndReached}
-          />
-        )
-      ) : loading ? (
-        <Loading />
+        <FlatList
+          data={products}
+          key={"*"}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          renderItem={renderGridItem}
+          keyExtractor={(item) => item._id}
+          ListEmptyComponent={<ListEmptyComponent />}
+          ListHeaderComponent={
+            <ListHeaderComponent>{children}</ListHeaderComponent>
+          }
+          ListFooterComponent={<ListFooterComponent pagination={pagination} />}
+          contentContainerStyle={styles.contentContainerStyleGrid}
+          onEndReached={handleOnEndReached}
+        />
       ) : (
         <FlatList
           data={products}
@@ -82,7 +82,7 @@ const ProductList = ({children, isGrid, wordSearch}) => {
           ListFooterComponent={<ListFooterComponent pagination={pagination} />}
           ListEmptyComponent={<ListEmptyComponent />}
           ListHeaderComponent={
-            <View style={styles.containerHeaderColumn}>{children}</View>
+            <ListHeaderComponent>{children}</ListHeaderComponent>
           }
           contentContainerStyle={styles.contentContainerStyleColumn}
           onEndReached={handleOnEndReached}
@@ -100,6 +100,5 @@ const styles = StyleSheet.create({
   contentContainerStyleGrid: {
     backgroundColor: Colors.ghostWhite,
   },
-  listHeaderContainer: {backgroundColor: Colors.white},
 })
 export default ProductList

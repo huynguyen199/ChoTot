@@ -9,6 +9,7 @@ const initialState = {
   searchProduct: {data: [], pagination: {}},
   searchFound: {data: [], pagination: {}},
   myPostedProducts: {data: [], pagination: {}},
+  loading: false,
 }
 
 const handledError = (error) => {
@@ -141,6 +142,10 @@ export const productSlice = createSlice({
       state.searchProduct.data = []
       state.searchProduct.pagination = {page: 0}
     },
+    clearSearchFound(state) {
+      state.searchProduct.data = []
+      state.searchProduct.pagination = {page: 0}
+    },
   },
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
@@ -208,5 +213,8 @@ export const {
   resetProductByCategory,
   clearProductsFound,
   clearSearchProducts,
+  showLoading,
+  hideLoading,
+  clearSearchFound,
 } = productSlice.actions
 export default productSlice.reducer

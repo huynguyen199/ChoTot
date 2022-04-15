@@ -11,12 +11,13 @@ import {getProductSearch} from "@redux/slices/product"
 import _ from "lodash"
 import SearchItem from "./containers/searchItem/historyItem"
 import Loading from "../../components/loading"
+import {showLoading, hideLoading} from "@redux/slices/loading"
 
 const SearchProduct = () => {
   const products = useSelector((state) => state.product.searchProduct.data)
-
+  const loading = useSelector((state) => state.progress.loading)
   const [search, setSearch] = useState("")
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const isFocused = useIsFocused()
@@ -30,7 +31,7 @@ const SearchProduct = () => {
           .unwrap()
           .then((result) => {
             if (result) {
-              setLoading(false)
+              dispatch(hideLoading())
             }
           }),
       500,
@@ -47,7 +48,7 @@ const SearchProduct = () => {
   const onChangeSearch = (value) => {
     sendSearchersWord(value)
     setSearch(value)
-    setLoading(true)
+    dispatch(showLoading())
   }
 
   const renderItem = ({item}) => <SearchItem item={item} />
