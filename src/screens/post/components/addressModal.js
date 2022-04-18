@@ -14,7 +14,7 @@ import {
   findByCodeWard,
 } from "@utils/address"
 
-const AddressModal = ({modalizeRef, setAddressText, onClose}) => {
+const AddressModal = ({modalizeRef, addressText, setAddressText, onClose}) => {
   const route = useRoute()
   const {address} = route.params
 
@@ -24,6 +24,16 @@ const AddressModal = ({modalizeRef, setAddressText, onClose}) => {
   const [city, setCity] = useState({})
   const [district, setDistrict] = useState({})
   const [ward, setWard] = useState({})
+
+  useEffect(() => {
+    clearForm()
+  }, [addressText])
+
+  const clearForm = () => {
+    setCity({})
+    setDistrict({})
+    setWard({})
+  }
 
   useEffect(() => {
     if (address.codeCity) {

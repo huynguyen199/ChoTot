@@ -1,12 +1,12 @@
 import {View, FlatList, StyleSheet, ActivityIndicator} from "react-native"
 import React, {useEffect} from "react"
 import Color from "@common/Color"
-import NewsItem from "./containers/newsItem"
+import NewsItem from "./components/newsItem"
 import {useSelector} from "react-redux"
 import {useDispatch} from "react-redux"
 import {getMyPostedProducts} from "@redux/slices/product"
 import {useState} from "react"
-import WithoutAccount from "./containers/withoutAccount"
+import WithoutAccount from "./components/withoutAccount"
 import {getProfileInfo} from "../../../redux/slices/auth"
 import LoadingDialog from "@components/loadingDialog"
 import {selectProfileInfo} from "@redux/selector/auth"
@@ -38,7 +38,7 @@ const Display = () => {
     <NewsItem setLoading={setLoading} item={item} />
   )
   return (
-    <View style={styles.containers}>
+    <View style={styles.components}>
       <FlatList
         data={data}
         renderItem={renderItem}
@@ -61,7 +61,7 @@ const Display = () => {
 
 const styles = StyleSheet.create({
   containerListFooter: {alignItems: "center"},
-  containers: {backgroundColor: Color.ghostWhite, flex: 1},
+  components: {backgroundColor: Color.ghostWhite, flex: 1},
 })
 
 export default Display

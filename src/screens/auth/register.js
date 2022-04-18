@@ -3,8 +3,8 @@ import React from "react"
 import {Icon, Header} from "react-native-elements"
 import Color from "@common/Color"
 import Icons from "@common/Icon"
-import WelcomeTop from "./containers/welcomeTop"
-import FormRegister from "./containers/formRegister"
+import WelcomeTop from "./components/welcomeTop"
+import FormRegister from "./components/formRegister"
 import {useTranslation} from "react-i18next"
 import {useNavigation} from "@react-navigation/native"
 
@@ -19,7 +19,7 @@ const Register = () => {
   return (
     <View style={styles.container}>
       <Header
-        containerStyle={styles.headerStyle}
+        componentstyle={styles.headerStyle}
         leftComponent={
           <Icon
             onPress={onBackSignIn}

@@ -7,7 +7,10 @@ import CategoryItem from "./categoryItem"
 import Icons from "@common/Icon"
 import HeaderModal from "@components/headerModal"
 import {useDispatch, useSelector} from "react-redux"
+import Loading from "../../components/loading"
 import {getCategories} from "@redux/slices/category"
+import {getProfileInfo} from "../../redux/slices/auth"
+import {hideLoading, showLoading} from "../../redux/slices/loading"
 
 const {height} = Dimensions.get("window")
 
@@ -17,9 +20,19 @@ const TabBarIconPost = ({color, modalizeRef}) => {
   }
   const dispatch = useDispatch()
   const data = useSelector((state) => state.category.data)
+  const userInfo = useSelector((state) => state.auth.user)
+  const loading = useSelector((state) => state.progress.loading)
 
   useEffect(() => {
+    dispatch(showLoading())
     dispatch(getCategories())
+    dispatch(getProfileInfo())
+      .unwrap()
+      .then((res) => {
+        if (res) {
+          dispatch(hideLoading())
+        }
+      })
   }, [dispatch])
 
   return (
@@ -32,9 +45,13 @@ const TabBarIconPost = ({color, modalizeRef}) => {
           modalHeight={height - 40}
           withHandle={false}
           ref={modalizeRef}>
-          {data.map((item, index) => (
-            <CategoryItem key={item._id} item={item} />
-          ))}
+          {loading ? (
+            <Loading />
+          ) : (
+            data.map((item, index) => (
+              <CategoryItem userInfo={userInfo} key={item._id} item={item} />
+            ))
+          )}
         </Modalize>
       </Portal>
       <Icon name={Icons.Ionicons.post} type="ionicon" color={color} />

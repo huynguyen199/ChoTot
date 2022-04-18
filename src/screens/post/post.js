@@ -1,12 +1,11 @@
-import {View, ScrollView, Dimensions} from "react-native"
+import {View, ScrollView, Dimensions, StyleSheet} from "react-native"
 import React, {useEffect, useRef, useState} from "react"
-import {StyleSheet} from "react-native"
 import {Header, Icon} from "react-native-elements"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
-import Category from "./containers/category"
-import InfoDetail from "./containers/infoDetail"
-import AddressModal from "./containers/addressModal"
+import Category from "./components/category"
+import InfoDetail from "./components/infoDetail"
+import AddressModal from "./components/addressModal"
 import {useTranslation} from "react-i18next"
 import {Modalize} from "react-native-modalize"
 import HeaderModal from "@components/headerModal"
@@ -14,7 +13,7 @@ import CategoryItem from "@containers/tabBarIconPost/categoryItem"
 import {getCategories} from "@redux/slices/category"
 import {useDispatch, useSelector} from "react-redux"
 import {useNavigation, useRoute} from "@react-navigation/native"
-import {clearDetails, getProductDetails} from "../../redux/slices/product"
+import {clearDetails, getProductDetails} from "@redux/slices/product"
 import Loading from "@components/loading"
 
 const {height} = Dimensions.get("window")
@@ -94,6 +93,7 @@ const Post = () => {
       )}
       <AddressModal
         onClose={onClose}
+        addressText={addressText}
         setAddressText={setAddressText}
         modalizeRef={ref}
       />

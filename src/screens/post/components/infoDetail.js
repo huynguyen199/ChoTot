@@ -28,12 +28,12 @@ const InfoDetail = ({
   const [name, setName] = useState(null)
   const [price, setPrice] = useState(null)
   const [description, setDescription] = useState(null)
-  const {t} = useTranslation()
-  const [images, setImages] = useState([])
-  const dispatch = useDispatch()
   const [isVisible, setIsVisible] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const {t} = useTranslation()
+  const [images, setImages] = useState([])
+  const dispatch = useDispatch()
 
   const [validator, setValidator] = useState({
     isName: false,
@@ -65,6 +65,13 @@ const InfoDetail = ({
       setValidator((prev) => ({...prev, isAddress: false}))
     }
   }, [addressText, setAddressText])
+
+  const clearForm = () => {
+    setName(null)
+    setPrice(null)
+    setDescription(null)
+    setAddressText(null)
+  }
 
   const onChangeName = (value) => {
     setName(value)
@@ -142,6 +149,7 @@ const InfoDetail = ({
       .then((res) => {
         if (res) {
           setLoading(false)
+          clearForm()
           toggleDialogSuccess()
         }
       })
@@ -172,9 +180,12 @@ const InfoDetail = ({
       .then((res) => {
         if (res) {
           setLoading(false)
-
+          clearForm()
           toggleDialogSuccess()
         }
+      })
+      .catch((err) => {
+        setLoading(false)
       })
   }
 
@@ -192,9 +203,9 @@ const InfoDetail = ({
       return setValidator((prev) => ({...prev, isAddress: true}))
     }
     if (product) {
-      updateNews()
+      await updateNews()
     } else {
-      postNews()
+      await postNews()
     }
   }
 
