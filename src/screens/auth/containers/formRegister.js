@@ -3,21 +3,24 @@ import React, {useState} from "react"
 import {Input} from "react-native-elements"
 import Color from "@common/Color"
 import ButtonLogin from "@components/button"
-import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
 import {register} from "@redux/slices/auth"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {useTranslation} from "react-i18next"
 import {useForm, Controller} from "react-hook-form"
+import LoadingDialog from "@components/loadingDialog"
 import {emailContraints, passwordContraints} from "@common/validator"
 import SimpleDialog from "@components/simpleDialog/index"
+import {showLoading, hideLoading} from "../../../redux/slices/loading"
 
 const FormRegister = () => {
   const [isFocus, setIsFocus] = useState({account: false, password: false})
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   const [isNotify, setIsNotify] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const dispatch = useDispatch()
+  const loading = useSelector((state) => state.progress.loading)
 
   const {
     handleSubmit,
@@ -30,7 +33,6 @@ const FormRegister = () => {
     },
   })
   const {t} = useTranslation()
-  const dispatch = useDispatch()
 
   const toggleDialog = () => {
     setIsNotify(!isNotify)
@@ -40,16 +42,20 @@ const FormRegister = () => {
     setIsSuccess(!isSuccess)
   }
   const onSubmit = (data) => {
+    dispatch(showLoading())
     const {email, password} = data
     dispatch(register({email, password}))
       .unwrap()
       .then((res) => {
         if (res.user) {
+          dispatch(hideLoading())
+
           toggleDialogSuccess()
         }
       })
       .catch((err) => {
         toggleDialog()
+        dispatch(hideLoading())
       })
   }
   const handleInputFocus = (text) => {
@@ -99,11 +105,12 @@ const FormRegister = () => {
             errorMessage={errors.password && errors.password.message}
             rightIcon={
               isVisible ? (
-                <EyeOffIcon onPress={showPasswords} />
-              ) : (
                 <EyeIcon onPress={showPasswords} />
+              ) : (
+                <EyeOffIcon onPress={showPasswords} />
               )
             }
+            secureTextEntry={isVisible}
             value={value}
             inputContainerStyle={styles.inputContainerPass}
             onChangeText={onChange}
@@ -130,7 +137,7 @@ const FormRegister = () => {
         </TouchableOpacity>
         <Text style={styles.textFoget}>{t("auth:whose")}</Text>
       </View>
-      <SocialMethod />
+      {/* <SocialMethod /> */}
       <SimpleDialog
         isVisible={isNotify}
         onBackdropPress={toggleDialog}
@@ -141,6 +148,7 @@ const FormRegister = () => {
         onBackdropPress={toggleDialogSuccess}
         title={t("auth:loginSuccess")}
       />
+      <LoadingDialog isVisible={loading} />
     </View>
   )
 }

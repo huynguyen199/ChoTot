@@ -3,26 +3,26 @@ import React, {useState} from "react"
 import {Input} from "react-native-elements"
 import Color from "@common/Color"
 import ButtonLogin from "@components/button"
-import SocialMethod from "./socialMethod"
 import EyeIcon from "./icon/eyeIcon"
 import EyeOffIcon from "./icon/eyeOffIcon"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {login} from "@redux/slices/auth"
-
 import {mainStack} from "@common/navigator"
 import {useNavigation} from "@react-navigation/native"
 import {useTranslation} from "react-i18next"
 import {useForm, Controller} from "react-hook-form"
+import LoadingDialog from "@components/loadingDialog"
 import SimpleDialog from "@components/simpleDialog/index"
 import {emailContraints, passwordContraints} from "@common/validator"
 import {authStack} from "@common/navigator"
+import {showLoading, hideLoading} from "@redux/slices/loading"
 
 const FormLogin = () => {
   const {t} = useTranslation()
   const [isFocus, setIsFocus] = useState({account: false, password: false})
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   const [isFailure, setIsFailure] = useState(false)
-
+  const loading = useSelector((state) => state.progress.loading)
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const {
@@ -41,16 +41,19 @@ const FormLogin = () => {
   }
 
   const onSubmit = (data) => {
+    dispatch(showLoading())
     const {email, password} = data
 
     dispatch(login({email, password}))
       .unwrap()
       .then((auth) => {
         if (auth.user) {
+          dispatch(hideLoading())
           navigation.navigate(mainStack.homeTab)
         }
       })
       .catch((err) => {
+        dispatch(hideLoading())
         toggleDialogFailure()
       })
   }
@@ -134,12 +137,13 @@ const FormLogin = () => {
       <TouchableOpacity onPress={onMoveForgot}>
         <Text style={styles.textFoget}>{t("auth:forgotPassword")}</Text>
       </TouchableOpacity>
-      <SocialMethod />
+      {/* <SocialMethod /> */}
       <SimpleDialog
         isVisible={isFailure}
         onBackdropPress={toggleDialogFailure}
         title={t("validator:emailIncorrect")}
       />
+      <LoadingDialog isVisible={loading} />
     </View>
   )
 }
