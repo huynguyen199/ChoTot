@@ -18,6 +18,8 @@ const Ionicons = {
   grid: "grid-outline",
   list: "list-outline",
   cameraOutline: "camera-outline",
+  trash: "trash-outline",
+  build: "build-outline",
 }
 const Fontisto = {
   heart: "heart",

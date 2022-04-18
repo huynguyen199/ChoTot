@@ -1,44 +1,42 @@
-import {View, FlatList, StyleSheet} from "react-native"
+import {View, FlatList, StyleSheet, ActivityIndicator} from "react-native"
 import React, {useEffect} from "react"
 import Color from "@common/Color"
 import NewsItem from "./containers/newsItem"
 import {useSelector} from "react-redux"
 import {useDispatch} from "react-redux"
-import ListEmptyComponent from "../containers/news/ListEmptyComponent"
 import {getMyPostedProducts} from "@redux/slices/product"
-import AsyncStorage from "@react-native-async-storage/async-storage"
 import {useState} from "react"
 import WithoutAccount from "./containers/withoutAccount"
+import {getProfileInfo} from "../../../redux/slices/auth"
+import LoadingDialog from "@components/loadingDialog"
+import {selectProfileInfo} from "@redux/selector/auth"
 
 const Display = () => {
   const data = useSelector((state) => state.product.myPostedProducts.data)
-  const [isLogged, setIsLogged] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
+  const userInfo = useSelector(selectProfileInfo)
 
   const pagination = useSelector(
     (state) => state.product.myPostedProducts.pagination,
   )
 
-  const dispatch = useDispatch()
-
   useEffect(() => {
-    AsyncStorage.getItem("token").then((token) => {
-      if (token) {
-        dispatch(getMyPostedProducts())
-      } else {
-        setIsLogged(true)
-      }
-    })
-  }, [dispatch, isLogged])
+    dispatch(getProfileInfo())
+    dispatch(getMyPostedProducts())
+  }, [dispatch])
 
   const handleOnEndReached = () => {
     let page = pagination.page
     dispatch(getMyPostedProducts(++page))
   }
-  if (isLogged) {
+
+  if (userInfo === null) {
     return <WithoutAccount />
   }
-  // const pagination = useSelector(selectPaginationOfProductByCategory)
-  const renderItem = ({item}) => <NewsItem item={item} />
+  const renderItem = ({item}) => (
+    <NewsItem setLoading={setLoading} item={item} />
+  )
   return (
     <View style={styles.containers}>
       <FlatList
@@ -46,13 +44,23 @@ const Display = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         onEndReached={handleOnEndReached}
-        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={
+          pagination.page === pagination.totalPages && (
+            <View style={styles.containerListFooter}>
+              <ActivityIndicator size="large" color={Color.orange} />
+            </View>
+          )
+        }
+        // ListEmptyComponent={ListEmptyComponent}
       />
+
+      <LoadingDialog onBackdropPress={setLoading} isVisible={loading} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  containerListFooter: {alignItems: "center"},
   containers: {backgroundColor: Color.ghostWhite, flex: 1},
 })
 

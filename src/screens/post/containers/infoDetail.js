@@ -10,23 +10,30 @@ import PictureBar from "./pictureBar"
 import {useTranslation} from "react-i18next"
 import {launchImageLibrary} from "@utils/imagePicker"
 import SimpleDialog from "@components/simpleDialog"
-import {addProduct} from "@redux/slices/product"
+import {addProduct, updateProduct} from "@redux/slices/product"
 import {useDispatch} from "react-redux"
 import {useEffect} from "react"
 import {uploadImage} from "@common/upload"
+import LoadingDialog from "@components/loadingDialog"
 
 // address
-const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
+const InfoDetail = ({
+  onOpen,
+  addressText,
+  setAddressText,
+  categoryItem,
+  product,
+  productId,
+}) => {
   const [name, setName] = useState(null)
   const [price, setPrice] = useState(null)
   const [description, setDescription] = useState(null)
   const {t} = useTranslation()
   const [images, setImages] = useState([])
-
   const dispatch = useDispatch()
-
   const [isVisible, setIsVisible] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [validator, setValidator] = useState({
     isName: false,
@@ -34,6 +41,24 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
     isDescription: false,
     isAddress: false,
   })
+
+  //fill product into form post
+  useEffect(() => {
+    if (productId && product) {
+      setImages([])
+      const image = {
+        id: product.imageUrl,
+        name: product.imageUrl,
+        type: "image/jpeg",
+        uri: product.imageUrl,
+      }
+      setImages((pre) => [...pre, image])
+      setName(product.name)
+      setPrice(String(product.price))
+      setDescription(product.description)
+      setAddressText(product.location)
+    }
+  }, [product, productId, setAddressText])
 
   useEffect(() => {
     if (addressText) {
@@ -116,13 +141,45 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
       .unwrap()
       .then((res) => {
         if (res) {
+          setLoading(false)
+          toggleDialogSuccess()
+        }
+      })
+  }
+
+  const updateNews = async () => {
+    const formData = new FormData()
+    const file = {
+      name: images[0].name,
+      type: images[0].type,
+      uri: images[0].uri,
+    }
+    formData.append("file", file)
+
+    const response = await uploadImage(formData)
+
+    const data = {
+      name,
+      price,
+      description,
+      location: addressText,
+      category: categoryItem._id,
+      imageUrl: response.data.url,
+    }
+
+    dispatch(updateProduct({id: productId, data}))
+      .unwrap()
+      .then((res) => {
+        if (res) {
+          setLoading(false)
+
           toggleDialogSuccess()
         }
       })
   }
 
   const onSubmitForm = async () => {
-    // await postNews()
+    setLoading(true)
     if (images.length === 0) {
       return toggleDialog()
     } else if (name == null) {
@@ -134,7 +191,11 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
     } else if (addressText == null) {
       return setValidator((prev) => ({...prev, isAddress: true}))
     }
-    await postNews()
+    if (product) {
+      updateNews()
+    } else {
+      postNews()
+    }
   }
 
   return (
@@ -222,7 +283,7 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
           {t("validator:fillAddress")}
         </HelperText>
         <Button
-          title={"ĐĂNG TIN"}
+          title={product ? "CẬP NHẬT TIN" : "ĐĂNG TIN"}
           style={styles.btnStyle}
           color={Color.orange}
           onPress={onSubmitForm}
@@ -233,11 +294,20 @@ const InfoDetail = ({onOpen, addressText, setAddressText, categoryItem}) => {
           title={t("validator:postAtLeast")}
           isVisible={isVisible}
         />
-        <SimpleDialog
-          onBackdropPress={toggleDialogSuccess}
-          title={t("validator:postSuccess")}
-          isVisible={isSuccess}
-        />
+        {product ? (
+          <SimpleDialog
+            onBackdropPress={toggleDialogSuccess}
+            title={"Cập nhật thành công"}
+            isVisible={isSuccess}
+          />
+        ) : (
+          <SimpleDialog
+            onBackdropPress={toggleDialogSuccess}
+            title={t("validator:postSuccess")}
+            isVisible={isSuccess}
+          />
+        )}
+        <LoadingDialog isVisible={loading} onBackdropPress={setLoading} />
       </View>
     </>
   )
