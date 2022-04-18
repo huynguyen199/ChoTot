@@ -1,8 +1,8 @@
 import {View, StyleSheet} from "react-native"
 import React, {useState} from "react"
-import ProductList from "./containers/productFound/productList"
-import LocationBar from "./containers/productFound/locationBar"
-import FilterBar from "./containers/productFound/filterBar"
+import ProductList from "./components/productFound/productList"
+import LocationBar from "./components/productFound/locationBar"
+import FilterBar from "./components/productFound/filterBar"
 import {Header, Icon} from "react-native-elements"
 import SearchBar from "@components/searchbar"
 import Icons from "@common/Icon"
@@ -51,7 +51,7 @@ const ProductFound = () => {
 
 const styles = StyleSheet.create({
   containerHeaderLeft: {flexDirection: "row", alignItems: "center"},
-  containerStyle: {width: 300},
+  componentstyle: {width: 300},
   flatlistContainer: {backgroundColor: "white", flex: 1, padding: 10},
   container: {flex: 1},
 })

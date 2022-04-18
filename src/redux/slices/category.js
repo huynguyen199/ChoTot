@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
-import categoryService from "../services/category"
+import categoryService from "../../services/category"
 
 const handledError = (error) => {
   return (

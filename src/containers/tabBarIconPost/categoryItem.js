@@ -3,10 +3,10 @@ import React from "react"
 import {Icon, Divider} from "react-native-elements"
 import {TouchableOpacity} from "react-native-gesture-handler"
 import {useNavigation} from "@react-navigation/native"
-import {mainStack} from "@common/navigator"
+import {mainStack, rootSwitch} from "@common/navigator"
 import Icons from "@common/Icon"
 import Color from "@common/Color"
-const CategoryItem = ({item, onPress}) => {
+const CategoryItem = ({item, onPress, userInfo}) => {
   const navigation = useNavigation()
 
   const onMovePost = () => {
@@ -17,8 +17,16 @@ const CategoryItem = ({item, onPress}) => {
     })
   }
 
+  const onMoveLogin = () => {
+    navigation.navigate(rootSwitch.auth, {
+      category: item,
+      address: {},
+      productId: null,
+    })
+  }
+
   return (
-    <TouchableOpacity onPress={onPress || onMovePost}>
+    <TouchableOpacity onPress={onPress || userInfo ? onMovePost : onMoveLogin}>
       <View style={styles.container}>
         <View style={styles.boxLeft}>
           <Image

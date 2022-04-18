@@ -1,8 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
-// import AsyncStorage from "@react-native-async-storage/async-storage"
-import authService from "../services/auth"
+import authService from "../../services/auth"
 
-// const user = JSON.parse(AsyncStorage.getItem("user"))
 const initialState = {user: null}
 
 const errorHandler = (error) => {

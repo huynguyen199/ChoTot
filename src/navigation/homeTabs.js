@@ -4,9 +4,7 @@ import Color from "../common/Color"
 import {Icon} from "react-native-elements"
 import News from "../screens/news/news"
 import Profile from "../screens/more/profile"
-import Notify from "../screens/notify/notify"
 import CreateNews from "../screens/post/createnews"
-
 import {homeTabs} from "../common/navigator"
 import {useTranslation} from "react-i18next"
 import {Host} from "react-native-portalize"
@@ -81,16 +79,6 @@ const HomeTabs = () => {
           }}
           name={homeTabs.createNews}
           component={CreateNews}
-        />
-        <Tab.Screen
-          options={{
-            tabBarLabel: t("home:notify"),
-            tabBarIcon: ({color, size}) => (
-              <Icon name="notifications-outline" type="ionicon" color={color} />
-            ),
-          }}
-          name={homeTabs.notify}
-          component={Notify}
         />
         <Tab.Screen
           options={{

@@ -33,7 +33,6 @@ const NewsItem = ({item, setLoading}) => {
       .unwrap()
       .then((res) => {
         if (res) {
-          console.log("DEBUG: - file: newsItem.js - line 35 - .then - res", res)
           setLoading(false)
         }
       })

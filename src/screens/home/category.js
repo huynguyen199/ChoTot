@@ -2,11 +2,11 @@ import {View, StyleSheet} from "react-native"
 import React, {useState} from "react"
 import {Header} from "react-native-elements"
 import SearchBar from "@components/searchbar/index"
-import ProductList from "./containers/category/productList"
-import FilterBar from "./containers/category/filterBar"
-import LocationBar from "./containers/category/locationBar"
-import HeaderLeft from "./containers/category/headerLeft"
-import RightComponent from "./containers/category/rightComponent"
+import ProductList from "./components/category/productList"
+import FilterBar from "./components/category/filterBar"
+import LocationBar from "./components/category/locationBar"
+import HeaderLeft from "./components/category/headerLeft"
+import RightComponent from "./components/category/rightComponent"
 
 const Category = () => {
   const [isGrid, setIsGrid] = useState(true)
@@ -14,7 +14,7 @@ const Category = () => {
     <View style={styles.container}>
       <Header
         leftComponent={<HeaderLeft />}
-        centerComponent={<SearchBar containerStyle={styles.containerStyle} />}
+        centerComponent={<SearchBar componentstyle={styles.componentstyle} />}
         backgroundColor={"orange"}
         rightComponent={<RightComponent />}
       />
@@ -29,7 +29,7 @@ const Category = () => {
 }
 
 const styles = StyleSheet.create({
-  containerStyle: {width: 300},
+  componentstyle: {width: 300},
   flatlistContainer: {backgroundColor: "white", flex: 1, padding: 10},
   container: {flex: 1},
 })

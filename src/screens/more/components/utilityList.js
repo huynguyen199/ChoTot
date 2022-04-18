@@ -10,7 +10,6 @@ const UtilityList = ({userInfo}) => {
   const dispatch = useDispatch()
 
   const onSignOut = () => {
-    console.log("dang xuat")
     dispatch(logoutUser())
   }
 

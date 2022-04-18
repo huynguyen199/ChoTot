@@ -9,7 +9,7 @@ import {homePage} from "@common/navigator"
 import {useSelector, useDispatch} from "react-redux"
 import {getProductSearch} from "@redux/slices/product"
 import _ from "lodash"
-import SearchItem from "./containers/searchItem/historyItem"
+import SearchItem from "./components/searchItem/historyItem"
 import Loading from "../../components/loading"
 import {showLoading, hideLoading} from "@redux/slices/loading"
 
