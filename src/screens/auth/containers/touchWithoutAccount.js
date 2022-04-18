@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    marginTop: 20,
   },
   txtRegister: {
     fontWeight: "bold",
